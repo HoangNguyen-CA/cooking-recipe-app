@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const config = require('config');
 
 app = express();
+
 app.use(express.json());
 
 const db = process.env.mongoURI || config.get('mongoURI');
@@ -18,6 +19,7 @@ mongoose
 
 app.use('/api/recipes/', require('./routes/api/recipes'));
 app.use('/api/users/', require('./routes/api/users'));
+app.use('/api/auth/', require('./routes/api/auth'));
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

@@ -2,6 +2,16 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 //create schema
+const RecipeSchema = new Schema({
+  name: { type: String, required: true },
+  image: String,
+  ingredients: [],
+  calories: String,
+  dietLabels: [],
+  healthLabels: [],
+  cautions: [],
+  nutrients: []
+});
 
 const UserSchema = new Schema({
   name: {
@@ -20,7 +30,8 @@ const UserSchema = new Schema({
   register_date: {
     type: Date,
     default: Date.now
-  }
+  },
+  recipes: [RecipeSchema]
 });
 
 module.exports = User = mongoose.model('user', UserSchema);

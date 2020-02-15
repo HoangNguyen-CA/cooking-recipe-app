@@ -8,6 +8,7 @@ export default function MainNavbar() {
     <Navbar bg='light' variant='light'>
       <Navbar.Brand href='#home'>Navbar</Navbar.Brand>
       <Nav className='ml-auto'>
+        <LoginModal></LoginModal>
         <RegisterModal></RegisterModal>
       </Nav>
     </Navbar>
