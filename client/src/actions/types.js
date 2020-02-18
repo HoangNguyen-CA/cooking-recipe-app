@@ -1,7 +1,8 @@
 export const GET_RECIPES = 'GET_RECIPES';
-export const SAVE_RECIPE = 'SAVE_RECIPE';
-export const REMOVE_RECIPE = 'REMOVE_RECIPE';
+export const ADD_RECIPE = 'ADD_RECIPE';
+export const DELETE_RECIPE = 'REMOVE_RECIPE';
 export const RECIPES_LOADING = 'RECIPES_LOADING';
+
 export const USER_LOADING = 'USER_LOADING';
 export const USER_LOADED = 'USER_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';

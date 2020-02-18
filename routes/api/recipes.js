@@ -82,8 +82,8 @@ router.get('/', auth, (req, res) => {
     });
 });
 
-// @route Post api/recipes
-// @desc post a recipe
+// @route Delete api/recipes
+// @desc delete a recipe
 // @access Public
 router.delete('/:id', auth, (req, res) => {
   const id = req.user.id;
