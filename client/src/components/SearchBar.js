@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import uuid from 'uuid';
 
 export default function SearchBar() {
   const [inputFields, setInputFields] = useState({
@@ -7,18 +8,11 @@ export default function SearchBar() {
     ingredients: '',
     calories: '',
     diet: '',
-    health: [], // CHECK
     time: '',
     excluded: ''
   });
 
-  const [excludedArray, setExcludedArray] = useState(['Default']);
-
   const [checkFields, setCheckFields] = useState({
-    balanced: false,
-    high_protein: false,
-    low_carb: false,
-    low_fat: false,
     vegan: false,
     vegetarian: false,
     sugar_conscious: false,
@@ -27,8 +21,19 @@ export default function SearchBar() {
     alcohol_free: false
   });
 
+  const [radioField, setRadioFields] = useState('');
+
+  const [excludedArray, setExcludedArray] = useState([]);
+
   const handleSubmit = e => {
     e.preventDefault();
+    const request = {
+      ...checkFields,
+      ...inputFields,
+      excluded: excludedArray,
+      diet: radioField
+    };
+    console.log(request);
   };
 
   const handleChange = e => {
@@ -38,16 +43,6 @@ export default function SearchBar() {
       ...inputFields,
       [name]: value
     });
-  };
-
-  const handleCheckBoxChange = e => {
-    const name = e.target.name;
-    const checked = e.target.checked;
-    setCheckFields({
-      ...checkFields,
-      [name]: checked
-    });
-    console.log(checkFields);
   };
 
   const handleReset = () => {
@@ -61,10 +56,6 @@ export default function SearchBar() {
       excluded: ''
     });
     setCheckFields({
-      balanced: false,
-      high_protein: false,
-      low_carb: false,
-      low_fat: false,
       vegan: false,
       vegetarian: false,
       sugar_conscious: false,
@@ -72,18 +63,43 @@ export default function SearchBar() {
       tree_nut_free: false,
       alcohol_free: false
     });
+    setRadioFields({
+      balanced: false,
+      high_protein: false,
+      low_carb: false,
+      low_fat: false
+    });
+    setExcludedArray([]);
+  };
+
+  const handleCheckBoxChange = e => {
+    const id = e.target.id;
+    const checked = e.target.checked;
+    setCheckFields({
+      ...checkFields,
+      [id]: checked
+    });
+  };
+
+  const handleRadioBoxChange = e => {
+    setRadioFields(e.target.id);
   };
 
   const handleExclude = () => {
-    setExcludedArray([...excludedArray, inputFields.excluded]);
+    if (
+      inputFields.excluded != '' &&
+      !excludedArray.includes(inputFields.excluded)
+    ) {
+      setExcludedArray([...excludedArray, inputFields.excluded]);
+    }
     setInputFields({ ...inputFields, excluded: '' });
   };
 
   return (
     <div className=''>
-      <Form onSubmit={handleSubmit} className='p-5'>
+      <Form onSubmit={handleSubmit} className='p-3'>
         <Form.Group>
-          <Row>
+          <Row className='mb-3'>
             <Col xs={12}>
               <div>
                 <Form.Label className='text-center'>Name</Form.Label>
@@ -96,7 +112,7 @@ export default function SearchBar() {
             </Col>
           </Row>
           {/* */}
-          <Row>
+          <Row className='my-3'>
             <Col xs={6} md={4}>
               <div>
                 <Form.Label className='text-center'>Max Ingredients</Form.Label>
@@ -137,100 +153,110 @@ export default function SearchBar() {
             </Col>
           </Row>
           {/* */}
-          <Row>
+          <Row className='my-3'>
             <Col xs={6}>
               <Form.Label>Diet Type</Form.Label>
-              <div>
+              <div className='custom-radio'>
                 <Form.Check
-                  type='checkbox'
+                  type='radio'
                   inline
                   label='Balanced'
-                  onChange={handleCheckBoxChange}
-                  name='balanced'
-                  checked={checkFields.balanced}
+                  onChange={handleRadioBoxChange}
+                  id='balanced'
+                  checked={radioField === 'balanced'}
+                  custom
                 ></Form.Check>
                 <Form.Check
-                  type='checkbox'
+                  type='radio'
                   label='High-Protein'
                   inline
-                  onChange={handleCheckBoxChange}
-                  name='high_protein'
-                  checked={checkFields.high_protein}
+                  onChange={handleRadioBoxChange}
+                  id='high_protein'
+                  checked={radioField === 'high_protein'}
+                  custom
                 ></Form.Check>
                 <Form.Check
-                  type='checkbox'
+                  type='radio'
                   label='Low-Carb'
                   inline
-                  onChange={handleCheckBoxChange}
-                  name='low_carb'
-                  checked={checkFields.low_carb}
+                  onChange={handleRadioBoxChange}
+                  id='low_carb'
+                  checked={radioField === 'low_carb'}
+                  custom
                 ></Form.Check>
                 <Form.Check
-                  type='checkbox'
+                  type='radio'
                   label='Low-Fat'
                   inline
-                  onChange={handleCheckBoxChange}
-                  name='low_fat'
-                  checked={checkFields.low_fat}
+                  onChange={handleRadioBoxChange}
+                  id='low_fat'
+                  checked={radioField === 'low_fat'}
+                  custom
                 ></Form.Check>
               </div>
             </Col>
             {/* */}
             <Col xs={6}>
               <Form.Label>Health Type</Form.Label>
-              <div>
+              <div className='custom-checkbox'>
                 <Form.Check
                   type='checkbox'
                   inline
                   label='Vegan'
                   onChange={handleCheckBoxChange}
-                  name='vegan'
+                  id='vegan'
                   checked={checkFields.vegan}
+                  custom
                 ></Form.Check>
                 <Form.Check
                   type='checkbox'
                   label='Vegetarian'
                   inline
                   onChange={handleCheckBoxChange}
-                  name='vegetarian'
+                  id='vegetarian'
                   checked={checkFields.vegetarian}
+                  custom
                 ></Form.Check>
                 <Form.Check
                   type='checkbox'
                   label='Sugar-Conscious'
                   inline
                   onChange={handleCheckBoxChange}
-                  name='sugar_conscious'
+                  id='sugar_conscious'
                   checked={checkFields.sugar_conscious}
+                  custom
                 ></Form.Check>
                 <Form.Check
                   type='checkbox'
                   label='Peanut-Free'
                   inline
                   onChange={handleCheckBoxChange}
-                  name='peanut_free'
+                  id='peanut_free'
                   checked={checkFields.peanut_free}
+                  custom
                 ></Form.Check>
                 <Form.Check
                   type='checkbox'
                   label='Tree-Nut-Free'
                   inline
                   onChange={handleCheckBoxChange}
-                  name='tree_nut_free'
+                  id='tree_nut_free'
                   checked={checkFields.tree_nut_free}
+                  custom
                 ></Form.Check>
                 <Form.Check
                   type='checkbox'
                   label='Alcohol-Free'
                   inline
                   onChange={handleCheckBoxChange}
-                  name='alcohol_free'
+                  id='alcohol_free'
                   checked={checkFields.alcohol_free}
+                  custom
                 ></Form.Check>
               </div>
             </Col>
           </Row>
-          <Row className='border border-black p-3'>
+          <Row className='border border-black p-3 mx-0 my-3'>
             <Col xs={4}>
               <Form.Label>Exclude Ingredients</Form.Label>
               <div>
@@ -239,26 +265,35 @@ export default function SearchBar() {
                   onChange={handleChange}
                   name='excluded'
                 ></Form.Control>
-                <Button onClick={handleExclude}>Exclude</Button>
+                <Button onClick={handleExclude} className='mt-3'>
+                  Exclude
+                </Button>
               </div>
             </Col>
-            <Col xs={8}>
-              <div className='w-100 h-100 bg-light'>
-                <ul>
-                  {excludedArray.map(item => (
-                    <li>{item}</li>
-                  ))}
-                </ul>
-              </div>
+            <Col xs={8} className='p-3 m-0 bg-light'>
+              {excludedArray.map(exclude => (
+                <Button
+                  key={uuid()}
+                  className='text-light m-2'
+                  variant='danger'
+                  onClick={() => {
+                    setExcludedArray(
+                      excludedArray.filter(temp => temp !== exclude)
+                    );
+                  }}
+                >
+                  {exclude}
+                </Button>
+              ))}
             </Col>
           </Row>
         </Form.Group>
 
+        <Button variant='danger' onClick={handleReset} className='mr-3'>
+          Clear Search
+        </Button>
         <Button variant='primary' type='submit'>
           Search
-        </Button>
-        <Button variant='primary' onClick={handleReset}>
-          Clear Search
         </Button>
       </Form>
     </div>
