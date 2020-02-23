@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { getRecipes } from '../actions/recipeActions';
 import uuid from 'uuid';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function SearchBar() {
+  const dispatch = useDispatch();
+
+  const results = useSelector(state => state.recipe.recipes);
+
   const [inputFields, setInputFields] = useState({
-    name: '',
+    search: '',
     ingredients: '',
     calories: '',
     diet: '',
-    time: '',
-    excluded: ''
+    time: ''
   });
 
   const [checkFields, setCheckFields] = useState({
@@ -25,15 +30,25 @@ export default function SearchBar() {
 
   const [excludedArray, setExcludedArray] = useState([]);
 
+  const [excludedField, setExcludedField] = useState('');
+
   const handleSubmit = e => {
     e.preventDefault();
+    const health = [];
+
+    for (const key in checkFields) {
+      if (checkFields[key] == true) {
+        health.push(key);
+      }
+    }
+
     const request = {
-      ...checkFields,
       ...inputFields,
       excluded: excludedArray,
-      diet: radioField
+      diet: radioField,
+      health
     };
-    console.log(request);
+    dispatch(getRecipes(request));
   };
 
   const handleChange = e => {
@@ -45,15 +60,20 @@ export default function SearchBar() {
     });
   };
 
+  const handleExcludedChange = e => {
+    if (e.target.value.length <= 20) {
+      setExcludedField(e.target.value);
+    }
+  };
+
   const handleReset = () => {
     setInputFields({
-      name: '',
+      search: '',
       ingredients: '',
       calories: '',
       diet: '',
       health: [],
-      time: '',
-      excluded: ''
+      time: ''
     });
     setCheckFields({
       vegan: false,
@@ -70,6 +90,7 @@ export default function SearchBar() {
       low_fat: false
     });
     setExcludedArray([]);
+    setExcludedField('');
   };
 
   const handleCheckBoxChange = e => {
@@ -86,13 +107,10 @@ export default function SearchBar() {
   };
 
   const handleExclude = () => {
-    if (
-      inputFields.excluded != '' &&
-      !excludedArray.includes(inputFields.excluded)
-    ) {
-      setExcludedArray([...excludedArray, inputFields.excluded]);
+    if (excludedField !== '' && !excludedArray.includes(excludedField)) {
+      setExcludedArray([...excludedArray, excludedField]);
     }
-    setInputFields({ ...inputFields, excluded: '' });
+    setExcludedField('');
   };
 
   return (
@@ -102,11 +120,11 @@ export default function SearchBar() {
           <Row className='mb-3'>
             <Col xs={12}>
               <div>
-                <Form.Label className='text-center'>Name</Form.Label>
+                <Form.Label className='text-center'>Search</Form.Label>
                 <Form.Control
-                  value={inputFields.name}
+                  value={inputFields.search}
                   onChange={handleChange}
-                  name='name'
+                  name='search'
                 ></Form.Control>
               </div>
             </Col>
@@ -261,8 +279,8 @@ export default function SearchBar() {
               <Form.Label>Exclude Ingredients</Form.Label>
               <div>
                 <Form.Control
-                  value={inputFields.excluded}
-                  onChange={handleChange}
+                  value={excludedField}
+                  onChange={handleExcludedChange}
                   name='excluded'
                 ></Form.Control>
                 <Button onClick={handleExclude} className='mt-3'>
@@ -292,7 +310,7 @@ export default function SearchBar() {
         <Button variant='danger' onClick={handleReset} className='mr-3'>
           Clear Search
         </Button>
-        <Button variant='primary' type='submit'>
+        <Button variant='success' type='submit'>
           Search
         </Button>
       </Form>

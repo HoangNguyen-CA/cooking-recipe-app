@@ -78,7 +78,6 @@ export const login = ({ email, password }) => dispatch => {
     }
   };
 
-  console.log('hello');
   //Request body
   const body = JSON.stringify({ email, password });
   axios
