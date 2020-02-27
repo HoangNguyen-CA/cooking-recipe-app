@@ -2,11 +2,12 @@ import {
   RECIPES_LOADING,
   ADD_RECIPE,
   GET_RECIPES,
-  DELETE_RECIPE
+  DELETE_RECIPE,
+  RECIPES_STOP_LOADING
 } from './types';
+import axios from 'axios';
 import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
-import axios from 'axios';
 
 export const getRecipes = ({
   search,
@@ -23,6 +24,10 @@ export const getRecipes = ({
     }
   };
 
+  dispatch({
+    type: RECIPES_LOADING
+  });
+
   axios
     .get(
       `/api/recipes/edamam`,
@@ -37,5 +42,10 @@ export const getRecipes = ({
         payload: res.data
       });
     })
-    .catch(err => {});
+    .catch(err => {
+      dispatch({
+        type: RECIPES_STOP_LOADING
+      });
+      returnErrors(err.response.data, err.response.status);
+    });
 };
