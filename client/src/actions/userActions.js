@@ -49,7 +49,7 @@ export const addFavorites = recipe => (dispatch, getState) => {
 
 export const removeFavorite = id => (dispatch, getState) => {
   axios
-    .delete(`api/recipies/${id}/`, tokenConfig(getState))
+    .delete(`api/recipes/${id}/`, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: DELETE_FAV,

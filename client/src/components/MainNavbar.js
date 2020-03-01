@@ -17,10 +17,10 @@ export default function MainNavbar() {
       <Nav className='ml-auto'>
         {isAuthenticated ? (
           <>
-            <FavoritesModal></FavoritesModal>
             <Nav.Item className='navbar-text text-success mr-3'>
               Logged in as {user.name}
             </Nav.Item>
+            <FavoritesModal></FavoritesModal>
             <LogoutModal className=''></LogoutModal>
           </>
         ) : (

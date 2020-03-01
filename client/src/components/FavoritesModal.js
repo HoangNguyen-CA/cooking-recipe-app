@@ -52,6 +52,7 @@ export default function FavoritesModal() {
                 calories={fav.calories}
                 totalTime={fav.totalTime}
                 nutrients={fav.nutrients}
+                _id={fav._id}
               ></Favorite>
             );
           })}

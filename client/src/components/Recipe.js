@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { addFavorites } from '../actions/userActions';
 import uuid from 'uuid';
+import IngredientsModal from './IngredientsModal';
 
 export default function Recipe({
   label,
@@ -34,35 +35,50 @@ export default function Recipe({
     };
     dispatch(addFavorites(recipe));
   };
+
+  const imageStyle = {
+    display: 'cover',
+    width: '100%',
+    height: 'auto'
+  };
   return (
-    <div className='bg-success m-3'>
-      <p className='lead'>{label}</p>
-      <img src={image} alt={label}></img>
-      <a href={url} target='_blank'>
-        source: {source}
-      </a>
-      <div className='bg-light'>
-        {healthLabels.map(name => {
-          return <p key={uuid()}>{name}</p>;
-        })}
-        <hr></hr>
-        {cautions.map(name => {
-          return <p key={uuid()}>{name}</p>;
-        })}
-        <hr></hr>
-        {ingredients.map(name => {
-          return <p key={uuid()}>{name}</p>;
-        })}
-        <hr></hr>
-        {dietLabels.map(name => {
-          return <p key={uuid()}>{name}</p>;
-        })}
-
-        <hr></hr>
-
-        <p>calories: {calories}</p>
-        <p>time to cook: {totalTime}</p>
-      </div>
+    <div className='bg-dark m-3 p-3 text-light'>
+      <Row>
+        <Col xs={12}>
+          <h3 className=''>{label}</h3>
+          <a href={url} target='_blank'>
+            source: {source}
+          </a>
+        </Col>
+        <Col xs={3}>
+          <img src={image} alt={label} style={imageStyle}></img>
+        </Col>
+        <Col xs={9}>
+          <Row>
+            <Col xs={4}>
+              <p>calories: {calories}</p>
+              <p>time to cook: {totalTime}</p>
+              <IngredientsModal ingredients={ingredients}></IngredientsModal>
+            </Col>
+            <Col xs={4}>
+              <p className='lead'>Health Types</p>
+              {healthLabels.map(name => {
+                return <p key={uuid()}>{name}</p>;
+              })}
+            </Col>
+            <Col xs={4}>
+              <p className='lead'>Cautions</p>
+              {cautions.map(name => {
+                return <p key={uuid()}>{name}</p>;
+              })}
+              <p className='lead'>Diet Type</p>
+              {dietLabels.map(name => {
+                return <p key={uuid()}>{name}</p>;
+              })}
+            </Col>
+          </Row>
+        </Col>
+      </Row>
       <Button onClick={handleSubmit}>Add Recipe</Button>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { addFavorites } from '../actions/userActions';
+import { removeFavorite } from '../actions/userActions';
 import uuid from 'uuid';
 
 export default function Favorite({
@@ -15,24 +15,12 @@ export default function Favorite({
   ingredients,
   calories,
   totalTime,
-  nutrients
+  nutrients,
+  _id
 }) {
   const dispatch = useDispatch();
   const handleSubmit = () => {
-    const recipe = {
-      label,
-      image,
-      source,
-      url,
-      ingredients,
-      dietLabels,
-      healthLabels,
-      cautions,
-      calories,
-      totalTime,
-      nutrients
-    };
-    dispatch(addFavorites(recipe));
+    dispatch(removeFavorite(_id));
   };
   return (
     <div className='bg-success m-3'>
@@ -59,11 +47,10 @@ export default function Favorite({
         })}
 
         <hr></hr>
-
         <p>calories: {calories}</p>
         <p>time to cook: {totalTime}</p>
       </div>
-      <Button onClick={handleSubmit}>Add Recipe</Button>
+      <Button onClick={handleSubmit}>Remove</Button>
     </div>
   );
 }
