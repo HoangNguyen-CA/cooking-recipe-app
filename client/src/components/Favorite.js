@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addFavorites } from '../actions/userActions';
 import uuid from 'uuid';
 
-export default function Recipe({
+export default function Favorite({
   label,
   image,
   source,

@@ -6718,21 +6718,12 @@ router.get('/edamam', (req, res) => {
 // @access Public
 router.post('/', auth, (req, res) => {
   const id = req.user.id;
-  const name = req.body.name;
+  const recipe = req.body;
 
-  User.findById(id)
-    .then(user => {
-      user.recipes.push({ name: name });
-      user
-        .save()
-        .then(res.status(200).json({ success: 'true' }))
-        .catch(err => {
-          res.status(404).json({ success: 'false' });
-        });
-    })
-    .catch(err => {
-      res.status(404).json({ success: 'false' });
-    });
+  User.findById(id).then(user => {
+    user.recipes.push(recipe);
+    user.save().then(res.status(200).json(recipe));
+  });
 });
 
 // @route get api/recipes
@@ -6758,10 +6749,7 @@ router.delete('/:id', auth, (req, res) => {
   User.findById(id)
     .then(user => {
       user.recipes.pull(itemID);
-      user
-        .save()
-        .then(res.status(200).json({ success: 'true' }))
-        .catch(err => res.status(404).json({ success: 'false' }));
+      user.save().then(res.status(200).json({ success: 'true' }));
     })
     .catch(err => {
       res.status(404).json({ success: 'false' });

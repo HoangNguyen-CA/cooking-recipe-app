@@ -3,10 +3,13 @@ const Schema = mongoose.Schema;
 
 //create schema
 const RecipeSchema = new Schema({
-  name: { type: String, required: true },
+  label: { type: String, required: true },
   image: String,
+  calories: Number,
+  url: String,
+  source: String,
+  totalTime: Number,
   ingredients: [],
-  calories: String,
   dietLabels: [],
   healthLabels: [],
   cautions: [],

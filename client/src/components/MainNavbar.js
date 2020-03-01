@@ -3,6 +3,7 @@ import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
 import LoginModal from './auth/LoginModal';
 import RegisterModal from './auth/RegisterModal';
 import LogoutModal from './auth/LogoutModal';
+import FavoritesModal from './FavoritesModal';
 
 import { useSelector } from 'react-redux';
 
@@ -16,6 +17,7 @@ export default function MainNavbar() {
       <Nav className='ml-auto'>
         {isAuthenticated ? (
           <>
+            <FavoritesModal></FavoritesModal>
             <Nav.Item className='navbar-text text-success mr-3'>
               Logged in as {user.name}
             </Nav.Item>
