@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addFavorites } from '../actions/userActions';
 import uuid from 'uuid';
 import IngredientsModal from './IngredientsModal';
+import NutrientsModal from './NutrientsModal';
 
 export default function Recipe({
   label,
@@ -44,7 +45,7 @@ export default function Recipe({
   return (
     <div className='bg-dark m-3 p-3 text-light'>
       <Row>
-        <Col xs={12}>
+        <Col xs={12} className='mb-3'>
           <h3 className=''>{label}</h3>
           <a href={url} target='_blank'>
             source: {source}
@@ -56,9 +57,12 @@ export default function Recipe({
         <Col xs={9}>
           <Row>
             <Col xs={4}>
-              <p>calories: {calories}</p>
-              <p>time to cook: {totalTime}</p>
+              <p className='lead'>Calories: {Math.round(calories)}</p>
+              <p className='lead'>Time to cook: {totalTime}</p>
               <IngredientsModal ingredients={ingredients}></IngredientsModal>
+              <br></br>
+              <br></br>
+              <NutrientsModal nutrients={nutrients}></NutrientsModal>
             </Col>
             <Col xs={4}>
               <p className='lead'>Health Types</p>
@@ -79,7 +83,9 @@ export default function Recipe({
           </Row>
         </Col>
       </Row>
-      <Button onClick={handleSubmit}>Add Recipe</Button>
+      <Button onClick={handleSubmit} className='mt-3'>
+        Add Recipe
+      </Button>
     </div>
   );
 }

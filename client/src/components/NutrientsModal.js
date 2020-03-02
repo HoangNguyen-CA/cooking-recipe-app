@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, Col, Row } from 'react-bootstrap';
 import uuid from 'uuid';
 
-export default function IngredientsModal({ ingredients }) {
+export default function NutrientsModal({ nutrients }) {
   const [modal, setModal] = useState(false);
 
   const handleOpen = () => {
@@ -14,16 +14,26 @@ export default function IngredientsModal({ ingredients }) {
 
   return (
     <>
-      <Button onClick={handleOpen}>Ingredients</Button>
+      <Button onClick={handleOpen}>Nutrients</Button>
 
       <Modal show={modal} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Ingredients</Modal.Title>
+          <Modal.Title>Nutrients</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          {ingredients.map(name => {
-            return <p key={uuid()}>{name}</p>;
+          {nutrients.map(nut => {
+            return (
+              <span key={uuid()}>
+                <p className='lead'>{nut.label}</p>
+                <p>
+                  Total: {Math.round(nut.total)}
+                  {nut.unit}
+                </p>
+                <p>Daily: {Math.round(nut.daily)}%</p>
+                <hr></hr>
+              </span>
+            );
           })}
         </Modal.Body>
         <Modal.Footer>

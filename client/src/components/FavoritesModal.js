@@ -32,7 +32,7 @@ export default function FavoritesModal() {
     <>
       <Nav.Link onClick={handleOpen}>Favorites</Nav.Link>
 
-      <Modal show={modal} onHide={handleClose} animation={false}>
+      <Modal show={modal} onHide={handleClose} animation={false} size='xl'>
         <Modal.Header closeButton>
           <Modal.Title>Favorites</Modal.Title>
         </Modal.Header>
