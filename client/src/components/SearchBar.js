@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function SearchBar() {
   const dispatch = useDispatch();
 
+  const isLoading = useSelector(state => state.recipe.loading);
+
   const [inputFields, setInputFields] = useState({
     search: '',
     ingredients: '',
@@ -303,9 +305,16 @@ export default function SearchBar() {
         <Button variant='danger' onClick={handleReset} className='mr-3'>
           Clear Search
         </Button>
-        <Button variant='success' type='submit'>
+        <Button variant='success' type='submit' className='mr-3'>
           Search
         </Button>
+        {isLoading ? (
+          <p className='lead' style={{ display: 'inline' }}>
+            Loading...
+          </p>
+        ) : (
+          ''
+        )}
       </Form>
     </div>
   );

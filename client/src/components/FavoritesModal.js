@@ -59,7 +59,7 @@ export default function FavoritesModal() {
               );
             })
           ) : (
-            <p className='display-4'>Loading...</p>
+            <p className='lead'>Loading...</p>
           )}
         </Modal.Body>
       </Modal>
