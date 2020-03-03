@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Nav,
   Modal,
@@ -19,6 +19,7 @@ export default function FavoritesModal() {
   const dispatch = useDispatch();
 
   const favorites = useSelector(state => state.user.favorites);
+  const isLoading = useSelector(state => state.user.loading);
 
   const handleOpen = () => {
     dispatch(getFavorites());
@@ -37,25 +38,29 @@ export default function FavoritesModal() {
           <Modal.Title>Favorites</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {favorites.map(fav => {
-            return (
-              <Favorite
-                key={uuid()}
-                image={fav.image}
-                label={fav.label}
-                url={fav.url}
-                source={fav.source}
-                dietLabels={fav.dietLabels}
-                healthLabels={fav.healthLabels}
-                cautions={fav.cautions}
-                ingredients={fav.ingredients}
-                calories={fav.calories}
-                totalTime={fav.totalTime}
-                nutrients={fav.nutrients}
-                _id={fav._id}
-              ></Favorite>
-            );
-          })}
+          {!isLoading ? (
+            favorites.map(fav => {
+              return (
+                <Favorite
+                  key={uuid()}
+                  image={fav.image}
+                  label={fav.label}
+                  url={fav.url}
+                  source={fav.source}
+                  dietLabels={fav.dietLabels}
+                  healthLabels={fav.healthLabels}
+                  cautions={fav.cautions}
+                  ingredients={fav.ingredients}
+                  calories={fav.calories}
+                  totalTime={fav.totalTime}
+                  nutrients={fav.nutrients}
+                  _id={fav._id}
+                ></Favorite>
+              );
+            })
+          ) : (
+            <p className='display-4'>Loading...</p>
+          )}
         </Modal.Body>
       </Modal>
     </>

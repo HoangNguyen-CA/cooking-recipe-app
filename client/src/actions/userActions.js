@@ -28,7 +28,7 @@ export const getFavorites = () => (dispatch, getState) => {
     });
 };
 
-export const addFavorites = recipe => (dispatch, getState) => {
+export const addFavorite = recipe => (dispatch, getState) => {
   const body = {
     ...recipe
   };

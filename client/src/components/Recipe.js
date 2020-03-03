@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
-import { addFavorites } from '../actions/userActions';
+import { useDispatch } from 'react-redux';
+import { addFavorite } from '../actions/userActions';
 import uuid from 'uuid';
 import IngredientsModal from './IngredientsModal';
 import NutrientsModal from './NutrientsModal';
@@ -34,7 +34,7 @@ export default function Recipe({
       totalTime,
       nutrients
     };
-    dispatch(addFavorites(recipe));
+    dispatch(addFavorite(recipe));
   };
 
   const imageStyle = {
@@ -47,8 +47,8 @@ export default function Recipe({
       <Row>
         <Col xs={12} className='mb-3'>
           <h3 className=''>{label}</h3>
-          <a href={url} target='_blank'>
-            source: {source}
+          <a href={url} rel='noreferrer noopener' target='_blank'>
+            Source: {source}
           </a>
         </Col>
         <Col xs={3}>
@@ -71,10 +71,16 @@ export default function Recipe({
               })}
             </Col>
             <Col xs={4}>
-              <p className='lead'>Cautions</p>
-              {cautions.map(name => {
-                return <p key={uuid()}>{name}</p>;
-              })}
+              {cautions.length !== 0 ? (
+                <>
+                  <p className='lead'>Cautions</p>
+                  {cautions.map(name => {
+                    return <p key={uuid()}>{name}</p>;
+                  })}
+                </>
+              ) : (
+                ''
+              )}
               <p className='lead'>Diet Type</p>
               {dietLabels.map(name => {
                 return <p key={uuid()}>{name}</p>;
@@ -83,7 +89,7 @@ export default function Recipe({
           </Row>
         </Col>
       </Row>
-      <Button onClick={handleSubmit} className='mt-3'>
+      <Button onClick={handleSubmit} className='mt-3' variant='success'>
         Add Recipe
       </Button>
     </div>

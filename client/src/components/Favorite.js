@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { removeFavorite } from '../actions/userActions';
 import uuid from 'uuid';
 import IngredientsModal from './IngredientsModal';
@@ -36,7 +36,7 @@ export default function Favorite({
         <Col xs={12} className='mb-3'>
           <h3 className=''>{label}</h3>
           <a href={url} target='_blank'>
-            source: {source}
+            Source: {source}
           </a>
         </Col>
         <Col xs={3}>

@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 import { getRecipes } from '../actions/recipeActions';
 import uuid from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function SearchBar() {
   const dispatch = useDispatch();
-
-  const results = useSelector(state => state.recipe.recipes);
 
   const [inputFields, setInputFields] = useState({
     search: '',
@@ -20,13 +18,13 @@ export default function SearchBar() {
   const [checkFields, setCheckFields] = useState({
     vegan: false,
     vegetarian: false,
-    sugar_conscious: false,
-    peanut_free: false,
-    tree_nut_free: false,
-    alcohol_free: false
+    'sugar-conscious': false,
+    'peanut-free': false,
+    'tree-nut-free': false,
+    'alcohol-free': false
   });
 
-  const [radioField, setRadioFields] = useState('');
+  const [radioField, setRadioField] = useState('');
 
   const [excludedArray, setExcludedArray] = useState([]);
 
@@ -37,7 +35,7 @@ export default function SearchBar() {
     const health = [];
 
     for (const key in checkFields) {
-      if (checkFields[key] == true) {
+      if (checkFields[key] === true) {
         health.push(key);
       }
     }
@@ -78,17 +76,12 @@ export default function SearchBar() {
     setCheckFields({
       vegan: false,
       vegetarian: false,
-      sugar_conscious: false,
-      peanut_free: false,
-      tree_nut_free: false,
-      alcohol_free: false
+      'sugar-conscious': false,
+      'peanut-free': false,
+      'tree-nut-free': false,
+      'alcohol-free': false
     });
-    setRadioFields({
-      balanced: false,
-      high_protein: false,
-      low_carb: false,
-      low_fat: false
-    });
+    setRadioField('');
     setExcludedArray([]);
     setExcludedField('');
   };
@@ -103,7 +96,7 @@ export default function SearchBar() {
   };
 
   const handleRadioBoxChange = e => {
-    setRadioFields(e.target.id);
+    setRadioField(e.target.id);
   };
 
   const handleExclude = () => {
@@ -189,8 +182,8 @@ export default function SearchBar() {
                   label='High-Protein'
                   inline
                   onChange={handleRadioBoxChange}
-                  id='high_protein'
-                  checked={radioField === 'high_protein'}
+                  id='high-protein'
+                  checked={radioField === 'high-protein'}
                   custom
                 ></Form.Check>
                 <Form.Check
@@ -198,8 +191,8 @@ export default function SearchBar() {
                   label='Low-Carb'
                   inline
                   onChange={handleRadioBoxChange}
-                  id='low_carb'
-                  checked={radioField === 'low_carb'}
+                  id='low-carb'
+                  checked={radioField === 'low-carb'}
                   custom
                 ></Form.Check>
                 <Form.Check
@@ -207,8 +200,8 @@ export default function SearchBar() {
                   label='Low-Fat'
                   inline
                   onChange={handleRadioBoxChange}
-                  id='low_fat'
-                  checked={radioField === 'low_fat'}
+                  id='low-fat'
+                  checked={radioField === 'low-fat'}
                   custom
                 ></Form.Check>
               </div>
@@ -240,8 +233,8 @@ export default function SearchBar() {
                   label='Sugar-Conscious'
                   inline
                   onChange={handleCheckBoxChange}
-                  id='sugar_conscious'
-                  checked={checkFields.sugar_conscious}
+                  id='sugar-conscious'
+                  checked={checkFields['sugar-conscious']}
                   custom
                 ></Form.Check>
                 <Form.Check
@@ -249,8 +242,8 @@ export default function SearchBar() {
                   label='Peanut-Free'
                   inline
                   onChange={handleCheckBoxChange}
-                  id='peanut_free'
-                  checked={checkFields.peanut_free}
+                  id='peanut-free'
+                  checked={checkFields['peanut-free']}
                   custom
                 ></Form.Check>
                 <Form.Check
@@ -258,8 +251,8 @@ export default function SearchBar() {
                   label='Tree-Nut-Free'
                   inline
                   onChange={handleCheckBoxChange}
-                  id='tree_nut_free'
-                  checked={checkFields.tree_nut_free}
+                  id='tree-nut-free'
+                  checked={checkFields['tree-nut-free']}
                   custom
                 ></Form.Check>
                 <Form.Check
@@ -267,8 +260,8 @@ export default function SearchBar() {
                   label='Alcohol-Free'
                   inline
                   onChange={handleCheckBoxChange}
-                  id='alcohol_free'
-                  checked={checkFields.alcohol_free}
+                  id='alcohol-free'
+                  checked={checkFields['alcohol-free']}
                   custom
                 ></Form.Check>
               </div>

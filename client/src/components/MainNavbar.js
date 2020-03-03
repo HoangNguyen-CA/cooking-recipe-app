@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import React from 'react';
+import { Navbar, Nav } from 'react-bootstrap';
 import LoginModal from './auth/LoginModal';
 import RegisterModal from './auth/RegisterModal';
 import LogoutModal from './auth/LogoutModal';
