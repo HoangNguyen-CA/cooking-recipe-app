@@ -15,6 +15,11 @@ const Label = styled.label`
 `;
 const Checkbox = styled.input``;
 
+const Badge = styled.div`
+  position: inline;
+  margin-top: 1rem;
+`;
+
 export default function SearchBar() {
   const dispatch = useDispatch();
 
@@ -47,7 +52,6 @@ export default function SearchBar() {
   const [radioField, setRadioField] = useState('');
 
   const [excludedArray, setExcludedArray] = useState([]);
-
   const [excludedField, setExcludedField] = useState('');
 
   const handleSubmit = e => {
@@ -151,7 +155,6 @@ export default function SearchBar() {
             <Col xs={12}>
               <div>
                 <Label>Search</Label>
-
                 <Form.Control
                   value={inputFields.search}
                   onChange={handleChange}
@@ -367,8 +370,7 @@ export default function SearchBar() {
         >
           Search
         </Button>
-
-        {isLoading ? '' : ''}
+        <Badge id='edamam-badge' data-color='transparent'></Badge>
       </Form>
     </div>
   );

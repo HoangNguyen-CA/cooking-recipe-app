@@ -4,6 +4,7 @@ import SearchBar from './components/SearchBar';
 import RecipesDisplay from './components/RecipesDisplay';
 import { useDispatch } from 'react-redux';
 import { loadUser } from './actions/authActions';
+import styled from 'styled-components';
 
 function App() {
   const dispatch = useDispatch();

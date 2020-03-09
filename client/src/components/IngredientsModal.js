@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, Col, Row } from 'react-bootstrap';
 import uuid from 'uuid';
 
-export default function IngredientsModal({ ingredients }) {
+export default function IngredientsModal({ ingredients, custom }) {
   const [modal, setModal] = useState(false);
 
   const handleOpen = () => {
@@ -14,11 +14,15 @@ export default function IngredientsModal({ ingredients }) {
 
   return (
     <>
-      <Button onClick={handleOpen}>Ingredients</Button>
+      <Button onClick={handleOpen} style={custom}>
+        Ingredients
+      </Button>
 
       <Modal show={modal} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Ingredients</Modal.Title>
+          <Modal.Title style={{ fontFamily: 'poppins' }}>
+            Ingredients
+          </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>

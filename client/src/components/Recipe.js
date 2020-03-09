@@ -9,10 +9,12 @@ import styled from 'styled-components';
 
 const Para = styled.p`
   font-size: 1.1rem;
+  margin: 0 0 0.2rem 0;
 `;
 
 const Lead = styled.p`
   font-size: 1.3rem;
+  margin: 0 0 0.5rem 0;
 `;
 const Header = styled.h1`
   font-size: 2rem;
@@ -21,9 +23,19 @@ const Header = styled.h1`
 
 const Image = styled.img`
   display: cover;
-  width: 100%;
+  width: 80%;
   height: auto;
 `;
+
+const Link = styled.a`
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+`;
+
+const buttonStyle = {
+  margin: '0.3rem 0 0.5rem 0',
+  display: 'block'
+};
 
 export default function Recipe({
   label,
@@ -57,13 +69,10 @@ export default function Recipe({
   };
 
   return (
-    <div className='bg-dark m-3 p-3 text-light'>
+    <div className='bg-dark my-3 p-3 text-light'>
       <Row>
-        <Col xs={12} className='mb-3'>
+        <Col xs={12} className='mb-2'>
           <Header className=''>{label}</Header>
-          <a href={url} rel='noreferrer noopener' target='_blank'>
-            Source: {source}
-          </a>
         </Col>
         <Col xs={3}>
           <Image src={image} alt={label}></Image>
@@ -71,12 +80,20 @@ export default function Recipe({
         <Col xs={9}>
           <Row>
             <Col xs={4}>
-              <Lead>Calories: {Math.round(calories)}</Lead>
-              <Lead>Time to cook: {totalTime}</Lead>
-              <IngredientsModal ingredients={ingredients}></IngredientsModal>
-              <br></br>
-              <br></br>
-              <NutrientsModal nutrients={nutrients}></NutrientsModal>
+              <Link href={url} rel='noreferrer noopener' target='_blank'>
+                Source: {source}
+              </Link>
+              <Para>Calories: {Math.round(calories)}</Para>
+              <Para style={{ marginBottom: 0 }}>Time to cook: {totalTime}</Para>
+              <IngredientsModal
+                custom={buttonStyle}
+                ingredients={ingredients}
+              ></IngredientsModal>
+
+              <NutrientsModal
+                nutrients={nutrients}
+                custom={buttonStyle}
+              ></NutrientsModal>
             </Col>
             <Col xs={4}>
               <Lead>Health Types</Lead>
@@ -85,17 +102,12 @@ export default function Recipe({
               })}
             </Col>
             <Col xs={4}>
-              {cautions.length !== 0 ? (
-                <>
-                  <Lead>Cautions</Lead>
-                  {cautions.map(name => {
-                    return <Para key={uuid()}>{name}</Para>;
-                  })}
-                </>
-              ) : (
-                ''
-              )}
+              {cautions.length == 0 ? <Para>None</Para> : ''}
+              {cautions.map(name => {
+                return <Para key={uuid()}>{name}</Para>;
+              })}
               <Lead>Diet Type</Lead>
+              {dietLabels.length === 0 ? <Para>None</Para> : ''}
               {dietLabels.map(name => {
                 return <Para key={uuid()}>{name}</Para>;
               })}

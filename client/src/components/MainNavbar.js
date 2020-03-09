@@ -4,8 +4,14 @@ import LoginModal from './auth/LoginModal';
 import RegisterModal from './auth/RegisterModal';
 import LogoutModal from './auth/LogoutModal';
 import FavoritesModal from './FavoritesModal';
-
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+
+const Title = styled.p`
+  font-size: 1.6rem;
+  display: inline;
+  font-family: poppins;
+`;
 
 export default function MainNavbar() {
   const user = useSelector(state => state.auth.user);
@@ -13,7 +19,9 @@ export default function MainNavbar() {
 
   return (
     <Navbar bg='light' variant='light'>
-      <Navbar.Brand>Recipe Search</Navbar.Brand>
+      <Navbar.Brand>
+        <Title>Recipe Search</Title>
+      </Navbar.Brand>
       <Nav className='ml-auto'>
         {isAuthenticated ? (
           <>
