@@ -13,6 +13,7 @@ import { clearErrors } from '../actions/errorActions';
 import { getFavorites } from '../actions/userActions';
 import uuid from 'uuid';
 import Favorite from './Favorite';
+import LoadingIcon from '../images/LoadingIcon';
 
 export default function FavoritesModal() {
   const [modal, setModal] = useState(false);
@@ -59,7 +60,7 @@ export default function FavoritesModal() {
               );
             })
           ) : (
-            <p className='lead'>Loading...</p>
+            <LoadingIcon></LoadingIcon>
           )}
         </Modal.Body>
       </Modal>

@@ -4,6 +4,7 @@ import { getRecipes } from '../actions/recipeActions';
 import uuid from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+//import LoadingIcon from './';
 
 const LabelStyle = {
   fontSize: '1.6rem'
@@ -354,6 +355,7 @@ export default function SearchBar() {
             Advanced Search
           </Button>
         )}
+
         <Button variant='danger' onClick={handleReset} className='ml-3'>
           Clear Search
         </Button>
