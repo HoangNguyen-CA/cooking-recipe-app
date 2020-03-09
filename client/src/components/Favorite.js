@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { removeFavorite } from '../actions/userActions';
+import { deleteFavorite } from '../actions/userActions';
 import uuid from 'uuid';
 import IngredientsModal from './IngredientsModal';
 import NutrientsModal from './NutrientsModal';
@@ -22,7 +22,7 @@ export default function Favorite({
 }) {
   const dispatch = useDispatch();
   const handleSubmit = () => {
-    dispatch(removeFavorite(_id));
+    dispatch(deleteFavorite(_id));
   };
 
   const imageStyle = {
@@ -30,6 +30,7 @@ export default function Favorite({
     width: '100%',
     height: 'auto'
   };
+
   return (
     <div className='bg-dark m-3 p-3 text-light'>
       <Row>

@@ -2,12 +2,14 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Recipe from './Recipe';
 import uuid from 'uuid';
+import { Container } from '../styledComponents';
+import styled from 'styled-components';
 
 export default function RecipesDisplay() {
   const recipes = useSelector(state => state.recipe.recipes);
   const isLoading = useSelector(state => state.recipe.loading);
   return (
-    <div className='bg-light'>
+    <Container>
       {!isLoading
         ? recipes.map(recipe => {
             return (
@@ -28,6 +30,6 @@ export default function RecipesDisplay() {
             );
           })
         : ''}
-    </div>
+    </Container>
   );
 }

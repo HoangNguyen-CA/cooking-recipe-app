@@ -1,6 +1,7 @@
 import { RECIPES_LOADING, GET_RECIPES, RECIPES_STOP_LOADING } from './types';
 import axios from 'axios';
 import { returnErrors } from './errorActions';
+import { clearErrors } from './errorActions';
 
 export const getRecipes = ({
   search,
@@ -30,15 +31,18 @@ export const getRecipes = ({
       config
     )
     .then(res => {
+      dispatch(clearErrors());
       dispatch({
         type: GET_RECIPES,
         payload: res.data
       });
     })
     .catch(err => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, 'GET_RECIPES_FAIL')
+      );
       dispatch({
         type: RECIPES_STOP_LOADING
       });
-      returnErrors(err.response.data, err.response.status);
     });
 };

@@ -49,7 +49,6 @@ router.get('/edamam', (req, res) => {
       )
     : '';
 
-  console.log(url);
   axios
     .get(url)
     .then(response => {
@@ -57,7 +56,7 @@ router.get('/edamam', (req, res) => {
       const hits = data.hits; // array of objects
       res.status(200).json(hits);
     })
-    .catch(err => res.status(404).send(err));
+    .catch(err => res.status(404).json({ msg: 'Error getting recipes' }));
 });
 
 // @route Post api/recipes
@@ -69,7 +68,12 @@ router.post('/', auth, (req, res) => {
 
   User.findById(id).then(user => {
     user.recipes.push(recipe);
-    user.save().then(res.status(200).json(recipe));
+    user
+      .save()
+      .then(res.status(200).json(recipe))
+      .catch(err => {
+        res.status(404).json({ msg: 'Error saving recipe' });
+      });
   });
 });
 

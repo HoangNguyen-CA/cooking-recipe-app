@@ -22,6 +22,9 @@ export const getFavorites = () => (dispatch, getState) => {
       });
     })
     .catch(err => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, 'GET_FAV_FAIL')
+      );
       dispatch({
         type: FAV_STOP_LOADING
       });
@@ -43,11 +46,13 @@ export const addFavorite = recipe => (dispatch, getState) => {
       });
     })
     .catch(err => {
-      console.log(err);
+      dispatch(
+        returnErrors(err.response.data, err.response.status, 'ADD_FAV_FAIL')
+      );
     });
 };
 
-export const removeFavorite = id => (dispatch, getState) => {
+export const deleteFavorite = id => (dispatch, getState) => {
   axios
     .delete(`api/recipes/${id}/`, tokenConfig(getState))
     .then(res => {
@@ -57,6 +62,8 @@ export const removeFavorite = id => (dispatch, getState) => {
       });
     })
     .catch(err => {
-      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch(
+        returnErrors(err.response.data, err.response.status, 'DELETE_FAV_FAIL')
+      );
     });
 };

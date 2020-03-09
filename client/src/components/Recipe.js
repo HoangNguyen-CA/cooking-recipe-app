@@ -5,6 +5,25 @@ import { addFavorite } from '../actions/userActions';
 import uuid from 'uuid';
 import IngredientsModal from './IngredientsModal';
 import NutrientsModal from './NutrientsModal';
+import styled from 'styled-components';
+
+const Para = styled.p`
+  font-size: 1.1rem;
+`;
+
+const Lead = styled.p`
+  font-size: 1.3rem;
+`;
+const Header = styled.h1`
+  font-size: 2rem;
+  font-family: Poppins;
+`;
+
+const Image = styled.img`
+  display: cover;
+  width: 100%;
+  height: auto;
+`;
 
 export default function Recipe({
   label,
@@ -37,53 +56,48 @@ export default function Recipe({
     dispatch(addFavorite(recipe));
   };
 
-  const imageStyle = {
-    display: 'cover',
-    width: '100%',
-    height: 'auto'
-  };
   return (
     <div className='bg-dark m-3 p-3 text-light'>
       <Row>
         <Col xs={12} className='mb-3'>
-          <h3 className=''>{label}</h3>
+          <Header className=''>{label}</Header>
           <a href={url} rel='noreferrer noopener' target='_blank'>
             Source: {source}
           </a>
         </Col>
         <Col xs={3}>
-          <img src={image} alt={label} style={imageStyle}></img>
+          <Image src={image} alt={label}></Image>
         </Col>
         <Col xs={9}>
           <Row>
             <Col xs={4}>
-              <p className='lead'>Calories: {Math.round(calories)}</p>
-              <p className='lead'>Time to cook: {totalTime}</p>
+              <Lead>Calories: {Math.round(calories)}</Lead>
+              <Lead>Time to cook: {totalTime}</Lead>
               <IngredientsModal ingredients={ingredients}></IngredientsModal>
               <br></br>
               <br></br>
               <NutrientsModal nutrients={nutrients}></NutrientsModal>
             </Col>
             <Col xs={4}>
-              <p className='lead'>Health Types</p>
+              <Lead>Health Types</Lead>
               {healthLabels.map(name => {
-                return <p key={uuid()}>{name}</p>;
+                return <Para key={uuid()}>{name}</Para>;
               })}
             </Col>
             <Col xs={4}>
               {cautions.length !== 0 ? (
                 <>
-                  <p className='lead'>Cautions</p>
+                  <Lead>Cautions</Lead>
                   {cautions.map(name => {
-                    return <p key={uuid()}>{name}</p>;
+                    return <Para key={uuid()}>{name}</Para>;
                   })}
                 </>
               ) : (
                 ''
               )}
-              <p className='lead'>Diet Type</p>
+              <Lead>Diet Type</Lead>
               {dietLabels.map(name => {
-                return <p key={uuid()}>{name}</p>;
+                return <Para key={uuid()}>{name}</Para>;
               })}
             </Col>
           </Row>

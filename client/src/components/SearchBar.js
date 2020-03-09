@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Form, Button, Row, Col, Alert } from 'react-bootstrap';
 import { getRecipes } from '../actions/recipeActions';
 import uuid from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+
+const LabelStyle = {
+  fontSize: '1.6rem'
+};
+
+const Label = styled.label`
+  font-size: 1.2rem;
+`;
+const Checkbox = styled.input``;
 
 export default function SearchBar() {
   const dispatch = useDispatch();
 
   const isLoading = useSelector(state => state.recipe.loading);
+
+  const [message, setMessage] = useState('');
+  const [visible, setVisible] = useState(false);
+
+  const AdvancedSearch = styled.div`
+    display: ${visible ? 'block' : 'none'};
+  `;
 
   const [inputFields, setInputFields] = useState({
     search: '',
@@ -49,6 +66,7 @@ export default function SearchBar() {
       health
     };
     dispatch(getRecipes(request));
+    setVisible(false);
   };
 
   const handleChange = e => {
@@ -108,14 +126,31 @@ export default function SearchBar() {
     setExcludedField('');
   };
 
+  const error = useSelector(state => state.error);
+
+  useEffect(() => {
+    if (error.id === 'GET_RECIPES_FAIL') {
+      setMessage(error.msg.msg);
+    } else {
+      setMessage('');
+    }
+  }, [error]);
+
   return (
     <div className=''>
-      <Form onSubmit={handleSubmit} className='p-3'>
+      <Form
+        onSubmit={handleSubmit}
+        className='m-3'
+        style={{ position: 'relative' }}
+      >
+        {message ? <Alert variant='danger'>{message}</Alert> : ''}
+
         <Form.Group>
           <Row className='mb-3'>
             <Col xs={12}>
               <div>
-                <Form.Label className='text-center'>Search</Form.Label>
+                <Label>Search</Label>
+
                 <Form.Control
                   value={inputFields.search}
                   onChange={handleChange}
@@ -124,197 +159,214 @@ export default function SearchBar() {
               </div>
             </Col>
           </Row>
-          {/* */}
-          <Row className='my-3'>
-            <Col xs={6} md={4}>
-              <div>
-                <Form.Label className='text-center'>Max Ingredients</Form.Label>
-                <Form.Control
-                  type='number'
-                  value={inputFields.ingredients}
-                  onChange={handleChange}
-                  name='ingredients'
-                  min='1'
-                ></Form.Control>
-              </div>
-            </Col>
-            <Col xs={6} md={4}>
-              <div>
-                <Form.Label className='text-center'>Max Calories</Form.Label>
-                <Form.Control
-                  type='number'
-                  value={inputFields.calories}
-                  onChange={handleChange}
-                  name='calories'
-                  min='1'
-                ></Form.Control>
-              </div>
-            </Col>
-            <Col xs={6} md={4}>
-              <div>
-                <Form.Label className='text-center'>
-                  Max Time to Cook (Mins)
-                </Form.Label>
-                <Form.Control
-                  type='number'
-                  value={inputFields.time}
-                  onChange={handleChange}
-                  name='time'
-                  min='1'
-                ></Form.Control>
-              </div>
-            </Col>
-          </Row>
-          {/* */}
-          <Row className='my-3'>
-            <Col xs={6}>
-              <Form.Label>Diet Type</Form.Label>
-              <div className='custom-radio'>
-                <Form.Check
-                  type='radio'
-                  inline
-                  label='Balanced'
-                  onChange={handleRadioBoxChange}
-                  id='balanced'
-                  checked={radioField === 'balanced'}
-                  custom
-                ></Form.Check>
-                <Form.Check
-                  type='radio'
-                  label='High-Protein'
-                  inline
-                  onChange={handleRadioBoxChange}
-                  id='high-protein'
-                  checked={radioField === 'high-protein'}
-                  custom
-                ></Form.Check>
-                <Form.Check
-                  type='radio'
-                  label='Low-Carb'
-                  inline
-                  onChange={handleRadioBoxChange}
-                  id='low-carb'
-                  checked={radioField === 'low-carb'}
-                  custom
-                ></Form.Check>
-                <Form.Check
-                  type='radio'
-                  label='Low-Fat'
-                  inline
-                  onChange={handleRadioBoxChange}
-                  id='low-fat'
-                  checked={radioField === 'low-fat'}
-                  custom
-                ></Form.Check>
-              </div>
-            </Col>
+          <AdvancedSearch>
             {/* */}
-            <Col xs={6}>
-              <Form.Label>Health Type</Form.Label>
-              <div className='custom-checkbox'>
-                <Form.Check
-                  type='checkbox'
-                  inline
-                  label='Vegan'
-                  onChange={handleCheckBoxChange}
-                  id='vegan'
-                  checked={checkFields.vegan}
-                  custom
-                ></Form.Check>
-                <Form.Check
-                  type='checkbox'
-                  label='Vegetarian'
-                  inline
-                  onChange={handleCheckBoxChange}
-                  id='vegetarian'
-                  checked={checkFields.vegetarian}
-                  custom
-                ></Form.Check>
-                <Form.Check
-                  type='checkbox'
-                  label='Sugar-Conscious'
-                  inline
-                  onChange={handleCheckBoxChange}
-                  id='sugar-conscious'
-                  checked={checkFields['sugar-conscious']}
-                  custom
-                ></Form.Check>
-                <Form.Check
-                  type='checkbox'
-                  label='Peanut-Free'
-                  inline
-                  onChange={handleCheckBoxChange}
-                  id='peanut-free'
-                  checked={checkFields['peanut-free']}
-                  custom
-                ></Form.Check>
-                <Form.Check
-                  type='checkbox'
-                  label='Tree-Nut-Free'
-                  inline
-                  onChange={handleCheckBoxChange}
-                  id='tree-nut-free'
-                  checked={checkFields['tree-nut-free']}
-                  custom
-                ></Form.Check>
-                <Form.Check
-                  type='checkbox'
-                  label='Alcohol-Free'
-                  inline
-                  onChange={handleCheckBoxChange}
-                  id='alcohol-free'
-                  checked={checkFields['alcohol-free']}
-                  custom
-                ></Form.Check>
-              </div>
-            </Col>
-          </Row>
-          <Row className='border border-black p-3 mx-0 my-3'>
-            <Col xs={4}>
-              <Form.Label>Exclude Ingredients</Form.Label>
-              <div>
-                <Form.Control
-                  value={excludedField}
-                  onChange={handleExcludedChange}
-                  name='excluded'
-                ></Form.Control>
-                <Button onClick={handleExclude} className='mt-3'>
-                  Exclude
-                </Button>
-              </div>
-            </Col>
-            <Col xs={8} className='p-3 m-0 bg-light'>
-              {excludedArray.map(exclude => (
-                <Button
-                  key={uuid()}
-                  className='text-light m-2'
-                  variant='danger'
-                  onClick={() => {
-                    setExcludedArray(
-                      excludedArray.filter(temp => temp !== exclude)
-                    );
-                  }}
-                >
-                  {exclude}
-                </Button>
-              ))}
-            </Col>
-          </Row>
+            <Row className='my-3'>
+              <Col xs={6} md={4}>
+                <div>
+                  <Label>Max Ingredients</Label>
+                  <Form.Control
+                    type='number'
+                    value={inputFields.ingredients}
+                    onChange={handleChange}
+                    name='ingredients'
+                    min='1'
+                  ></Form.Control>
+                </div>
+              </Col>
+              <Col xs={6} md={4}>
+                <div>
+                  <Label>Max Calories</Label>
+                  <Form.Control
+                    type='number'
+                    value={inputFields.calories}
+                    onChange={handleChange}
+                    name='calories'
+                    min='1'
+                  ></Form.Control>
+                </div>
+              </Col>
+              <Col xs={6} md={4}>
+                <div>
+                  <Label>Max Time to Cook (Mins)</Label>
+                  <Form.Control
+                    type='number'
+                    value={inputFields.time}
+                    onChange={handleChange}
+                    name='time'
+                    min='1'
+                  ></Form.Control>
+                </div>
+              </Col>
+            </Row>
+            {/* */}
+            <Row className='my-3'>
+              <Col xs={6}>
+                <Label>Diet Type</Label>
+                <div className='custom-radio'>
+                  <Form.Check
+                    type='radio'
+                    inline
+                    onChange={handleRadioBoxChange}
+                    id='balanced'
+                    label='Balanced'
+                    checked={radioField === 'balanced'}
+                    custom
+                  ></Form.Check>
+                  <Form.Check
+                    type='radio'
+                    label='High-Protein'
+                    inline
+                    onChange={handleRadioBoxChange}
+                    id='high-protein'
+                    checked={radioField === 'high-protein'}
+                    custom
+                  ></Form.Check>
+                  <Form.Check
+                    type='radio'
+                    label='Low-Carb'
+                    inline
+                    onChange={handleRadioBoxChange}
+                    id='low-carb'
+                    checked={radioField === 'low-carb'}
+                    custom
+                  ></Form.Check>
+                  <Form.Check
+                    type='radio'
+                    label='Low-Fat'
+                    inline
+                    onChange={handleRadioBoxChange}
+                    id='low-fat'
+                    checked={radioField === 'low-fat'}
+                    custom
+                  ></Form.Check>
+                </div>
+              </Col>
+              {/* */}
+              <Col xs={6}>
+                <Label>Health Type</Label>
+                <div className='custom-checkbox'>
+                  <Form.Check
+                    type='checkbox'
+                    inline
+                    label='Vegan'
+                    onChange={handleCheckBoxChange}
+                    id='vegan'
+                    checked={checkFields.vegan}
+                    custom
+                  ></Form.Check>
+                  <Form.Check
+                    type='checkbox'
+                    label='Vegetarian'
+                    inline
+                    onChange={handleCheckBoxChange}
+                    id='vegetarian'
+                    checked={checkFields.vegetarian}
+                    custom
+                  ></Form.Check>
+                  <Form.Check
+                    type='checkbox'
+                    label='Sugar-Conscious'
+                    inline
+                    onChange={handleCheckBoxChange}
+                    id='sugar-conscious'
+                    checked={checkFields['sugar-conscious']}
+                    custom
+                  ></Form.Check>
+                  <Form.Check
+                    type='checkbox'
+                    label='Peanut-Free'
+                    inline
+                    onChange={handleCheckBoxChange}
+                    id='peanut-free'
+                    checked={checkFields['peanut-free']}
+                    custom
+                  ></Form.Check>
+                  <Form.Check
+                    type='checkbox'
+                    label='Tree-Nut-Free'
+                    inline
+                    onChange={handleCheckBoxChange}
+                    id='tree-nut-free'
+                    checked={checkFields['tree-nut-free']}
+                    custom
+                  ></Form.Check>
+                  <Form.Check
+                    type='checkbox'
+                    label='Alcohol-Free'
+                    inline
+                    onChange={handleCheckBoxChange}
+                    id='alcohol-free'
+                    checked={checkFields['alcohol-free']}
+                    custom
+                  ></Form.Check>
+                </div>
+              </Col>
+            </Row>
+            <Row className='border border-black p-3 mx-0 my-3'>
+              <Col xs={4}>
+                <Label>Exclude Ingredients</Label>
+                <div>
+                  <Form.Control
+                    value={excludedField}
+                    onChange={handleExcludedChange}
+                    name='excluded'
+                  ></Form.Control>
+                  <Button onClick={handleExclude} className='mt-3'>
+                    Exclude
+                  </Button>
+                </div>
+              </Col>
+              <Col xs={8} className='p-3 m-0 bg-light'>
+                {excludedArray.map(exclude => (
+                  <Button
+                    key={uuid()}
+                    className='text-light m-2'
+                    variant='danger'
+                    onClick={() => {
+                      setExcludedArray(
+                        excludedArray.filter(temp => temp !== exclude)
+                      );
+                    }}
+                  >
+                    {exclude}
+                  </Button>
+                ))}
+              </Col>
+            </Row>
+          </AdvancedSearch>
         </Form.Group>
 
-        <Button variant='danger' onClick={handleReset} className='mr-3'>
+        {visible ? (
+          <Button
+            onClick={() => {
+              setVisible(false);
+            }}
+          >
+            Hide Search
+          </Button>
+        ) : (
+          <Button
+            onClick={() => {
+              setVisible(true);
+            }}
+          >
+            Advanced Search
+          </Button>
+        )}
+        <Button variant='danger' onClick={handleReset} className='ml-3'>
           Clear Search
         </Button>
-        <Button variant='success' type='submit' className='mr-3'>
+
+        <Button
+          variant='success'
+          type='submit'
+          style={{ position: 'absolute', right: '0' }}
+        >
           Search
         </Button>
-        {isLoading ? (
-          <p className='lead' style={{ display: 'inline' }}>
-            Loading...
-          </p>
-        ) : (
-          ''
-        )}
+
+        {isLoading ? '' : ''}
       </Form>
     </div>
   );
