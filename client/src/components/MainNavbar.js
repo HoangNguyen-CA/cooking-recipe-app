@@ -20,7 +20,7 @@ export default function MainNavbar() {
   return (
     <Navbar bg='light' variant='light'>
       <Navbar.Brand>
-        <Title>Recipe Search</Title>
+        <Title className='text-primary'>Recipe Search</Title>
       </Navbar.Brand>
       <Nav className='ml-auto'>
         {isAuthenticated ? (

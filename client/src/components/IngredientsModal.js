@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Col, Row } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import uuid from 'uuid';
 
 export default function IngredientsModal({ ingredients, custom }) {

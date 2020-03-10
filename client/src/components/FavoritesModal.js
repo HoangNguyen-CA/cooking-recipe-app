@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Nav,
-  Modal,
-  Button,
-  Form,
-  FormControl,
-  FormLabel,
-  Alert
-} from 'react-bootstrap';
+import { Nav, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors } from '../actions/errorActions';
 import { getFavorites } from '../actions/userActions';

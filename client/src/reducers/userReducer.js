@@ -29,7 +29,7 @@ export default function(state = initialState, action) {
     case ADD_FAV: {
       return {
         ...state,
-        favorites: [action.payload, ...state.recipes]
+        favorites: [...state.favorites, action.payload]
       };
     }
     case FAV_LOADING: {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Col, Row } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import uuid from 'uuid';
 import styled from 'styled-components';
 
@@ -36,7 +36,7 @@ export default function NutrientsModal({ nutrients, custom }) {
           {nutrients.map(nut => {
             return (
               <span key={uuid()}>
-                {nutrients[0].label == nut.label ? '' : <hr></hr>}
+                {nutrients[0].label === nut.label ? '' : <hr></hr>}
 
                 <Lead>{nut.label}</Lead>
                 <Para>

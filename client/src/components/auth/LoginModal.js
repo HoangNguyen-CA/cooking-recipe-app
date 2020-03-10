@@ -20,7 +20,6 @@ export default function RegisterModal() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const error = useSelector(state => state.error);
 
   const handleOpen = () => {
@@ -53,7 +52,9 @@ export default function RegisterModal() {
 
       <Modal show={modal} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Login to an account</Modal.Title>
+          <Modal.Title style={{ fontFamily: 'poppins' }}>
+            Login to an account
+          </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>

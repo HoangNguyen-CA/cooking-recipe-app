@@ -69,7 +69,7 @@ export default function Recipe({
   };
 
   return (
-    <div className='bg-dark my-3 p-3 text-light'>
+    <div className='my-3 p-3 text-light bg-dark'>
       <Row>
         <Col xs={12} className='mb-2'>
           <Header className=''>{label}</Header>
@@ -102,7 +102,7 @@ export default function Recipe({
               })}
             </Col>
             <Col xs={4}>
-              {cautions.length == 0 ? <Para>None</Para> : ''}
+              {cautions.length === 0 ? <Para>None</Para> : ''}
               {cautions.map(name => {
                 return <Para key={uuid()}>{name}</Para>;
               })}

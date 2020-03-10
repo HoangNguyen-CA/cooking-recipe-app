@@ -56,7 +56,9 @@ export default function RegisterModal() {
 
       <Modal show={modal} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Register for an account</Modal.Title>
+          <Modal.Title style={{ fontFamily: 'poppins' }}>
+            Register for an account
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {message ? <Alert variant='danger'>{message}</Alert> : ''}

@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import Recipe from './Recipe';
 import uuid from 'uuid';
 import { Container } from '../styledComponents';
-import styled from 'styled-components';
 import '../images/LoadingIcon';
 import LoadingIcon from '../images/LoadingIcon';
 

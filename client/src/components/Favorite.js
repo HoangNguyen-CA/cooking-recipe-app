@@ -5,7 +5,37 @@ import { deleteFavorite } from '../actions/userActions';
 import uuid from 'uuid';
 import IngredientsModal from './IngredientsModal';
 import NutrientsModal from './NutrientsModal';
+import styled from 'styled-components';
 
+const Para = styled.p`
+  font-size: 1.1rem;
+  margin: 0 0 0.2rem 0;
+`;
+
+const Lead = styled.p`
+  font-size: 1.3rem;
+  margin: 0 0 0.5rem 0;
+`;
+const Header = styled.h1`
+  font-size: 2rem;
+  font-family: Poppins;
+`;
+
+const Image = styled.img`
+  display: cover;
+  width: 80%;
+  height: auto;
+`;
+
+const Link = styled.a`
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+`;
+
+const buttonStyle = {
+  margin: '0.3rem 0 0.5rem 0',
+  display: 'block'
+};
 export default function Favorite({
   label,
   image,
@@ -25,48 +55,48 @@ export default function Favorite({
     dispatch(deleteFavorite(_id));
   };
 
-  const imageStyle = {
-    display: 'cover',
-    width: '100%',
-    height: 'auto'
-  };
-
   return (
     <div className='bg-dark m-3 p-3 text-light'>
       <Row>
-        <Col xs={12} className='mb-3'>
-          <h3 className=''>{label}</h3>
-          <a href={url} target='_blank'>
-            Source: {source}
-          </a>
+        <Col xs={12} className='mb-2'>
+          <Header className=''>{label}</Header>
         </Col>
         <Col xs={3}>
-          <img src={image} alt={label} style={imageStyle}></img>
+          <Image src={image} alt={label}></Image>
         </Col>
         <Col xs={9}>
           <Row>
             <Col xs={4}>
-              <p className='lead'>Calories: {Math.round(calories)}</p>
-              <p className='lead'>Time to cook: {totalTime}</p>
-              <IngredientsModal ingredients={ingredients}></IngredientsModal>
-              <br></br>
-              <br></br>
-              <NutrientsModal nutrients={nutrients}></NutrientsModal>
+              <Link href={url} rel='noreferrer noopener' target='_blank'>
+                Source: {source}
+              </Link>
+              <Para>Calories: {Math.round(calories)}</Para>
+              <Para style={{ marginBottom: 0 }}>Time to cook: {totalTime}</Para>
+              <IngredientsModal
+                custom={buttonStyle}
+                ingredients={ingredients}
+              ></IngredientsModal>
+
+              <NutrientsModal
+                nutrients={nutrients}
+                custom={buttonStyle}
+              ></NutrientsModal>
             </Col>
             <Col xs={4}>
-              <p className='lead'>Health Types</p>
+              <Lead>Health Types</Lead>
               {healthLabels.map(name => {
-                return <p key={uuid()}>{name}</p>;
+                return <Para key={uuid()}>{name}</Para>;
               })}
             </Col>
             <Col xs={4}>
-              <p className='lead'>Cautions</p>
+              {cautions.length === 0 ? <Para>None</Para> : ''}
               {cautions.map(name => {
-                return <p key={uuid()}>{name}</p>;
+                return <Para key={uuid()}>{name}</Para>;
               })}
-              <p className='lead'>Diet Type</p>
+              <Lead>Diet Type</Lead>
+              {dietLabels.length === 0 ? <Para>None</Para> : ''}
               {dietLabels.map(name => {
-                return <p key={uuid()}>{name}</p>;
+                return <Para key={uuid()}>{name}</Para>;
               })}
             </Col>
           </Row>

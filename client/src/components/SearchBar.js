@@ -4,17 +4,10 @@ import { getRecipes } from '../actions/recipeActions';
 import uuid from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-//import LoadingIcon from './';
-
-const LabelStyle = {
-  fontSize: '1.6rem'
-};
 
 const Label = styled.label`
   font-size: 1.2rem;
 `;
-const Checkbox = styled.input``;
-
 const Badge = styled.div`
   position: inline;
   margin-top: 1rem;
@@ -22,8 +15,6 @@ const Badge = styled.div`
 
 export default function SearchBar() {
   const dispatch = useDispatch();
-
-  const isLoading = useSelector(state => state.recipe.loading);
 
   const [message, setMessage] = useState('');
   const [visible, setVisible] = useState(false);
@@ -346,6 +337,7 @@ export default function SearchBar() {
             onClick={() => {
               setVisible(false);
             }}
+            variant='secondary'
           >
             Hide Search
           </Button>
@@ -354,6 +346,7 @@ export default function SearchBar() {
             onClick={() => {
               setVisible(true);
             }}
+            variant='secondary'
           >
             Advanced Search
           </Button>
