@@ -6,6 +6,11 @@ import * as serviceWorker from './serviceWorker';
 import store from './store';
 import { Provider } from 'react-redux';
 
+const script = document.createElement('script');
+script.async = true;
+script.src = 'https://developer.edamam.com/attribution/badge.js';
+document.head.appendChild(script);
+
 ReactDOM.render(
   <Provider store={store}>
     <App />
