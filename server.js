@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const config = require('config');
 const path = require('path');
 
-app = express();
+const app = express();
 
 app.use(express.json());
 
@@ -26,6 +26,10 @@ app.use('/api/auth/', require('./routes/api/auth'));
 if (process.env.NODE_ENV === 'production') {
   // Set static folderl
   app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  });
 }
 
 const port = process.env.PORT || 5000;
