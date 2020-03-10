@@ -24,9 +24,10 @@ app.use('/api/auth/', require('./routes/api/auth'));
 
 //Serve static files
 if (process.env.NODE_ENV === 'production') {
-  // Set static folder
+  // Set static folderl
   app.use(express.static('client/build'));
 }
+
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
