@@ -16,6 +16,7 @@ function App() {
       <MainNavbar></MainNavbar>
       <SearchBar></SearchBar>
       <RecipesDisplay></RecipesDisplay>
+      <h1>TEST</h1>
     </>
   );
 }
