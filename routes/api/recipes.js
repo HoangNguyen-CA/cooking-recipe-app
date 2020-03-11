@@ -29,15 +29,12 @@ router.get('/edamam', (req, res) => {
     res.status(404).json({ msg: 'search is undefined' });
   }
 
-  let url = `https://api.edamam.com/search?q=${search}&app_id=${config.get(
-    'apiID'
-  )}&app_key=${config.get('apiKey')}${setUpParam(
-    'ingr',
-    ingredients
-  )}${setUpParam('diet', diet)}${setUpParam('calories', calories)}${setUpParam(
-    'time',
-    time
-  )}`;
+  let url = `https://api.edamam.com/search?q=${search}&app_id=${process.env
+    .API_ID || config.get('apiID')}&app_key=${process.env.API_KEY ||
+    config.get('API_KEY')}${setUpParam('ingr', ingredients)}${setUpParam(
+    'diet',
+    diet
+  )}${setUpParam('calories', calories)}${setUpParam('time', time)}`;
 
   health
     ? health.map(healthItem => (url += setUpParam('health', healthItem)))
