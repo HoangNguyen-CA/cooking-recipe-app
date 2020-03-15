@@ -24,7 +24,7 @@ app.use('/api/auth/', require('./routes/api/auth'));
 
 //Serve static files
 if (process.env.NODE_ENV === 'production') {
-  // Set static folderl
+  // Set static folder
   app.use(express.static('client/build'));
 
   app.get('*', (req, res) => {

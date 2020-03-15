@@ -36,21 +36,19 @@ export const addFavorite = recipe => (dispatch, getState) => {
     ...recipe
   };
 
-  axios.post('api/recipes/', body, tokenConfig(getState)).then(res => {
-    console.log(res);
-    dispatch({
-      type: ADD_FAV,
-      payload: res.data
-    });
-  });
-  /*
+  axios
+    .post('api/recipes/', body, tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: ADD_FAV,
+        payload: res.data
+      });
+    })
     .catch(err => {
-      console.log(err);
       dispatch(
         returnErrors(err.response.data, err.response.status, 'ADD_FAV_FAIL')
       );
     });
-    */
 };
 
 export const deleteFavorite = id => (dispatch, getState) => {

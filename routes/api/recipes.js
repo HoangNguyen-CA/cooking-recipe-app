@@ -30,7 +30,7 @@ router.get('/edamam', (req, res) => {
   }
 
   let url = `https://api.edamam.com/search?q=${search}&app_id=${process.env
-    .API_ID || config.get('apiID')}&app_key=${process.env.API_KEY ||
+    .API_ID || config.get('API_ID')}&app_key=${process.env.API_KEY ||
     config.get('API_KEY')}${setUpParam('ingr', ingredients)}${setUpParam(
     'diet',
     diet
@@ -53,10 +53,12 @@ router.get('/edamam', (req, res) => {
       const hits = data.hits; // array of objects
       res.status(200).json(hits);
     })
-    .catch(err => res.status(404).json({ msg: 'Error getting recipes' }));
+    .catch(err =>
+      res.status(404).json({ msg: "Error: Couldn't get recipes." })
+    );
 });
 
-// @route Post api/recipes
+// @route post api/recipes
 // @desc post a recipe
 // @access Public
 router.post('/', auth, (req, res) => {
@@ -69,7 +71,7 @@ router.post('/', auth, (req, res) => {
       .save()
       .then(res.status(200).json(recipe))
       .catch(err => {
-        res.status(404).json({ msg: 'Error saving recipe' });
+        res.status(400).json({ msg: "Error: couldn't save recipe" });
       });
   });
 });
@@ -79,28 +81,30 @@ router.post('/', auth, (req, res) => {
 // @access Public
 router.get('/', auth, (req, res) => {
   const id = req.user.id;
+
   User.findById(id)
     .then(user => {
       res.status(200).json(user.recipes);
     })
     .catch(err => {
-      res.status(404).json({ success: 'false' });
+      res.status(404).json({ msg: "Error: couldn't get recipe" });
     });
 });
 
-// @route Delete api/recipes
+// @route delete api/recipes
 // @desc delete a recipe
 // @access Public
 router.delete('/:id', auth, (req, res) => {
   const id = req.user.id;
   const itemID = req.params.id;
+
   User.findById(id)
     .then(user => {
       user.recipes.pull(itemID);
-      user.save().then(res.status(200).json({ success: 'true' }));
+      user.save().then(res.status(200).json({ msg: 'success' }));
     })
     .catch(err => {
-      res.status(404).json({ success: 'false' });
+      res.status(400).json({ msg: "Error: couldn't get recipe" });
     });
 });
 
