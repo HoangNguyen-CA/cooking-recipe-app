@@ -1,22 +1,23 @@
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
-const config = require('config');
 const path = require('path');
 
 const app = express();
 
 app.use(express.json());
 
-const db = process.env.MONGODB_URI || config.get('mongoURI');
+const db = process.env.MONGODB_URI;
 
 mongoose
   .connect(db, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   })
   .then(() => console.log('Connected To MongoDB'))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 app.use('/api/recipes/', require('./routes/api/recipes'));
 app.use('/api/users/', require('./routes/api/users'));

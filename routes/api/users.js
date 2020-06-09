@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const config = require('config');
 const jwt = require('jsonwebtoken');
 
 //User
@@ -17,7 +16,7 @@ router.post('/', (req, res) => {
     return res.status(400).json({ msg: 'Please enter all fields' });
   }
 
-  User.findOne({ email: email }).then(user => {
+  User.findOne({ email: email }).then((user) => {
     //check for existing user
     if (user) return res.status(400).json({ msg: 'User already exists' });
 
@@ -25,7 +24,7 @@ router.post('/', (req, res) => {
     const newUser = new User({
       name,
       email,
-      password
+      password,
     });
 
     //create salt and hash
@@ -33,12 +32,12 @@ router.post('/', (req, res) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
         if (err) throw err;
         newUser.password = hash;
-        newUser.save().then(user => {
+        newUser.save().then((user) => {
           jwt.sign(
             {
-              id: user.id
+              id: user.id,
             },
-            config.get('jwtSecret'),
+            process.env.jwtSecret,
             { expiresIn: 3600 },
             (err, token) => {
               if (err) throw err;
@@ -47,8 +46,8 @@ router.post('/', (req, res) => {
                 user: {
                   id: user.id,
                   name: user.name,
-                  email: user.email
-                }
+                  email: user.email,
+                },
               });
             }
           );
