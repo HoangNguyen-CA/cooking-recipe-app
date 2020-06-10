@@ -12,7 +12,6 @@ const StyledModal = styled.div`
   z-index: 500;
 
   width: 70%;
-  max-width: 500px;
   border-radius: 5px;
   padding: 1.5em;
 
@@ -23,7 +22,9 @@ const Modal = (props) => {
   return (
     <>
       <Backdrop show={props.show} clicked={props.clickedBackdrop}></Backdrop>
-      {props.show ? <StyledModal>{props.children}</StyledModal> : null}
+      {props.show ? (
+        <StyledModal className={props.className}>{props.children}</StyledModal>
+      ) : null}
     </>
   );
 };

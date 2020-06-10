@@ -6,12 +6,15 @@ const StyledNavLinks = styled.div`
   display: flex;
 `;
 
+const NavLabel = styled.p``;
+
 const NavLinks = (props) => {
   let navLinks;
   if (props.isAuthenticated) {
     navLinks = (
       <StyledNavLinks>
-        <NavLink></NavLink>
+        <NavLabel>Logged in as {props.user ? props.user.name : ''} </NavLabel>
+        <NavLink onClick={props.logout}>Logout</NavLink>
       </StyledNavLinks>
     );
   } else {

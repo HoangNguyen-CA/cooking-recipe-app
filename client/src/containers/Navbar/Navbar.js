@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-/*
-import LoginModal from '../../components/auth/LoginModal';
-import RegisterModal from '../../components/auth/RegisterModal';
-import LogoutModal from '../../components/auth/LogoutModal';
-import FavoritesModal from '../../components/FavoritesModal';
-*/
+
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import LoginModal from '../../components/Navigation/Modals/LoginModal';
-import RegisterModal from '../../components/Navigation/Modals/RegisterModal';
+import LoginModal from '../Modals/LoginModal';
+import RegisterModal from '../Modals/RegisterModal';
 
 import NavLinks from '../../components/Navigation/NavLinks/NavLinks';
+
+import { login, logout, register } from '../../store/actions/authActions';
 
 const StyledNavbar = styled.div`
   background-color: ${(props) => props.theme.colors.light};
@@ -59,10 +56,12 @@ export class Navbar extends Component {
         <LoginModal
           show={this.state.loginOpen}
           handleLoginClose={this.handleLoginClose}
+          login={this.props.login}
         ></LoginModal>
         <RegisterModal
           show={this.state.registerOpen}
           handleRegisterClose={this.handleRegisterClose}
+          register={this.props.register}
         ></RegisterModal>
 
         <StyledNavbar>
@@ -70,6 +69,9 @@ export class Navbar extends Component {
           <NavLinks
             handleLoginOpen={this.handleLoginOpen}
             handleRegisterOpen={this.handleRegisterOpen}
+            isAuthenticated={this.props.isAuthenticated}
+            logout={this.props.logout}
+            user={this.props.user}
           ></NavLinks>
         </StyledNavbar>
       </>
@@ -80,9 +82,17 @@ export class Navbar extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    isAuthenticated: state.auth.isAuthenticated,
   };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (email, password) => dispatch(login({ email, password })),
+    logout: () => dispatch(logout()),
+    register: (username, email, password) =>
+      dispatch(register({ name: username, email, password })),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

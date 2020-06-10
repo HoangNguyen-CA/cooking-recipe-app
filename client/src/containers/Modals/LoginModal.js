@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import Modal from '../../UI/Modal/Modal';
-import Button from '../../UI/Button/Button';
+import Modal from '../../components/UI/Modal/Modal';
+import Button from '../../components/UI/Button/Button';
 
-import ModalHeader from '../../UI/Modal/ModalHeader/ModalHeader';
-import Label from '../../Forms/Label';
-import TextInput from '../../Forms/TextInput';
+import ModalHeader from '../../components/UI/Modal/ModalHeader/ModalHeader';
+
+import Label from '../../components/Forms/Label';
+import TextInput from '../../components/Forms/TextInput';
 
 import styled from 'styled-components';
+
+const StyledModal = styled(Modal)`
+  max-width: 400px;
+`;
 
 const SubmitButton = styled(Button)`
   width: 100%;
@@ -16,36 +21,38 @@ const SubmitButton = styled(Button)`
 `;
 
 export default function LoginModal(props) {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+    setEmail(e.target.value);
   };
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
+  const handleSubmit = () => {
+    props.login(email, password);
+  };
+
   return (
-    <Modal show={props.show} clickedBackdrop={props.handleLoginClose}>
+    <StyledModal show={props.show} clickedBackdrop={props.handleLoginClose}>
       <ModalHeader>Login</ModalHeader>
-      <Label htmlFor='login-name'>Username: </Label>
+      <Label htmlFor='login-name'>Email: </Label>
       <TextInput
-        name='name'
         type='text'
-        id='login-name'
-        value={username}
+        id='login-email'
+        value={email}
         onChange={handleUsernameChange}
       />
       <Label htmlFor='login-password'>Password: </Label>
       <TextInput
-        name='name'
         type='password'
         id='login-password'
         target={password}
         onChange={handlePasswordChange}
       />
-      <SubmitButton>Submit</SubmitButton>
-    </Modal>
+      <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+    </StyledModal>
   );
 }
