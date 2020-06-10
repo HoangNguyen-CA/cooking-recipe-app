@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Row, Col, Alert } from 'react-bootstrap';
-import { getRecipes } from '../actions/recipeActions';
+import { getRecipes } from '../store/actions/recipeActions';
 import uuid from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -28,7 +28,7 @@ export default function SearchBar() {
     ingredients: '',
     calories: '',
     diet: '',
-    time: ''
+    time: '',
   });
 
   const [checkFields, setCheckFields] = useState({
@@ -37,7 +37,7 @@ export default function SearchBar() {
     'sugar-conscious': false,
     'peanut-free': false,
     'tree-nut-free': false,
-    'alcohol-free': false
+    'alcohol-free': false,
   });
 
   const [radioField, setRadioField] = useState('');
@@ -45,7 +45,7 @@ export default function SearchBar() {
   const [excludedArray, setExcludedArray] = useState([]);
   const [excludedField, setExcludedField] = useState('');
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const health = [];
 
@@ -59,22 +59,22 @@ export default function SearchBar() {
       ...inputFields,
       excluded: excludedArray,
       diet: radioField,
-      health
+      health,
     };
     dispatch(getRecipes(request));
     setVisible(false);
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setInputFields({
       ...inputFields,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handleExcludedChange = e => {
+  const handleExcludedChange = (e) => {
     if (e.target.value.length <= 20) {
       setExcludedField(e.target.value);
     }
@@ -87,7 +87,7 @@ export default function SearchBar() {
       calories: '',
       diet: '',
       health: [],
-      time: ''
+      time: '',
     });
     setCheckFields({
       vegan: false,
@@ -95,23 +95,23 @@ export default function SearchBar() {
       'sugar-conscious': false,
       'peanut-free': false,
       'tree-nut-free': false,
-      'alcohol-free': false
+      'alcohol-free': false,
     });
     setRadioField('');
     setExcludedArray([]);
     setExcludedField('');
   };
 
-  const handleCheckBoxChange = e => {
+  const handleCheckBoxChange = (e) => {
     const id = e.target.id;
     const checked = e.target.checked;
     setCheckFields({
       ...checkFields,
-      [id]: checked
+      [id]: checked,
     });
   };
 
-  const handleRadioBoxChange = e => {
+  const handleRadioBoxChange = (e) => {
     setRadioField(e.target.id);
   };
 
@@ -122,7 +122,7 @@ export default function SearchBar() {
     setExcludedField('');
   };
 
-  const error = useSelector(state => state.error);
+  const error = useSelector((state) => state.error);
 
   useEffect(() => {
     if (error.id === 'GET_RECIPES_FAIL') {
@@ -313,14 +313,14 @@ export default function SearchBar() {
                 </div>
               </Col>
               <Col xs={8} className='p-3 m-0 bg-light'>
-                {excludedArray.map(exclude => (
+                {excludedArray.map((exclude) => (
                   <Button
                     key={uuid()}
                     className='text-light m-2'
                     variant='danger'
                     onClick={() => {
                       setExcludedArray(
-                        excludedArray.filter(temp => temp !== exclude)
+                        excludedArray.filter((temp) => temp !== exclude)
                       );
                     }}
                   >

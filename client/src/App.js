@@ -1,23 +1,30 @@
-import React, { useEffect } from 'react';
-import MainNavbar from './components/MainNavbar';
-import SearchBar from './components/SearchBar';
-import RecipesDisplay from './components/RecipesDisplay';
-import { useDispatch } from 'react-redux';
-import { loadUser } from './actions/authActions';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-function App() {
-  const dispatch = useDispatch();
+import { loadUser } from './store/actions/authActions';
 
-  useEffect(() => {
-    dispatch(loadUser());
-  }, [dispatch]);
-  return (
-    <>
-      <MainNavbar></MainNavbar>
-      <SearchBar></SearchBar>
-      <RecipesDisplay></RecipesDisplay>
-    </>
-  );
+import Controls from './containers/Controls/Controls';
+
+export class App extends Component {
+  componentDidMount() {
+    this.props.loadUser();
+  }
+
+  render() {
+    return (
+      <>
+        <Controls></Controls>
+      </>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadUser: () => dispatch(loadUser()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

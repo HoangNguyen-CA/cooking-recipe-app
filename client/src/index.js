@@ -2,11 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
+
+import { ThemeProvider } from 'styled-components';
+import theme from './theme/theme';
+
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 
 import thunk from 'redux-thunk';
-import rootReducer from './reducers/index';
+import rootReducer from './store/reducers/index';
 
 const middleware = [thunk];
 
@@ -26,7 +30,9 @@ document.head.appendChild(script);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </Provider>,
   document.getElementById('root')
 );
