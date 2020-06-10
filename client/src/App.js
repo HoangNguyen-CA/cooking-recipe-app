@@ -5,6 +5,8 @@ import { loadUser } from './store/actions/authActions';
 
 import Controls from './containers/Controls/Controls';
 
+import Layout from './components/Layout/Layout';
+
 export class App extends Component {
   componentDidMount() {
     this.props.loadUser();
@@ -13,7 +15,9 @@ export class App extends Component {
   render() {
     return (
       <>
-        <Controls></Controls>
+        <Layout>
+          <Controls></Controls>
+        </Layout>
       </>
     );
   }
