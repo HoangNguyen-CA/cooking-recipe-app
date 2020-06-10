@@ -37,20 +37,14 @@ export class Navbar extends Component {
   handleRegisterOpen = () => this.setState({ registerOpen: true });
   handleRegisterClose = () => this.setState({ registerOpen: false });
 
-  render() {
-    /*
-    if (this.props.isAuthenticated) {
-      navItems = (
-        <>
-          <Nav.Item className='navbar-text text-success mr-3'>
-            Logged in as {user.name}
-          </Nav.Item>
-          <FavoritesModal></FavoritesModal>
-          <LogoutModal className=''></LogoutModal>
-        </>
-      );
+  static getDerivedStateFromProps(props) {
+    if (props.isAuthenticated) {
+      return { loginOpen: false, registerOpen: false };
     }
-    */
+    return {};
+  }
+
+  render() {
     return (
       <>
         <LoginModal
