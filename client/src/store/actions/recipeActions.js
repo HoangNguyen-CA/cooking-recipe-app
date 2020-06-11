@@ -30,7 +30,15 @@ export const getRecipes = ({
     .get(
       `/api/recipes/edamam`,
       {
-        params: { search, ingredients, diet, health, calories, time, excluded },
+        params: {
+          search,
+          ingredients,
+          diet,
+          health,
+          calories,
+          time,
+          excluded,
+        },
       },
       config
     )

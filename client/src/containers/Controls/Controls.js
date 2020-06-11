@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { getRecipes as GET_RECIPES } from '../../store/actions/recipeActions';
 import styled from 'styled-components';
 
 import Label from '../../components/Forms/Label';
@@ -83,7 +84,7 @@ export class Controls extends Component {
   };
 
   handleAddExcluded = () => {
-    if (this.state.excludedField == '') return;
+    if (this.state.excludedField === '') return;
     this.setState((prevState) => {
       const newSet = new Set(prevState.excludedItems);
       newSet.add(prevState.excludedField.toLowerCase());
@@ -103,14 +104,27 @@ export class Controls extends Component {
     this.setState({ excludedField: e.target.value });
   };
 
-  componentDidUpdate() {
-    console.log(this.state.excludedField, this.state.excludedItems);
-  }
-
   handleToggleAdvanced = () => {
     this.setState((prevState) => {
       return { showAdvanced: !prevState.showAdvanced };
     });
+  };
+
+  handleSubmit = () => {
+    const health = [];
+    for (let field in this.state.healthFields) {
+      if (this.state.healthFields[field] === true) health.push(field);
+    }
+    let excluded = [...this.state.excludedItems];
+    this.props.getRecipes(
+      this.state.search,
+      this.state.maxIngredients,
+      this.state.maxCalories,
+      this.state.maxTime,
+      this.state.dietField,
+      health,
+      excluded
+    );
   };
 
   render() {
@@ -178,7 +192,7 @@ export class Controls extends Component {
           <AdvancedButton onClick={this.handleToggleAdvanced}>
             Advanced Search
           </AdvancedButton>
-          <SearchButton>Search</SearchButton>
+          <SearchButton onClick={this.handleSubmit}>Search</SearchButton>
         </ButtonContainer>
       </StyledControls>
     );
@@ -187,6 +201,30 @@ export class Controls extends Component {
 
 const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getRecipes: (
+      search,
+      ingredients,
+      calories,
+      time,
+      diet,
+      health,
+      excluded
+    ) => {
+      dispatch(
+        GET_RECIPES({
+          search,
+          ingredients,
+          diet,
+          health,
+          calories,
+          time,
+          excluded,
+        })
+      );
+    },
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);

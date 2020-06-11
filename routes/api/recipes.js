@@ -24,6 +24,8 @@ router.get('/edamam', (req, res) => {
     excluded, // array
   } = req.query;
 
+  console.log(req.query);
+
   if (search == undefined) {
     res.status(404).json({ msg: 'search is undefined' });
   }
@@ -56,9 +58,9 @@ router.get('/edamam', (req, res) => {
       res.status(200).json(hits);
     })
 
-    .catch((err) =>
-      res.status(404).json({ msg: "Error: Couldn't get recipes." })
-    );
+    .catch((err) => {
+      res.status(404).json({ msg: "Error: Couldn't get recipes." });
+    });
 });
 
 // @route post api/recipes
