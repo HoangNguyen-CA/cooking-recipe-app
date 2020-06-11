@@ -18,9 +18,16 @@ const Container = styled.div`
   margin: 0.8em 0;
 `;
 
+const Header = styled.h3`
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.3em;
+`;
+
 const DietType = (props) => {
   return (
     <Container>
+      <Header>Health Type:</Header>
       <BoxGroup>
         <CheckBox
           id='vegan'

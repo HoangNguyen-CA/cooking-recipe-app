@@ -8,7 +8,7 @@ const SideLabel = styled(Label)`
 `;
 
 const Container = styled.div`
-  margin: 0.8em 0;
+  margin-top: 0.8em;
 `;
 
 const BoxGroup = styled.div`
@@ -17,11 +17,18 @@ const BoxGroup = styled.div`
   margin-bottom: 0.3em;
 `;
 
+const Header = styled.h3`
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.3em;
+`;
+
 const nameAtr = 'hello';
 
 const HealthType = (props) => {
   return (
     <Container>
+      <Header>Diet Type: </Header>
       <BoxGroup>
         <RadioBox
           name={nameAtr}

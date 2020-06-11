@@ -7,6 +7,7 @@ const Button = styled.button`
   font-size: 1.1rem;
   border: none;
   outline: none;
+  text-transform: uppercase;
 `;
 
 export default Button;
