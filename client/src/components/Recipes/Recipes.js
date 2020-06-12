@@ -20,10 +20,10 @@ const Recipes = (props) => {
             url={el.recipe.url}
             dietLabels={el.recipe.dietLabels}
             cautions={el.recipe.cautions}
-            ingredients={el.recipe.ingredients}
+            ingredients={el.recipe.ingredientLines}
             calories={el.recipe.calories}
             totalTime={el.recipe.totalTime}
-            totalNutrients={el.recipe.totalNutrients}
+            totalNutrients={el.recipe.digest}
           ></Recipe>
         );
       })}

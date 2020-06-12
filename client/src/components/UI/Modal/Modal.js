@@ -15,6 +15,8 @@ const StyledModal = styled.div`
   border-radius: 5px;
   padding: 1.5em;
 
+  overflow: auto;
+  max-height: 90%;
   transform: translate(-50%, -50%);
 `;
 

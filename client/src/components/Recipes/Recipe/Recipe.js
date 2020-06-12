@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import RecipeModal from './RecipeModal/RecipeModal';
+import Button from '../../UI/Button/Button';
 
 const Display = styled.div`
   width: 100%;
@@ -40,6 +42,11 @@ const Info = styled.p`
   margin-top: 0.2em;
 `;
 
+const StyledButton = styled(Button)`
+  background-color: ${(props) => props.theme.colors.primary};
+  color: white;
+`;
+
 const Recipe = ({
   label,
   image,
@@ -53,8 +60,26 @@ const Recipe = ({
   totalTime,
   totalNutrients,
 }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    console.log(modalOpen);
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
   return (
     <Display>
+      <RecipeModal
+        open={modalOpen}
+        handleClose={handleModalClose}
+        label={label}
+        ingredients={ingredients}
+        nutrients={totalNutrients}
+      ></RecipeModal>
       <Header> {label}</Header>
       <Source>
         Source: <Url href={url}>{source}</Url>
@@ -64,6 +89,7 @@ const Recipe = ({
       </ImageContainer>
       <Info>Calories: {calories}</Info>
       <Info>Time to make: {totalTime} minutes</Info>
+      <StyledButton onClick={handleModalOpen}>More Info</StyledButton>
     </Display>
   );
 };
