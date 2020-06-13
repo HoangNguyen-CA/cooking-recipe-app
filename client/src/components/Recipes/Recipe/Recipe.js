@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import RecipeModal from './RecipeModal/RecipeModal';
 import Button from '../../UI/Button/Button';
+import LabelSection from './LabelSection/LabelSection';
 
 const Display = styled.div`
   width: 100%;
@@ -45,6 +46,11 @@ const Info = styled.p`
 const StyledButton = styled(Button)`
   background-color: ${(props) => props.theme.colors.primary};
   color: white;
+  margin-top: 1em;
+`;
+
+const LabelsWrapper = styled.div`
+  margin-top: 0.5em;
 `;
 
 const Recipe = ({
@@ -89,7 +95,19 @@ const Recipe = ({
       </ImageContainer>
       <Info>Calories: {calories}</Info>
       <Info>Time to make: {totalTime} minutes</Info>
-      <StyledButton onClick={handleModalOpen}>More Info</StyledButton>
+
+      <LabelsWrapper>
+        <LabelSection header='Diet Types:' labels={dietLabels}></LabelSection>
+        <LabelSection
+          header='Health Types:'
+          labels={healthLabels}
+        ></LabelSection>
+        <LabelSection header='Cautions:' labels={cautions}></LabelSection>
+      </LabelsWrapper>
+
+      <StyledButton onClick={handleModalOpen}>
+        Ingredients & Nutrients
+      </StyledButton>
     </Display>
   );
 };

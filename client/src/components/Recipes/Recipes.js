@@ -19,6 +19,7 @@ const Recipes = (props) => {
             source={el.recipe.source}
             url={el.recipe.url}
             dietLabels={el.recipe.dietLabels}
+            healthLabels={el.recipe.healthLabels}
             cautions={el.recipe.cautions}
             ingredients={el.recipe.ingredientLines}
             calories={el.recipe.calories}
