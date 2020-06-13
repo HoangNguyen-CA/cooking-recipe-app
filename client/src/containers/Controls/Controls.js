@@ -13,6 +13,8 @@ import HealthType from '../../components/Controls/HealthType';
 import DietType from '../../components/Controls/DietType';
 import ExcludedIngredients from '../../components/Controls/ExcludedIngredients/ExcludedIngredients';
 
+import { withRouter } from 'react-router-dom';
+
 const StyledControls = styled.div`
   padding: 2em;
   max-width: 600px;
@@ -125,6 +127,7 @@ export class Controls extends Component {
       health,
       excluded
     );
+    this.props.history.push('/recipes');
   };
 
   render() {
@@ -227,4 +230,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Controls);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Controls)
+);

@@ -9,6 +9,7 @@ import RegisterModal from '../Modals/RegisterModal';
 import NavLinks from '../../components/Navigation/NavLinks/NavLinks';
 
 import { login, logout, register } from '../../store/actions/authActions';
+import { withRouter } from 'react-router-dom';
 
 const StyledNavbar = styled.div`
   background-color: ${(props) => props.theme.colors.light};
@@ -36,6 +37,14 @@ export class Navbar extends Component {
 
   handleRegisterOpen = () => this.setState({ registerOpen: true });
   handleRegisterClose = () => this.setState({ registerOpen: false });
+
+  handleToSearch = () => {
+    this.props.history.push('/');
+  };
+
+  handleToRecipes = () => {
+    this.props.history.push('/recipes');
+  };
 
   static getDerivedStateFromProps(props) {
     if (props.isAuthenticated) {
@@ -66,6 +75,8 @@ export class Navbar extends Component {
             isAuthenticated={this.props.isAuthenticated}
             logout={this.props.logout}
             user={this.props.user}
+            handleToSearch={this.handleToSearch}
+            handleToRecipes={this.handleToRecipes}
           ></NavLinks>
         </StyledNavbar>
       </>
@@ -89,4 +100,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));
