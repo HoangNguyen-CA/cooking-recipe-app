@@ -8,6 +8,8 @@ import RecipesDisplay from './containers/RecipesDisplay/RecipesDisplay';
 
 import Layout from './components/Layout/Layout';
 
+import { Switch, Route } from 'react-router-dom';
+
 export class App extends Component {
   componentDidMount() {
     this.props.loadUser();
@@ -17,8 +19,14 @@ export class App extends Component {
     return (
       <>
         <Layout>
-          <Controls></Controls>
-          <RecipesDisplay></RecipesDisplay>
+          <Switch>
+            <Route exact path='/'>
+              <Controls></Controls>
+            </Route>
+            <Route exact path='/recipes'>
+              <RecipesDisplay> </RecipesDisplay>
+            </Route>
+          </Switch>
         </Layout>
       </>
     );

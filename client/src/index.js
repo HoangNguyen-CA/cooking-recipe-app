@@ -12,6 +12,8 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './store/reducers/index';
 
+import { BrowserRouter as Router } from 'react-router-dom';
+
 const middleware = [thunk];
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -30,9 +32,11 @@ document.head.appendChild(script);
 
 ReactDOM.render(
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );

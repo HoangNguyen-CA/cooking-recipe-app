@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   recipes: [],
-  loading: true,
+  loading: false,
 };
 
 export default function (state = initialState, action) {
