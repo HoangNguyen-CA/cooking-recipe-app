@@ -15,7 +15,10 @@ export class RecipesDisplay extends Component {
   render() {
     return (
       <Container>
-        <Recipes recipes={this.props.recipes}></Recipes>
+        <Recipes
+          recipes={this.props.recipes}
+          loading={this.props.loading}
+        ></Recipes>
       </Container>
     );
   }
@@ -23,6 +26,7 @@ export class RecipesDisplay extends Component {
 
 const mapStateToProps = (state) => ({
   recipes: state.recipe.recipes,
+  loading: state.recipe.loading,
 });
 
 const mapDispatchToProps = {};
