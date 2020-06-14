@@ -46,6 +46,10 @@ export class Navbar extends Component {
     this.props.history.push('/recipes');
   };
 
+  handleToFavorites = () => {
+    this.props.history.push('/favorites');
+  };
+
   static getDerivedStateFromProps(props) {
     if (props.isAuthenticated) {
       return { loginOpen: false, registerOpen: false };
@@ -77,6 +81,7 @@ export class Navbar extends Component {
             user={this.props.user}
             handleToSearch={this.handleToSearch}
             handleToRecipes={this.handleToRecipes}
+            handleToFavorites={this.handleToFavorites}
           ></NavLinks>
         </StyledNavbar>
       </>

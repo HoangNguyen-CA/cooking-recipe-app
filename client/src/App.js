@@ -5,6 +5,7 @@ import { loadUser } from './store/actions/authActions';
 
 import Controls from './containers/Controls/Controls';
 import RecipesDisplay from './containers/RecipesDisplay/RecipesDisplay';
+import FavoritesDisplay from './containers/FavoritesDisplay/FavoritesDisplay';
 
 import Layout from './components/Layout/Layout';
 
@@ -25,6 +26,9 @@ export class App extends Component {
             </Route>
             <Route exact path='/recipes'>
               <RecipesDisplay> </RecipesDisplay>
+            </Route>
+            <Route exact path='/favorites'>
+              <FavoritesDisplay></FavoritesDisplay>
             </Route>
           </Switch>
         </Layout>

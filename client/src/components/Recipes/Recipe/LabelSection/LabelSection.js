@@ -28,8 +28,8 @@ const LabelSection = (props) => {
       <>
         <LabelHeader>{props.header}</LabelHeader>
         <LabelContainer>
-          {props.labels.map((el) => (
-            <LabelItem>{el}</LabelItem>
+          {props.labels.map((el, index) => (
+            <LabelItem key={index}>{el}</LabelItem>
           ))}
         </LabelContainer>
       </>

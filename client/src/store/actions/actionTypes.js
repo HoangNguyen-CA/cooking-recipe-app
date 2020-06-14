@@ -1,3 +1,4 @@
+//Recipes
 export const GET_RECIPES = 'GET_RECIPES';
 export const RECIPES_LOADING = 'RECIPES_LOADING';
 export const RECIPES_STOP_LOADING = 'RECIPES_STOP_LOADING';

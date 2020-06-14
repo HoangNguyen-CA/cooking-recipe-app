@@ -64,7 +64,8 @@ const Recipe = ({
   ingredients,
   calories,
   totalTime,
-  totalNutrients,
+  nutrients,
+  children,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -84,7 +85,7 @@ const Recipe = ({
         handleClose={handleModalClose}
         label={label}
         ingredients={ingredients}
-        nutrients={totalNutrients}
+        nutrients={nutrients}
       ></RecipeModal>
       <Header> {label}</Header>
       <Source>
@@ -108,6 +109,7 @@ const Recipe = ({
       <StyledButton onClick={handleModalOpen}>
         Ingredients & Nutrients
       </StyledButton>
+      {children}
     </Display>
   );
 };

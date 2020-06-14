@@ -1,21 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 import NavLink from './NavLink/NavLink';
+import NavLabel from './NavLink/NavLabel';
 
 const StyledNavLinks = styled.div`
   display: flex;
 `;
 
-const NavLabel = styled.p``;
+const Emphasis = styled.span`
+  color: ${(props) => props.theme.colors.primary};
+  font-weight: 600;
+`;
 
 const NavLinks = (props) => {
   let navLinks;
   if (props.isAuthenticated) {
     navLinks = (
       <StyledNavLinks>
-        <NavLink>Search</NavLink>
-        <NavLink>Recipes</NavLink>
-        <NavLabel>Logged in as {props.user ? props.user.name : ''} </NavLabel>
+        <NavLabel>
+          Logged in as{' '}
+          <Emphasis>{props.user ? props.user.name : null}</Emphasis>{' '}
+        </NavLabel>
+        <NavLink onClick={props.handleToFavorites}>Favorites</NavLink>
+        <NavLink onClick={props.handleToSearch}>Search</NavLink>
+        <NavLink onClick={props.handleToRecipes}>Recipes</NavLink>
         <NavLink onClick={props.logout}>Logout</NavLink>
       </StyledNavLinks>
     );

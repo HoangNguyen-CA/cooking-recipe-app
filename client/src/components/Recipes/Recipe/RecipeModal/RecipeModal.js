@@ -30,14 +30,14 @@ const RecipeModal = (props) => {
       <ModalHeader>{props.label}</ModalHeader>
       <List>
         <ListHeader>Ingredients:</ListHeader>
-        {props.ingredients.map((el) => (
-          <ListElement>{el}</ListElement>
+        {props.ingredients.map((el, index) => (
+          <ListElement key={index}>{el}</ListElement>
         ))}
       </List>
       <List>
         <ListHeader>Nutrients:</ListHeader>
-        {props.nutrients.map((el) => (
-          <ListElement>
+        {props.nutrients.map((el, index) => (
+          <ListElement key={index}>
             {el.label}: {el.total.toFixed(2)} {el.unit} ({Math.round(el.daily)}%
             daily)
           </ListElement>
