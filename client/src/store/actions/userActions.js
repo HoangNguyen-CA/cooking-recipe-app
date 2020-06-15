@@ -8,6 +8,7 @@ import {
   FAV_STOP_LOADING,
 } from './actionTypes';
 import { tokenConfig } from './authActions';
+
 import { setError } from './errorActions';
 
 export const getFavorites = () => (dispatch, getState) => {
@@ -23,11 +24,9 @@ export const getFavorites = () => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      dispatch(
-        setError(err.response.data, err.response.status, 'GET_FAV_FAIL')
-      );
       dispatch({
         type: FAV_STOP_LOADING,
+        error: err.response.data.msg,
       });
     });
 };
@@ -46,9 +45,7 @@ export const addFavorite = (recipe) => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      dispatch(
-        setError(err.response.data, err.response.status, 'ADD_FAV_FAIL')
-      );
+      dispatch(setError(err.response.data.msg));
     });
 };
 
@@ -62,8 +59,6 @@ export const deleteFavorite = (id) => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      dispatch(
-        setError(err.response.data, err.response.status, 'DELETE_FAV_FAIL')
-      );
+      dispatch(setError(err.response.data.msg));
     });
 };

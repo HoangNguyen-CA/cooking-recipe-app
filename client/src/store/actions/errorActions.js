@@ -1,19 +1,17 @@
-import { GET_ERRORS, CLEAR_ERRORS } from './actionTypes';
+import { SET_ERROR, HIDE_ERROR } from './actionTypes';
 
 //RETURN ERRORS (used in dispatch at authActions)
-export const setError = (msg, status, id = null) => {
+export const setError = (error, id, show) => {
   return {
-    type: GET_ERRORS,
-    payload: {
-      msg,
-      status,
-      id,
-    },
+    type: SET_ERROR,
+    error: error,
+    errorId: id,
+    showError: show,
   };
 };
 //CLEAR ERRORS
 export const clearErrors = () => {
   return {
-    type: CLEAR_ERRORS,
+    type: HIDE_ERROR,
   };
 };

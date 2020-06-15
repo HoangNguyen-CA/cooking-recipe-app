@@ -9,7 +9,6 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
 } from './actionTypes';
-import { setError } from './errorActions';
 
 //check token and load user
 export const loadUser = () => (dispatch, getState) => {
@@ -26,10 +25,10 @@ export const loadUser = () => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      console.log(err);
-      dispatch(setError(err.response.data, err.response.status));
       dispatch({
         type: AUTH_ERROR,
+        error: err.response.data.msg,
+        showError: false,
       });
     });
 };
@@ -54,11 +53,9 @@ export const register = ({ name, email, password }) => (dispatch) => {
       });
     })
     .catch((err) => {
-      dispatch(
-        setError(err.response.data, err.response.status, 'REGISTER_FAIL')
-      );
       dispatch({
         type: REGISTER_FAIL,
+        error: err.response.data.msg,
       });
     });
 };
@@ -89,9 +86,9 @@ export const login = ({ email, password }) => (dispatch) => {
       });
     })
     .catch((err) => {
-      dispatch(setError(err.response.data, err.response.status, 'LOGIN_FAIL'));
       dispatch({
         type: LOGIN_FAIL,
+        error: err.response.data.msg,
       });
     });
 };

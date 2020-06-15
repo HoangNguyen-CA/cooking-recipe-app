@@ -38,6 +38,7 @@ export default function LoginModal(props) {
   return (
     <StyledModal show={props.show} clickedBackdrop={props.handleLoginClose}>
       <ModalHeader>Login</ModalHeader>
+
       <Label htmlFor='login-name'>Email: </Label>
       <TextInput
         type='text'

@@ -1,27 +1,35 @@
-import { GET_ERRORS, CLEAR_ERRORS } from '../actions/actionTypes';
+import { SET_ERROR, HIDE_ERROR } from '../actions/actionTypes';
 
 const initalState = {
-  msg: {},
-  status: null,
-  id: null,
+  error: '',
+  id: '',
+  show: false,
 };
 
 export default function (state = initalState, action) {
   switch (action.type) {
-    case GET_ERRORS:
+    case HIDE_ERROR: {
       return {
-        msg: action.payload.msg,
-        status: action.payload.status,
-        id: action.payload.id,
-      };
-    case CLEAR_ERRORS: {
-      return {
-        msg: {},
-        status: null,
+        ...state,
+        error: null,
         id: null,
+        show: false,
       };
     }
-    default:
-      return state;
+
+    default: {
+      const { error, errorId, showError } = action;
+
+      if (error) {
+        return {
+          ...state,
+          error: error,
+          id: errorId,
+          show: showError === false ? false : true,
+        };
+      } else {
+        return state;
+      }
+    }
   }
 }
