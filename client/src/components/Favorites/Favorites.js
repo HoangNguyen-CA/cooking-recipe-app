@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Button from '../UI/Button/Button';
 
-import LoadingIcon from '../../images/LoadingIcon';
+import Spinner from '../UI/Spinner/Spinner';
 
 const Container = styled.div`
   width: 80%;
@@ -24,7 +24,7 @@ const Favorites = (props) => {
   return (
     <>
       {props.loading ? (
-        <LoadingIcon></LoadingIcon>
+        <Spinner />
       ) : (
         <Container>
           {props.favorites.map((el) => (

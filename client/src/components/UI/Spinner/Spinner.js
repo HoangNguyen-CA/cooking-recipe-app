@@ -19,7 +19,8 @@ const Animated = styled.svg`
 
 const Container = styled.div`
   overflow: hidden;
-  width: 30vw;
+  width: 80%;
+  margin: auto;
 `;
 
 export default function LoadingIcon() {

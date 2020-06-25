@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import Modal from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
+import Separator from '../../components/UI/Separator/Separator';
 
 import ModalHeader from '../../components/UI/Modal/ModalHeader/ModalHeader';
+import ErrorDiv from '../../components/Error/ErrorDiv';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 import Label from '../../components/Forms/Label';
 import TextInput from '../../components/Forms/TextInput';
@@ -20,7 +24,7 @@ const SubmitButton = styled(Button)`
   margin-top: 2em;
 `;
 
-export default function LoginModal(props) {
+function LoginModal(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -35,9 +39,11 @@ export default function LoginModal(props) {
     props.login(email, password);
   };
 
-  return (
-    <StyledModal show={props.show} clickedBackdrop={props.handleLoginClose}>
+  let content = (
+    <>
       <ModalHeader>Login</ModalHeader>
+      <ErrorDiv error={props.error}></ErrorDiv>
+      <Separator margin='0.5em 0' />
 
       <Label htmlFor='login-name'>Email: </Label>
       <TextInput
@@ -54,6 +60,23 @@ export default function LoginModal(props) {
         onChange={handlePasswordChange}
       />
       <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+    </>
+  );
+
+  if (props.loading) {
+    content = <Spinner />;
+  }
+
+  return (
+    <StyledModal show={props.show} clickedBackdrop={props.handleLoginClose}>
+      {content}
     </StyledModal>
   );
 }
+
+const mapStateToProps = (state) => ({
+  error: state.auth.loginError,
+  loading: state.auth.loading,
+});
+
+export default connect(mapStateToProps)(LoginModal);

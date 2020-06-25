@@ -1,7 +1,7 @@
 import React from 'react';
 import RecipeTemplate from './Recipe/RecipeTemplate';
 import styled from 'styled-components';
-import LoadingIcon from '../../images/LoadingIcon';
+import Spinner from '../UI/Spinner/Spinner';
 
 import Button from '../UI/Button/Button';
 
@@ -37,7 +37,7 @@ const Recipes = (props) => {
   return (
     <>
       {props.loading ? (
-        <LoadingIcon></LoadingIcon>
+        <Spinner />
       ) : (
         <Container>
           {props.recipes.map((el) => {

@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import Modal from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
+
+import ErrorDiv from '../../components/Error/ErrorDiv';
+import Separator from '../../components/UI/Separator/Separator';
 
 import ModalHeader from '../../components/UI/Modal/ModalHeader/ModalHeader';
 import Label from '../../components/Forms/Label';
 import TextInput from '../../components/Forms/TextInput';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 import styled from 'styled-components';
 
@@ -19,7 +24,7 @@ const SubmitButton = styled(Button)`
   margin-top: 2em;
 `;
 
-export default function RegisterModal(props) {
+function RegisterModal(props) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,9 +45,12 @@ export default function RegisterModal(props) {
     props.register(username, email, password);
   };
 
-  return (
-    <StyledModal show={props.show} clickedBackdrop={props.handleRegisterClose}>
+  let content = (
+    <>
       <ModalHeader>Register</ModalHeader>
+      <ErrorDiv error={props.error}></ErrorDiv>
+      <Separator margin='0.5em 0' />
+
       <Label htmlFor='register-name'>Username: </Label>
       <TextInput
         type='text'
@@ -65,6 +73,23 @@ export default function RegisterModal(props) {
         onChange={handlePasswordChange}
       />
       <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+    </>
+  );
+
+  if (props.loading) {
+    content = <Spinner />;
+  }
+
+  return (
+    <StyledModal show={props.show} clickedBackdrop={props.handleRegisterClose}>
+      {content}
     </StyledModal>
   );
 }
+
+const mapStateToProps = (state) => ({
+  error: state.auth.registerError,
+  loading: state.auth.loading,
+});
+
+export default connect(mapStateToProps)(RegisterModal);

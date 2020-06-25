@@ -18,7 +18,7 @@ const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null,
   user: null,
-  isLoading: false,
+  loading: false,
   loginError: null,
   registerError: null,
 };
@@ -29,7 +29,7 @@ const removeToken = (state, props = {}) => {
     token: null,
     user: null,
     isAuthenticated: null,
-    isLoading: false,
+    loading: false,
     ...props,
   });
 };
@@ -41,11 +41,11 @@ export default function (state = initialState, action) {
     case LOGIN_START:
     case REGISTER_START:
     case USER_LOADING_START:
-      return updateObject(state, { isLoading: true });
+      return updateObject(state, { loading: true });
     case USER_LOADING_SUCCESS:
       return updateObject(state, {
         isAuthenticated: true,
-        isLoading: false,
+        loading: false,
         user: payload,
       });
     case LOGIN_SUCCESS:
@@ -54,7 +54,7 @@ export default function (state = initialState, action) {
       return updateObject(state, {
         ...payload,
         isAuthenticated: true,
-        isLoading: false,
+        loading: false,
       });
 
     case USER_LOADING_FAIL:
