@@ -9,6 +9,7 @@ import {
   REGISTER_START,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  CLEAR_AUTH_ERRORS,
 } from '../actions/actionTypes';
 
 import { updateObject } from '../../shared/util';
@@ -35,6 +36,7 @@ const removeToken = (state, props = {}) => {
 
 export default function (state = initialState, action) {
   const payload = action.payload;
+
   switch (action.type) {
     case LOGIN_START:
     case REGISTER_START:
@@ -63,6 +65,8 @@ export default function (state = initialState, action) {
     case REGISTER_FAIL:
       return removeToken(state, { registerError: payload.error });
 
+    case CLEAR_AUTH_ERRORS:
+      return updateObject(state, { loginError: null, registerError: null });
     default:
       return state;
   }

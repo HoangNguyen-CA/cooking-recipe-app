@@ -24,6 +24,8 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const REGISTER_START = 'REGISTER_START';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
-//Error
+
+export const CLEAR_AUTH_ERRORS = 'CLEAR_AUTH_ERRORS';
+
 export const SET_ERROR = 'SET_ERROR';
 export const HIDE_ERROR = 'HIDE_ERROR';

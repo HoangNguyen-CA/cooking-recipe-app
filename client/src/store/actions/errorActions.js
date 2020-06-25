@@ -1,16 +1,14 @@
 import { SET_ERROR, HIDE_ERROR } from './actionTypes';
 
 //RETURN ERRORS (used in dispatch at authActions)
-export const setError = (error, id, show) => {
+export const setError = (error) => {
   return {
     type: SET_ERROR,
-    error: error,
-    errorId: id,
-    showError: show,
+    payload: { error },
   };
 };
 //CLEAR ERRORS
-export const clearErrors = () => {
+export const hideError = () => {
   return {
     type: HIDE_ERROR,
   };

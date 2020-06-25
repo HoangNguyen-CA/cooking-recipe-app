@@ -1,35 +1,24 @@
 import { SET_ERROR, HIDE_ERROR } from '../actions/actionTypes';
 
-const initalState = {
+import { updateObject } from '../../shared/util';
+
+const initialState = {
   error: '',
-  id: '',
   show: false,
 };
 
-export default function (state = initalState, action) {
+export default function (state = initialState, action) {
+  const payload = action.payload;
+
   switch (action.type) {
+    case SET_ERROR: {
+      return updateObject(state, { error: payload.error, show: true });
+    }
     case HIDE_ERROR: {
-      return {
-        ...state,
-        error: null,
-        id: null,
-        show: false,
-      };
+      return updateObject(state, { error: '', show: false });
     }
 
-    default: {
-      const { error, errorId, showError } = action;
-
-      if (error) {
-        return {
-          ...state,
-          error: error,
-          id: errorId,
-          show: showError === false ? false : true,
-        };
-      } else {
-        return state;
-      }
-    }
+    default:
+      return state;
   }
 }

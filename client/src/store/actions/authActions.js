@@ -10,6 +10,7 @@ import {
   REGISTER_START,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  CLEAR_AUTH_ERRORS,
 } from './actionTypes';
 
 import { tokenConfig } from '../util';
@@ -76,5 +77,11 @@ export const login = ({ email, password }) => (dispatch) => {
 export const logout = () => {
   return {
     type: LOGOUT_SUCCESS,
+  };
+};
+
+export const clearAuthErrors = () => {
+  return {
+    type: CLEAR_AUTH_ERRORS,
   };
 };
