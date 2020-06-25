@@ -7,8 +7,7 @@ import {
   DELETE_FAV,
   FAV_STOP_LOADING,
 } from './actionTypes';
-import { tokenConfig } from './authActions';
-
+import { tokenConfig } from '../util';
 import { setError } from './errorActions';
 
 export const getFavorites = () => (dispatch, getState) => {

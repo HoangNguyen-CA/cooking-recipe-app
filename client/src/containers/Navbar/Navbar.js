@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import LoginModal from '../Modals/LoginModal';
-import RegisterModal from '../Modals/RegisterModal';
+import LoginModal from '../Auth/LoginModal';
+import RegisterModal from '../Auth/RegisterModal';
 
 import NavLinks from '../../components/Navigation/NavLinks/NavLinks';
 

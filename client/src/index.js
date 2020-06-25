@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 import './index.scss';
 import App from './App';
 
@@ -13,6 +14,8 @@ import thunk from 'redux-thunk';
 import rootReducer from './store/reducers/index';
 
 import { BrowserRouter as Router } from 'react-router-dom';
+
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 const middleware = [thunk];
 
