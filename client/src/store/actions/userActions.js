@@ -1,31 +1,29 @@
 import axios from 'axios';
 
 import {
-  FAV_LOADING,
   ADD_FAV,
-  GET_FAV,
   DELETE_FAV,
-  FAV_STOP_LOADING,
+  GET_FAV_START,
+  GET_FAV_SUCCESS,
+  GET_FAV_FAIL,
 } from './actionTypes';
 import { tokenConfig } from '../util';
-import { setError } from './errorActions';
 
 export const getFavorites = () => (dispatch, getState) => {
   dispatch({
-    type: FAV_LOADING,
+    type: GET_FAV_START,
   });
   axios
     .get('/api/recipes/', tokenConfig(getState))
     .then((res) => {
       dispatch({
-        type: GET_FAV,
+        type: GET_FAV_SUCCESS,
         payload: res.data,
       });
     })
     .catch((err) => {
       dispatch({
-        type: FAV_STOP_LOADING,
-        error: err.response.data.msg,
+        type: GET_FAV_FAIL,
       });
     });
 };
@@ -43,9 +41,7 @@ export const addFavorite = (recipe) => (dispatch, getState) => {
         payload: res.data,
       });
     })
-    .catch((err) => {
-      dispatch(setError(err.response.data.msg));
-    });
+    .catch((err) => {});
 };
 
 export const deleteFavorite = (id) => (dispatch, getState) => {
@@ -57,7 +53,5 @@ export const deleteFavorite = (id) => (dispatch, getState) => {
         payload: id,
       });
     })
-    .catch((err) => {
-      dispatch(setError(err.response.data.msg));
-    });
+    .catch((err) => {});
 };

@@ -6,9 +6,10 @@ export const GET_RECIPES_FAIL = 'GET_RECIPES_FAIL';
 //User
 export const ADD_FAV = 'ADD_FAV';
 export const DELETE_FAV = 'DELETE_FAV';
-export const GET_FAV = 'GET_FAV';
-export const FAV_LOADING = 'FAV_LOADING';
-export const FAV_STOP_LOADING = 'FAV_STOP_LOADING';
+
+export const GET_FAV_START = 'FAV_LOADING';
+export const GET_FAV_SUCCESS = 'GET_FAV';
+export const GET_FAV_FAIL = 'FAV_STOP_LOADING';
 
 //Auth
 export const USER_LOADING_START = 'USER_LOADING_START';

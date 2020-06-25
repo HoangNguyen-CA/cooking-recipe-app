@@ -1,10 +1,12 @@
 import {
   ADD_FAV,
   DELETE_FAV,
-  GET_FAV,
-  FAV_LOADING,
-  FAV_STOP_LOADING,
+  GET_FAV_START,
+  GET_FAV_SUCCESS,
+  GET_FAV_FAIL,
 } from '../actions/actionTypes';
+
+import { updateObject } from '../../shared/util';
 
 const initialState = {
   favorites: [],
@@ -12,39 +14,27 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
+  const payload = action.payload;
   switch (action.type) {
-    case GET_FAV: {
-      return {
-        ...state,
-        favorites: action.payload,
-        loading: false,
-      };
+    case GET_FAV_SUCCESS: {
+      return updateObject(state, { favorites: payload, loading: false });
     }
     case DELETE_FAV: {
-      return {
-        ...state,
+      return updateObject(state, {
         favorites: state.favorites.filter((fav) => fav._id !== action.payload),
-      };
+      });
     }
     case ADD_FAV: {
-      return {
-        ...state,
+      return updateObject(state, {
         favorites: [...state.favorites, action.payload],
-      };
+      });
     }
-    case FAV_LOADING: {
-      return {
-        ...state,
-        loading: true,
-      };
+    case GET_FAV_START: {
+      return updateObject(state, { loading: true });
     }
-    case FAV_STOP_LOADING: {
-      return {
-        ...state,
-        loading: false,
-      };
+    case GET_FAV_FAIL: {
+      return updateObject(state, { loading: false });
     }
-
     default:
       return state;
   }
