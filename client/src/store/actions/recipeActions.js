@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 import {
-  RECIPES_LOADING,
-  GET_RECIPES,
-  RECIPES_STOP_LOADING,
+  GET_RECIPES_START,
+  GET_RECIPES_SUCCESS,
+  GET_RECIPES_FAIL,
 } from './actionTypes';
 
 export const getRecipes = ({
@@ -15,42 +15,29 @@ export const getRecipes = ({
   time,
   excluded,
 }) => (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
-  dispatch({
-    type: RECIPES_LOADING,
-  });
+  dispatch({ type: GET_RECIPES_START });
 
   axios
-    .get(
-      `/api/recipes/edamam`,
-      {
-        params: {
-          search,
-          ingredients,
-          diet,
-          health,
-          calories,
-          time,
-          excluded,
-        },
+    .get(`/api/recipes/edamam`, {
+      params: {
+        search,
+        ingredients,
+        diet,
+        health,
+        calories,
+        time,
+        excluded,
       },
-      config
-    )
+    })
     .then((res) => {
       dispatch({
-        type: GET_RECIPES,
+        type: GET_RECIPES_SUCCESS,
         payload: res.data,
       });
     })
     .catch((err) => {
       dispatch({
-        type: RECIPES_STOP_LOADING,
-        err: err.response.data.msg,
+        type: GET_RECIPES_FAIL,
       });
     });
 };

@@ -1,7 +1,7 @@
 //Recipes
-export const GET_RECIPES = 'GET_RECIPES';
-export const RECIPES_LOADING = 'RECIPES_LOADING';
-export const RECIPES_STOP_LOADING = 'RECIPES_STOP_LOADING';
+export const GET_RECIPES_SUCCESS = 'GET_RECIPES_SUCCESS';
+export const GET_RECIPES_START = 'GET_RECIPES_START';
+export const GET_RECIPES_FAIL = 'GET_RECIPES_FAIL';
 
 //User
 export const ADD_FAV = 'ADD_FAV';
