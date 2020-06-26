@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -8,7 +7,12 @@ import RegisterModal from '../Auth/RegisterModal';
 
 import NavLinks from '../../components/Navigation/NavLinks/NavLinks';
 
-import { login, logout, register } from '../../store/actions/authActions';
+import {
+  login,
+  logout,
+  register,
+  clearAuthErrors,
+} from '../../store/actions/authActions';
 import { withRouter } from 'react-router-dom';
 
 const StyledNavbar = styled.div`
@@ -32,10 +36,16 @@ export class Navbar extends Component {
     registerOpen: false,
   };
 
-  handleLoginOpen = () => this.setState({ loginOpen: true });
+  handleLoginOpen = () => {
+    this.props.clearAuthErrors();
+    this.setState({ loginOpen: true });
+  };
   handleLoginClose = () => this.setState({ loginOpen: false });
 
-  handleRegisterOpen = () => this.setState({ registerOpen: true });
+  handleRegisterOpen = () => {
+    this.props.clearAuthErrors();
+    this.setState({ registerOpen: true });
+  };
   handleRegisterClose = () => this.setState({ registerOpen: false });
 
   handleToSearch = () => {
@@ -102,6 +112,7 @@ const mapDispatchToProps = (dispatch) => {
     logout: () => dispatch(logout()),
     register: (username, email, password) =>
       dispatch(register({ name: username, email, password })),
+    clearAuthErrors: () => dispatch(clearAuthErrors()),
   };
 };
 

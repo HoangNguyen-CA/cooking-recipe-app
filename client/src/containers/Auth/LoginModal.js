@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+
 import Modal from '../../components/UI/Modal/Modal';
+import ErrorDiv from '../../components/Error/ErrorDiv';
+
 import Button from '../../components/UI/Button/Button';
 import Separator from '../../components/UI/Separator/Separator';
 
 import ModalHeader from '../../components/UI/Modal/ModalHeader/ModalHeader';
-import ErrorDiv from '../../components/Error/ErrorDiv';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
-import Label from '../../components/Forms/Label';
-import TextInput from '../../components/Forms/TextInput';
+import FormInputs from '../../components/Forms/FormInputs';
 
-import styled from 'styled-components';
+import { checkValidity, checkSubmitValidity } from '../../shared/formAuth';
 
 const StyledModal = styled(Modal)`
   max-width: 400px;
@@ -25,18 +27,56 @@ const SubmitButton = styled(Button)`
 `;
 
 function LoginModal(props) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [controls, setControls] = useState({
+    email: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'email',
+      },
+      validation: {
+        required: true,
+        isEmail: true,
+      },
+      value: '',
+      valid: false,
+      touched: false,
+    },
+    password: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'password',
+      },
+      validation: {
+        required: true,
+      },
+      value: '',
+      valid: false,
+      touched: false,
+    },
+  });
 
-  const handleUsernameChange = (e) => {
-    setEmail(e.target.value);
-  };
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+  const handleInputChanged = (event, controlName) => {
+    const updatedControls = {
+      ...controls,
+      [controlName]: {
+        ...controls[controlName],
+        value: event.target.value,
+        valid: checkValidity(
+          event.target.value,
+          controls[controlName].validation
+        ),
+        touched: true,
+      },
+    };
+    setControls(updatedControls);
   };
 
-  const handleSubmit = () => {
-    props.login(email, password);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(checkSubmitValidity(controls));
+    if (checkSubmitValidity(controls)) {
+      props.login(controls.email.value, controls.password.value);
+    }
   };
 
   let content = (
@@ -44,22 +84,13 @@ function LoginModal(props) {
       <ModalHeader>Login</ModalHeader>
       <ErrorDiv error={props.error}></ErrorDiv>
       <Separator margin='0.5em 0' />
-
-      <Label htmlFor='login-name'>Email: </Label>
-      <TextInput
-        type='text'
-        id='login-email'
-        value={email}
-        onChange={handleUsernameChange}
-      />
-      <Label htmlFor='login-password'>Password: </Label>
-      <TextInput
-        type='password'
-        id='login-password'
-        target={password}
-        onChange={handlePasswordChange}
-      />
-      <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+      <form onSubmit={handleSubmit}>
+        <FormInputs
+          controls={controls}
+          handleInputChanged={handleInputChanged}
+        ></FormInputs>
+        <SubmitButton type='submit'>Submit</SubmitButton>
+      </form>
     </>
   );
 
