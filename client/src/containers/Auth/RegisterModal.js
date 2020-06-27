@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Modal from '../../components/UI/Modal/Modal';
-import Button from '../../components/UI/Button/Button';
-
-import ErrorDiv from '../../components/Error/ErrorDiv';
-import Separator from '../../components/UI/Separator/Separator';
-
 import ModalHeader from '../../components/UI/Modal/ModalHeader/ModalHeader';
-import Label from '../../components/Forms/Label';
-import TextInput from '../../components/Forms/TextInput';
+import Button from '../../components/UI/Button/Button';
+import Separator from '../../components/UI/Separator/Separator';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
-import styled from 'styled-components';
+import ErrorDiv from '../../components/Error/ErrorDiv';
+
+import FormInputs from '../../components/Forms/FormInputs';
+
+import { checkSubmitValidity, checkValidity } from '../../shared/formAuth';
 
 const StyledModal = styled(Modal)`
   max-width: 400px;
@@ -25,24 +25,74 @@ const SubmitButton = styled(Button)`
 `;
 
 function RegisterModal(props) {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [controls, setControls] = useState({
+    username: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'text',
+      },
+      validation: {
+        required: true,
+        maxLength: 15,
+      },
+      value: '',
+      valid: false,
+      touched: false,
+    },
+    email: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'email',
+      },
+      validation: {
+        required: true,
+        isEmail: true,
+      },
+      value: '',
+      valid: false,
+      touched: false,
+    },
+    password: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'password',
+      },
+      validation: {
+        required: true,
+        minLength: 5,
+      },
+      value: '',
+      valid: false,
+      touched: false,
+    },
+  });
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const handleInputChanged = (event, controlName) => {
+    const updatedControls = {
+      ...controls,
+      [controlName]: {
+        ...controls[controlName],
+        value: event.target.value,
+        valid: checkValidity(
+          event.target.value,
+          controls[controlName].validation
+        ),
+        touched: true,
+      },
+    };
+    setControls(updatedControls);
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = () => {
-    props.register(username, email, password);
+    if (checkSubmitValidity(controls)) {
+      props.register(
+        controls.username.value,
+        controls.email.value,
+        controls.password.value
+      );
+    }
   };
 
   let content = (
@@ -50,29 +100,13 @@ function RegisterModal(props) {
       <ModalHeader>Register</ModalHeader>
       <ErrorDiv error={props.error}></ErrorDiv>
       <Separator margin='0.5em 0' />
-
-      <Label htmlFor='register-name'>Username: </Label>
-      <TextInput
-        type='text'
-        id='register-name'
-        value={username}
-        onChange={handleUsernameChange}
-      />
-      <Label htmlFor='register-email'>Email: </Label>
-      <TextInput
-        type='text'
-        id='register-email'
-        value={email}
-        onChange={handleEmailChange}
-      />
-      <Label htmlFor='register-password'>Password: </Label>
-      <TextInput
-        type='password'
-        id='register-password'
-        target={password}
-        onChange={handlePasswordChange}
-      />
-      <SubmitButton onClick={handleSubmit}>Submit</SubmitButton>
+      <form onSubmit={handleSubmit}>
+        <FormInputs
+          controls={controls}
+          handleInputChanged={handleInputChanged}
+        ></FormInputs>
+        <SubmitButton type='submit'>Submit</SubmitButton>
+      </form>
     </>
   );
 

@@ -48,6 +48,7 @@ function LoginModal(props) {
       },
       validation: {
         required: true,
+        minLength: 5,
       },
       value: '',
       valid: false,
@@ -73,7 +74,7 @@ function LoginModal(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(checkSubmitValidity(controls));
+
     if (checkSubmitValidity(controls)) {
       props.login(controls.email.value, controls.password.value);
     }
