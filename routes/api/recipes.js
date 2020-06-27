@@ -15,7 +15,7 @@ const setUpParam = (paramName, param) => {
 
 router.get('/edamam', (req, res) => {
   const {
-    search,
+    search = '',
     ingredients, //int
     diet,
     health, // array
@@ -24,10 +24,8 @@ router.get('/edamam', (req, res) => {
     excluded, // array
   } = req.query;
 
-  console.log(req.query);
-
-  if (search == undefined) {
-    res.status(404).json({ msg: 'search is undefined' });
+  if (search == '') {
+    return res.status(404).json({ msg: 'search is empty or undefined.' });
   }
 
   let url = `https://api.edamam.com/search?q=${search}&app_id=${
@@ -59,7 +57,7 @@ router.get('/edamam', (req, res) => {
     })
 
     .catch((err) => {
-      res.status(404).json({ msg: "Error: Couldn't get recipes." });
+      res.status(404).json({ msg: "couldn't fetch recipes from server." });
     });
 });
 
@@ -77,7 +75,7 @@ router.post('/', auth, (req, res) => {
       .then(res.status(200).json(recipe))
 
       .catch((err) => {
-        res.status(400).json({ msg: "Error: couldn't save recipe" });
+        res.status(400).json({ msg: "couldn't save recipe" });
       });
   });
 });
@@ -94,7 +92,7 @@ router.get('/', auth, (req, res) => {
     })
 
     .catch((err) => {
-      res.status(404).json({ msg: "Error: couldn't get recipe" });
+      res.status(404).json({ msg: "couldn't get recipes" });
     });
 });
 
@@ -112,7 +110,7 @@ router.delete('/:id', auth, (req, res) => {
     })
 
     .catch((err) => {
-      res.status(400).json({ msg: "Error: couldn't get recipe" });
+      res.status(400).json({ msg: "couldn't delete recipe" });
     });
 });
 

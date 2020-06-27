@@ -6,6 +6,8 @@ import {
   GET_RECIPES_FAIL,
 } from './actionTypes';
 
+import { setError } from './errorActions';
+
 export const getRecipes = ({
   search,
   ingredients,
@@ -36,6 +38,7 @@ export const getRecipes = ({
       });
     })
     .catch((err) => {
+      dispatch(setError(err.response.data.msg));
       dispatch({
         type: GET_RECIPES_FAIL,
       });

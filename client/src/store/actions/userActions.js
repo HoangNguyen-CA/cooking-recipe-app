@@ -9,6 +9,8 @@ import {
 } from './actionTypes';
 import { tokenConfig } from '../util';
 
+import { setError } from './errorActions';
+
 export const getFavorites = () => (dispatch, getState) => {
   dispatch({
     type: GET_FAV_START,
@@ -22,6 +24,7 @@ export const getFavorites = () => (dispatch, getState) => {
       });
     })
     .catch((err) => {
+      dispatch(setError(err.response.data.msg));
       dispatch({
         type: GET_FAV_FAIL,
       });
@@ -41,7 +44,9 @@ export const addFavorite = (recipe) => (dispatch, getState) => {
         payload: res.data,
       });
     })
-    .catch((err) => {});
+    .catch((err) => {
+      dispatch(setError(err.response.data.msg));
+    });
 };
 
 export const deleteFavorite = (id) => (dispatch, getState) => {
@@ -53,5 +58,7 @@ export const deleteFavorite = (id) => (dispatch, getState) => {
         payload: id,
       });
     })
-    .catch((err) => {});
+    .catch((err) => {
+      dispatch(setError(err.response.data.msg));
+    });
 };
