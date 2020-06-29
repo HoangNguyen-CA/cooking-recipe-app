@@ -20,7 +20,7 @@ const StyledNavbar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.3em 0.7em;
+  padding: 0.5em 0.7em;
 `;
 
 const Title = styled.h1`

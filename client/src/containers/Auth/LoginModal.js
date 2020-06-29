@@ -38,6 +38,7 @@ function LoginModal(props) {
         isEmail: true,
       },
       value: '',
+      msg: '',
       valid: false,
       touched: false,
     },
@@ -51,21 +52,25 @@ function LoginModal(props) {
         minLength: 5,
       },
       value: '',
+      msg: '',
       valid: false,
       touched: false,
     },
   });
 
   const handleInputChanged = (event, controlName) => {
+    const { valid, msg } = checkValidity(
+      event.target.value,
+      controls[controlName].validation,
+      controlName
+    );
     const updatedControls = {
       ...controls,
       [controlName]: {
         ...controls[controlName],
         value: event.target.value,
-        valid: checkValidity(
-          event.target.value,
-          controls[controlName].validation
-        ),
+        msg: msg,
+        valid: valid,
         touched: true,
       },
     };

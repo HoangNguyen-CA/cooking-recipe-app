@@ -21,6 +21,7 @@ const Container = styled.div`
   overflow: hidden;
   width: 80%;
   margin: auto;
+  max-width: 500px;
 `;
 
 export default function LoadingIcon() {

@@ -19,6 +19,7 @@ const Form = (props) => {
       changed={(e) => props.handleInputChanged(e, formElement.id)}
       valid={formElement.config.valid}
       touched={formElement.config.touched}
+      msg={formElement.config.msg}
     />
   ));
   return <>{form}</>;

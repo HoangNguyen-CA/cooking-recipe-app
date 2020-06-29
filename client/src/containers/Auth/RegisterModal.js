@@ -68,15 +68,18 @@ function RegisterModal(props) {
   });
 
   const handleInputChanged = (event, controlName) => {
+    const { valid, msg } = checkValidity(
+      event.target.value,
+      controls[controlName].validation,
+      controlName
+    );
     const updatedControls = {
       ...controls,
       [controlName]: {
         ...controls[controlName],
         value: event.target.value,
-        valid: checkValidity(
-          event.target.value,
-          controls[controlName].validation
-        ),
+        msg: msg,
+        valid: valid,
         touched: true,
       },
     };

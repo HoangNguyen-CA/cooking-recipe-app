@@ -20,6 +20,25 @@ const ValidatedInput = styled(TextInput)`
 
 const Group = styled.div``;
 
+const Message = styled.small`
+  display: block;
+  padding-left: 1em;
+  color: ${(props) => props.theme.colors.danger};
+  font-size: 0.8rem;
+  text-transform: capitalize;
+  ${(props) => {
+    if (!props.valid && props.touched && props.msg !== '') {
+      return 'opacity: 1;';
+    } else {
+      return 'opacity: 0;';
+    }
+  }}
+`;
+
+const NoMarginLabel = styled(Label)`
+  margin-top: 0;
+`;
+
 const Input = (props) => {
   let inputElement = null;
 
@@ -40,6 +59,7 @@ const Input = (props) => {
         <ValidatedInput
           {...props.elementConfig}
           valid={props.valid}
+          touched={props.touched}
           value={props.value}
           onChange={props.changed}
         ></ValidatedInput>
@@ -47,8 +67,11 @@ const Input = (props) => {
   }
   return (
     <Group>
-      <Label>{props.label}</Label>
+      <NoMarginLabel>{props.label}</NoMarginLabel>
       {inputElement}
+      <Message valid={props.valid} touched={props.touched} msg={props.msg}>
+        {props.msg || '_'}
+      </Message>
     </Group>
   );
 };
