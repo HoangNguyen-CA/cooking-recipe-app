@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import NavLink from './NavLink/NavLink';
 import NavLabel from './NavLink/NavLabel';
 
-import Backdrop from '../../UI/Backdrop/Backdrop';
-
 const Burger = styled.div`
   cursor: pointer;
   display: block;
@@ -25,6 +23,7 @@ const Burger = styled.div`
 const StyledNavLinks = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
 
   position: fixed;
   top: 0;
@@ -48,13 +47,13 @@ const StyledNavLinks = styled.div`
   @media ${({ theme }) => theme.breakpoints.tablet} {
     position: static;
     flex-direction: row;
-    justify-content: flex-start;
     font-size: 1rem;
 
     height: auto;
+    max-height: none;
+
     width: auto;
-    max-width: auto;
-    max-height: auto;
+    max-width: none;
 
     background-color: transparent;
     transform: translateX(0%);

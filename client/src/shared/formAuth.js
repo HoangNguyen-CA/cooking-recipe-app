@@ -8,7 +8,7 @@ export const checkValidity = (value, rules, name = '') => {
   };
 
   if (rules.required) {
-    if (value.trim() == '') {
+    if (value.trim() === '') {
       msg = `${name} is required`;
       isValid = false;
       finish();
