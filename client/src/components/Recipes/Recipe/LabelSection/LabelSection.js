@@ -11,13 +11,11 @@ const LabelHeader = styled.h6`
 
 const LabelItem = styled.p`
   display: inline-block;
-  padding: 0.2em 0.5em;
+  padding: 0.3em 0.7em;
   margin: 0.2em;
   color: white;
   background-color: ${(props) => props.theme.colors.secondary};
-  border: none;
-  border-top: none;
-  border-bottom: none;
+  border: 2px solid ${(props) => props.theme.colors.dark};
 `;
 
 const LabelSection = (props) => {
