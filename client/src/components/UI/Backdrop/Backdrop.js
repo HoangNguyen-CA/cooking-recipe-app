@@ -13,7 +13,10 @@ const StyledBackdrop = styled.div`
 
 const Backdrop = (props) => {
   return props.show ? (
-    <StyledBackdrop onClick={props.clicked}></StyledBackdrop>
+    <StyledBackdrop
+      onClick={props.clicked}
+      className={props.className}
+    ></StyledBackdrop>
   ) : (
     ''
   );

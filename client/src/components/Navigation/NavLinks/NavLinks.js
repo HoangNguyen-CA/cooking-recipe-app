@@ -1,10 +1,65 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import NavLink from './NavLink/NavLink';
 import NavLabel from './NavLink/NavLabel';
 
+import Backdrop from '../../UI/Backdrop/Backdrop';
+
+const Burger = styled.div`
+  cursor: pointer;
+  display: block;
+
+  & div {
+    height: 0.25em;
+    width: 1.7em;
+    margin: 0.3em;
+    background-color: black;
+  }
+
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    display: none;
+  }
+`;
+
 const StyledNavLinks = styled.div`
   display: flex;
+  flex-direction: column;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+
+  min-height: auto;
+  height: 100vh;
+
+  background-color: ${(props) => props.theme.colors.light};
+
+  overflow: auto;
+
+  font-size: 1.2rem;
+  width: 12em;
+  max-width: 50vw;
+  transform: ${(props) => (props.open ? 'translateX(0%)' : 'translateX(100%)')};
+
+  transition: 0.2s ease-out;
+
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    position: static;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-size: 1rem;
+
+    height: auto;
+    width: auto;
+    max-width: auto;
+    max-height: auto;
+
+    background-color: transparent;
+    transform: translateX(0%);
+    transition: none;
+  }
 `;
 
 const Emphasis = styled.span`
@@ -16,7 +71,7 @@ const NavLinks = (props) => {
   let navLinks;
   if (props.isAuthenticated) {
     navLinks = (
-      <StyledNavLinks>
+      <StyledNavLinks open={props.open}>
         <NavLabel>
           Logged in as{' '}
           <Emphasis>{props.user ? props.user.name : null}</Emphasis>{' '}
@@ -29,7 +84,7 @@ const NavLinks = (props) => {
     );
   } else {
     navLinks = (
-      <StyledNavLinks>
+      <StyledNavLinks open={props.open}>
         <NavLink onClick={props.handleToSearch}>Search</NavLink>
         <NavLink onClick={props.handleToRecipes}>Recipes</NavLink>
 
@@ -38,7 +93,16 @@ const NavLinks = (props) => {
       </StyledNavLinks>
     );
   }
-  return <>{navLinks}</>;
+  return (
+    <>
+      {navLinks}
+      <Burger onClick={props.toggleOpen}>
+        <div></div>
+        <div></div>
+        <div></div>
+      </Burger>
+    </>
+  );
 };
 
 export default NavLinks;
