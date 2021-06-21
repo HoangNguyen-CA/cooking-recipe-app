@@ -2,57 +2,56 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const AppError = require('../../AppError');
+const jwtSecret = process.env.jwtSecret || 'secret';
 
-//User
 const User = require('../../models/User');
 
 // @route POST api/users
-// @desc Register new user
+// @desc Register a new user
 // @access Public
-router.post('/', (req, res) => {
+router.post('/', async (req, res, next) => {
   const { name, email, password } = req.body;
-  // simple validation
+
   if (!name || !email || !password) {
-    return res.status(400).json({ msg: 'Please enter all fields' });
+    return next(new AppError(400, 'Please enter all fields.'));
   }
 
-  User.findOne({ email: email }).then((user) => {
-    //check for existing user
-    if (user) return res.status(400).json({ msg: 'User already exists' });
+  const foundUser = await User.findOne({ email: email });
+  if (foundUser) return next(new AppError(400, 'User already exists.'));
 
-    //if not found create new user
-    const newUser = new User({
-      name,
-      email,
-      password,
-    });
+  const newUser = new User({
+    name,
+    email,
+    password,
+  });
 
-    //create salt and hash
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-        if (err) throw err;
-        newUser.password = hash;
-        newUser.save().then((user) => {
-          jwt.sign(
-            {
-              id: user.id,
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(newUser.password, salt, async (err, hash) => {
+      if (err) return next(err);
+      newUser.password = hash;
+      const savedUser = await newUser.save();
+      jwt.sign(
+        {
+          id: savedUser.id,
+        },
+        jwtSecret,
+        { expiresIn: 3600 },
+        (err, token) => {
+          if (err) next(err);
+
+          const payload = {
+            token: token,
+            user: {
+              id: savedUser.id,
+              name: savedUser.name,
+              email: savedUser.email,
             },
-            process.env.jwtSecret,
-            { expiresIn: 3600 },
-            (err, token) => {
-              if (err) throw err;
-              res.json({
-                token: token,
-                user: {
-                  id: user.id,
-                  name: user.name,
-                  email: user.email,
-                },
-              });
-            }
-          );
-        });
-      });
+          };
+
+          res.json(payload);
+        }
+      );
     });
   });
 });

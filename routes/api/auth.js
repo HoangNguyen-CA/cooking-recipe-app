@@ -3,59 +3,58 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');
+const AppError = require('../../AppError');
 
-//Item model
+const jwtSecret = process.env.jwtSecret || 'secret';
+
 const User = require('../../models/User');
 
 // @route POST api/auth
-// @desc Authenticate user
+// @desc Authenticate an user (LOGIN)
 // @access Public
-router.post('/', (req, res) => {
+router.post('/', async (req, res, next) => {
   const { email, password } = req.body;
-  // simple validation
+
   if (!email || !password) {
-    return res.status(400).json({ msg: 'Please enter all fields' });
+    return next(new AppError(400, 'Please enter all fields.'));
   }
 
-  //check for existing user
-  User.findOne({ email: email }).then((user) => {
-    if (!user) return res.status(400).json({ msg: 'User does not exists' });
+  const foundUser = await User.findOne({ email: email });
+  if (!foundUser) next(new AppError(400, 'User does not exist.'));
 
-    //validate password
-    bcrypt.compare(password, user.password).then((isMatch) => {
-      if (!isMatch) return res.status(400).json({ msg: 'Invalid Credentials' });
-      jwt.sign(
-        {
-          id: user.id,
+  //validate password
+  const isMatch = await bcrypt.compare(password, foundUser.password);
+  if (!isMatch) next(new AppError(400, 'Invalid Credentials.'));
+  jwt.sign(
+    {
+      id: foundUser.id,
+    },
+    jwtSecret,
+    { expiresIn: 3600 },
+    (err, token) => {
+      if (err) next(err);
+      res.json({
+        token: token,
+        user: {
+          id: foundUser.id,
+          name: foundUser.name,
+          email: foundUser.email,
         },
-        process.env.jwtSecret,
-
-        { expiresIn: 3600 },
-        (err, token) => {
-          if (err) throw err;
-          res.json({
-            token: token,
-            user: {
-              id: user.id,
-              name: user.name,
-              email: user.email,
-            },
-          });
-        }
-      );
-    });
-  });
+      });
+    }
+  );
 });
 
 // @route GET api/auth/user
-// @desc Get user data
+// @desc Gets user data
 // @access private
-router.get('/user', auth, (req, res) => {
-  User.findById(req.user.id)
-    .select('-password')
-    .then((user) => {
-      res.json(user);
-    });
+router.get('/user', auth, async (req, res, next) => {
+  try {
+    const foundUser = await User.findById(req.user.id).select('-password');
+    res.json(foundUser);
+  } catch (e) {
+    next(e);
+  }
 });
 
 module.exports = router;
