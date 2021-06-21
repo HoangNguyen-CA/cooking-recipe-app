@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');
 const AppError = require('../../AppError');
 
-const jwtSecret = process.env.jwtSecret || 'secret';
+const jwtSecret = process.env.jwtSecret;
 
 const User = require('../../models/User');
 

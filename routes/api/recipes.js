@@ -26,8 +26,8 @@ router.get('/edamam', async (req, res, next) => {
   //TODO: HIDE API KEYS
   const params = new URLSearchParams({
     q: search,
-    app_id: process.env.API_ID || '6a6591d3',
-    app_key: process.env.API_KEY || '6ec44a9a4f5c99655709482d074d7555',
+    app_id: process.env.API_ID,
+    app_key: process.env.API_KEY,
   });
   if (ingredients) params.append('ingr', ingredients);
   if (diet) params.append('diet', diet);
