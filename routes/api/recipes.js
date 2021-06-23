@@ -6,6 +6,13 @@ const AppError = require('../../AppError');
 
 const User = require('../../models/User');
 
+/* Required for API syntax */
+const kebabize = (str) =>
+  str.replace(
+    /[A-Z]+(?![a-z])|[A-Z]/g,
+    ($, ofs) => (ofs ? '-' : '') + $.toLowerCase()
+  );
+
 // @route GET api/recipes/edamam
 // @desc Search recipes from API
 // @access Public
@@ -33,9 +40,10 @@ router.get('/edamam', async (req, res, next) => {
   if (diet) params.append('diet', diet);
   if (calories) params.append('calories', calories);
   if (time) params.append('time', time);
-  for (const item of health) params.append('health', item);
+  for (const item of health) params.append('health', kebabize(item));
   for (const item of excluded) params.append('excluded', item);
 
+  console.log(params);
   try {
     const response = await axios.get(`https://api.edamam.com/search`, {
       params,
