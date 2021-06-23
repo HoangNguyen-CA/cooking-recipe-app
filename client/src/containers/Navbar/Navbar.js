@@ -14,7 +14,7 @@ import {
   logout,
   register,
   clearAuthErrors,
-} from '../../store/actions/authActions';
+} from '../../store/slices/authSlice.js';
 
 const StyledNavbar = styled.div`
   display: flex;

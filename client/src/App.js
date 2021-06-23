@@ -8,7 +8,7 @@ import FavoritesDisplay from './containers/FavoritesDisplay/FavoritesDisplay';
 
 import Layout from './components/Layout/Layout';
 
-import { loadUser } from './store/actions/authActions';
+import { loadUser } from './store/slices/authSlice';
 
 import GlobalStyle from './GlobalStyle';
 

@@ -44,6 +44,8 @@ router.get('/edamam', async (req, res, next) => {
     const hits = data.hits; // array of objects
     res.json(hits);
   } catch (e) {
+    console.dir(e);
+    console.log(params);
     next(e);
   }
 });

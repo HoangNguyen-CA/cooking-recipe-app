@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getRecipes as GET_RECIPES } from '../../store/actions/recipeActions';
+import { getRecipes as GET_RECIPES } from '../../store/slices/recipeSlice';
 import styled from 'styled-components';
 
 import Label from '../../components/Forms/Label';

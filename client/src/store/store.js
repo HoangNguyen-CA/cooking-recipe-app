@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import recipesReducer from './reducers/recipesReducer';
-import authReducer from './reducers/authReducer';
-import errorReducer from './reducers/errorReducer';
-import userReducer from './reducers/userReducer';
+import recipesReducer from './slices/recipeSlice';
+import authReducer from './slices/authSlice';
+import errorReducer from './slices/errorSlice';
+import userReducer from './slices/userSlice';
 
 const store = configureStore({
   reducer: {

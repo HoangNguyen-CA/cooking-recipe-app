@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Recipes from '../../components/Recipes/Recipes';
 
-import { addFavorite } from '../../store/actions/userActions';
+import { addFavorite } from '../../store/slices/userSlice';
 
 const Container = styled.div`
   display: flex;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getFavorites, deleteFavorite } from '../../store/actions/userActions';
+import { getFavorites, deleteFavorite } from '../../store/slices/userSlice';
 import styled from 'styled-components';
 
 import Favorites from '../../components/Favorites/Favorites';

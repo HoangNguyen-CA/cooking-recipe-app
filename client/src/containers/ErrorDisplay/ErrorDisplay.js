@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { hideError } from '../../store/actions/errorActions';
+import { hideError } from '../../store/slices/errorSlice';
 
 import Modal from '../../components/UI/Modal/Modal';
 
