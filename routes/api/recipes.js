@@ -37,7 +37,7 @@ router.get('/edamam', async (req, res, next) => {
     app_key: process.env.API_KEY,
   });
   if (ingredients) params.append('ingr', ingredients);
-  if (diet) params.append('diet', diet);
+  if (diet) params.append('diet', kebabize(diet));
   if (calories) params.append('calories', calories);
   if (time) params.append('time', time);
   for (const item of health) params.append('health', kebabize(item));

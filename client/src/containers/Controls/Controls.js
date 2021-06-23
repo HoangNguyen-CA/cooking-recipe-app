@@ -23,6 +23,7 @@ const StyledControls = styled.div`
 
 const SearchLabel = styled(Label)`
   font-weight: 600;
+  font-size: 1.2rem;
 `;
 
 const AdvancedButton = styled(Button)`
@@ -33,11 +34,11 @@ const SearchButton = styled(Button)`
   display: block;
   background-color: ${(props) => props.theme.colors.primary};
   color: #fff;
-  margin-left: auto;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   margin-top: 1.3em;
 `;
 
@@ -181,9 +182,7 @@ export class Controls extends Component {
 
     return (
       <StyledControls>
-        <SearchLabel htmlFor='search-input' fontSize='1.2rem'>
-          Search:
-        </SearchLabel>
+        <SearchLabel htmlFor='search-input'>Search:</SearchLabel>
         <TextInput
           id='search-input'
           type='text'
