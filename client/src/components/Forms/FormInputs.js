@@ -1,13 +1,35 @@
 import React from 'react';
 
 import FormGroup from './FormGroup';
+import PropTypes from 'prop-types';
 
-const Form = (props) => {
+import { checkValidity } from '../../shared/formAuth';
+
+export const handleControlChange = (event, controlName, controls) => {
+  const { valid, msg } = checkValidity(
+    event.target.value,
+    controls[controlName].validation,
+    controlName
+  );
+  const updatedControls = {
+    ...controls,
+    [controlName]: {
+      ...controls[controlName],
+      value: event.target.value,
+      msg: msg,
+      valid: valid,
+      touched: true,
+    },
+  };
+  return updatedControls;
+};
+
+const Form = ({ controls, handleInputChanged }) => {
   const formElementsArray = [];
-  for (let key in props.controls) {
+  for (let key in controls) {
     formElementsArray.push({
       id: key,
-      config: props.controls[key],
+      config: controls[key],
     });
   }
 
@@ -19,13 +41,28 @@ const Form = (props) => {
       elementConfig={formElement.config.elementConfig}
       value={formElement.config.value}
       shouldValidate={formElement.config.validation}
-      changed={(e) => props.handleInputChanged(e, formElement.id)}
+      changed={(e) => handleInputChanged(e, formElement.id)}
       valid={formElement.config.valid}
       touched={formElement.config.touched}
       msg={formElement.config.msg}
     />
   ));
   return <>{form}</>;
+};
+
+Form.propTypes = {
+  controls: PropTypes.objectOf(
+    PropTypes.shape({
+      elementType: PropTypes.string,
+      elementConfig: PropTypes.objectOf(PropTypes.string),
+      validation: PropTypes.object,
+      value: PropTypes.string.isRequired,
+      msg: PropTypes.string,
+      valid: PropTypes.bool,
+      touched: PropTypes.bool,
+    })
+  ),
+  handleInputChanged: PropTypes.func.isRequired,
 };
 
 export default Form;

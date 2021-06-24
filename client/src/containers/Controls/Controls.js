@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { getRecipes as GET_RECIPES } from '../../store/slices/recipeSlice';
 import styled from 'styled-components';
 
-import FormInputs from '../../components/Forms/FormInputs';
-import { checkValidity } from '../../shared/formAuth';
+import FormInputs, {
+  handleControlChange,
+} from '../../components/Forms/FormInputs';
 
 import Button from '../../components/UI/Button/Button';
 
@@ -114,59 +115,30 @@ export class Controls extends Component {
   };
 
   handleSearchControlsChange = (event, controlName) => {
-    const { valid, msg } = checkValidity(
-      event.target.value,
-      this.state.searchControls[controlName].validation,
-      controlName
+    const updatedControls = handleControlChange(
+      event,
+      controlName,
+      this.state.searchControls
     );
-    const updatedControls = {
-      ...this.state.searchControls,
-      [controlName]: {
-        ...this.state.searchControls[controlName],
-        value: event.target.value,
-        msg: msg,
-        valid: valid,
-        touched: true,
-      },
-    };
 
     this.setState({ searchControls: updatedControls });
   };
+
   handleAdvancedControlsChange = (event, controlName) => {
-    const { valid, msg } = checkValidity(
-      event.target.value,
-      this.state.advancedControls[controlName].validation,
-      controlName
+    const updatedControls = handleControlChange(
+      event,
+      controlName,
+      this.state.advancedControls
     );
-    const updatedControls = {
-      ...this.state.advancedControls,
-      [controlName]: {
-        ...this.state.advancedControls[controlName],
-        value: event.target.value,
-        msg: msg,
-        valid: valid,
-        touched: true,
-      },
-    };
     this.setState({ advancedControls: updatedControls });
   };
 
   handleExcludedControlsChange = (event, controlName) => {
-    const { valid, msg } = checkValidity(
-      event.target.value,
-      this.state.excludedControls[controlName].validation,
-      controlName
+    const updatedControls = handleControlChange(
+      event,
+      controlName,
+      this.state.excludedControls
     );
-    const updatedControls = {
-      ...this.state.excludedControls,
-      [controlName]: {
-        ...this.state.excludedControls[controlName],
-        value: event.target.value,
-        msg: msg,
-        valid: valid,
-        touched: true,
-      },
-    };
     this.setState({ excludedControls: updatedControls });
   };
 
@@ -244,6 +216,7 @@ export class Controls extends Component {
             controls={this.state.advancedControls}
             handleInputChanged={this.handleAdvancedControlsChange}
           ></FormInputs>
+
           <HealthType
             healthFields={this.state.healthFields}
             handleCheck={this.handleCheck}

@@ -5,6 +5,7 @@ import Label from './Label';
 import TextInput from './TextInput';
 
 import { v4 as uuidv4 } from 'uuid';
+import PropTypes from 'prop-types';
 
 const Group = styled.div`
   margin-top: 0.5em;
@@ -89,4 +90,14 @@ const FormGroup = ({
   );
 };
 
+FormGroup.propTypes = {
+  elementType: PropTypes.string,
+  elementConfig: PropTypes.objectOf(PropTypes.string),
+  valid: PropTypes.bool,
+  touched: PropTypes.bool,
+  value: PropTypes.string.isRequired,
+  changed: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+  msg: PropTypes.string,
+};
 export default FormGroup;
