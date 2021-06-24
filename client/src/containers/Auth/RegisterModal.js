@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Modal from '../../components/UI/Modal/Modal';
 import ModalHeader from '../../components/UI/Modal/ModalHeader/ModalHeader';
 import Button from '../../components/UI/Button/Button';
-import Separator from '../../components/UI/Separator/Separator';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 import ErrorDiv from '../../components/Error/ErrorDiv';
@@ -105,7 +104,6 @@ function RegisterModal(props) {
     <>
       <ModalHeader>Register</ModalHeader>
       <ErrorDiv error={props.error}></ErrorDiv>
-      <Separator margin='0.5em 0' />
       <form onSubmit={handleSubmit}>
         <FormInputs
           controls={controls}

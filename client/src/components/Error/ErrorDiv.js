@@ -7,7 +7,7 @@ const Container = styled.div`
   border-radius: 3px;
   padding: 0.5em 0.1em;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
   text-transform: uppercase;
 `;
 
