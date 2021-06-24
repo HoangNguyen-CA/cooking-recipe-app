@@ -20,20 +20,24 @@ export class App extends Component {
   render() {
     return (
       <>
-        <Layout>
-          <GlobalStyle></GlobalStyle>
-          <Switch>
-            <Route exact path='/'>
+        <GlobalStyle></GlobalStyle>
+        <Switch>
+          <Route exact path='/'>
+            <Layout>
               <Controls></Controls>
-            </Route>
-            <Route exact path='/recipes'>
+            </Layout>
+          </Route>
+          <Route exact path='/recipes'>
+            <Layout center>
               <RecipesDisplay> </RecipesDisplay>
-            </Route>
-            <Route exact path='/favorites'>
+            </Layout>
+          </Route>
+          <Route exact path='/favorites'>
+            <Layout center>
               <FavoritesDisplay></FavoritesDisplay>
-            </Route>
-          </Switch>
-        </Layout>
+            </Layout>
+          </Route>
+        </Switch>
       </>
     );
   }

@@ -1,30 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getFavorites, deleteFavorite } from '../../store/slices/userSlice';
-import styled from 'styled-components';
 
 import Favorites from '../../components/Favorites/Favorites';
 
 import { Redirect } from 'react-router-dom';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Header = styled.h2`
-  font-size: 3rem;
-  font-weight: 600;
-  margin-top: 1em;
-  margin-bottom: 0.3em;
-`;
-
-const Message = (styled.message = styled.p`
-  font-size: 2rem;
-  color: ${(props) => props.theme.colors.danger};
-  text-transform: uppercase;
-`);
+import { Header, EmptyMessage } from '../../components/Layout/Layout';
 
 export class FavoritesDisplay extends Component {
   componentDidMount() {
@@ -32,7 +13,7 @@ export class FavoritesDisplay extends Component {
   }
   render() {
     return (
-      <Container>
+      <>
         <Header>Your Favorites</Header>
         {this.props.isAuthenticated ? null : <Redirect to='/'></Redirect>}
 
@@ -43,9 +24,9 @@ export class FavoritesDisplay extends Component {
             loading={this.props.loading}
           ></Favorites>
         ) : (
-          <Message>You Have No Favorites</Message>
+          <EmptyMessage>You Have No Favorites</EmptyMessage>
         )}
-      </Container>
+      </>
     );
   }
 }

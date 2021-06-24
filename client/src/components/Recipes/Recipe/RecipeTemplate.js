@@ -5,6 +5,7 @@ import Button from '../../UI/Button/Button';
 import LabelSection from './LabelSection/LabelSection';
 
 const Display = styled.div`
+  flex-grow: 1;
   width: 100%;
   margin: 2em 0;
   background-color: ${(props) => props.theme.colors.light};

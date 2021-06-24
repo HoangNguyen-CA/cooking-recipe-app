@@ -15,12 +15,6 @@ import ExcludedIngredients from '../../components/Controls/ExcludedIngredients';
 
 import { withRouter } from 'react-router-dom';
 
-const StyledControls = styled.div`
-  padding: 2em;
-  max-width: 600px;
-  margin: 0 auto;
-`;
-
 const AdvancedButton = styled(Button)`
   display: block;
 `;
@@ -240,7 +234,7 @@ export class Controls extends Component {
     }
 
     return (
-      <StyledControls>
+      <>
         <FormInputs
           controls={this.state.searchControls}
           handleInputChanged={this.handleSearchControlsChange}
@@ -252,7 +246,7 @@ export class Controls extends Component {
           </AdvancedButton>
           <SearchButton onClick={this.handleSubmit}>Search</SearchButton>
         </ButtonContainer>
-      </StyledControls>
+      </>
     );
   }
 }

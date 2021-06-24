@@ -5,11 +5,6 @@ import Spinner from '../UI/Spinner/Spinner';
 
 import Button from '../UI/Button/Button';
 
-const Container = styled.div`
-  width: 80%;
-  max-width: 500px;
-`;
-
 const AddFavButton = styled(Button)`
   display: block;
   margin-top: 1em;
@@ -39,7 +34,7 @@ const Recipes = (props) => {
       {props.loading ? (
         <Spinner />
       ) : (
-        <Container>
+        <>
           {props.recipes.map((el) => {
             return (
               <RecipeTemplate
@@ -64,7 +59,7 @@ const Recipes = (props) => {
               </RecipeTemplate>
             );
           })}
-        </Container>
+        </>
       )}
     </>
   );

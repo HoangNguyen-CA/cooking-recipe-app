@@ -6,11 +6,6 @@ import Button from '../UI/Button/Button';
 
 import Spinner from '../UI/Spinner/Spinner';
 
-const Container = styled.div`
-  width: 80%;
-  max-width: 500px;
-`;
-
 const RemoveButton = styled(Button)`
   display: block;
   background-color: ${(props) => props.theme.colors.danger};
@@ -26,7 +21,7 @@ const Favorites = (props) => {
       {props.loading ? (
         <Spinner />
       ) : (
-        <Container>
+        <>
           {props.favorites.map((el) => (
             <RecipeTemplate
               key={el.url}
@@ -51,7 +46,7 @@ const Favorites = (props) => {
               </RemoveButton>
             </RecipeTemplate>
           ))}
-        </Container>
+        </>
       )}
     </>
   );

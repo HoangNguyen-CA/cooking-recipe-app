@@ -22,11 +22,11 @@ document.head.appendChild(script);
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <Router>
         <App />
-      </ThemeProvider>
-    </Router>
+      </Router>
+    </ThemeProvider>
   </Provider>,
   document.getElementById('root')
 );

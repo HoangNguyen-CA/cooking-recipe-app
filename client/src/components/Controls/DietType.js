@@ -53,7 +53,7 @@ const DietType = ({ dietField, dietOptions, handleRadio }) => {
 DietType.propTypes = {
   dietField: PropTypes.string.isRequired,
   handleRadio: PropTypes.func.isRequired,
-  dietOptions: PropTypes.arrayOf(PropTypes.string),
+  dietOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default DietType;
