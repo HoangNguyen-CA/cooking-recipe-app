@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from '../../../UI/Modal/Modal';
 import styled from 'styled-components';
-import ModalHeader from '../../../UI/Modal/ModalHeader/ModalHeader';
+import { ModalHeader } from '../../../UI/Modal/Modal';
 
 const StyledModal = styled(Modal)`
   max-width: 600px;

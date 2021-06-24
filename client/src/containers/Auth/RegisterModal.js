@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import Modal from '../../components/UI/Modal/Modal';
-import ModalHeader from '../../components/UI/Modal/ModalHeader/ModalHeader';
+import Modal, { ModalHeader } from '../../components/UI/Modal/Modal';
+
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 

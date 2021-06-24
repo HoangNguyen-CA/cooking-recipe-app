@@ -11,12 +11,9 @@ const StyledBackdrop = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
 `;
 
-const Backdrop = (props) => {
-  return props.show ? (
-    <StyledBackdrop
-      onClick={props.clicked}
-      className={props.className}
-    ></StyledBackdrop>
+const Backdrop = ({ clicked, show, className }) => {
+  return show ? (
+    <StyledBackdrop onClick={clicked} className={className}></StyledBackdrop>
   ) : (
     ''
   );

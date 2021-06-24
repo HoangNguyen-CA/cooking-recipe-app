@@ -9,7 +9,7 @@ const StyledModal = styled.div`
   position: fixed;
   left: 50%;
   top: 50%;
-  z-index: 500;
+  z-index: 1000;
 
   width: 70%;
   border-radius: 5px;
@@ -30,5 +30,12 @@ const Modal = (props) => {
     </>
   );
 };
+
+export const ModalHeader = styled.h2`
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+  text-align: center;
+`;
 
 export default Modal;

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
 import LoginModal from '../Auth/LoginModal';
 import RegisterModal from '../Auth/RegisterModal';
 
-import NavLinks from '../../components/Navigation/NavLinks/NavLinks';
-import Backdrop from '../../components/UI/Backdrop/Backdrop';
+import styled from 'styled-components';
+
+import NavLinks from '../../components/Navigation/NavLinks';
 
 import {
   login,
@@ -16,7 +16,7 @@ import {
   clearAuthErrors,
 } from '../../store/slices/authSlice.js';
 
-const StyledNavbar = styled.div`
+const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,12 +29,6 @@ const Title = styled.h1`
   display: block;
   color: ${(props) => props.theme.colors.primary};
   font-weight: 500;
-`;
-
-const MobileBackdrop = styled(Backdrop)`
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    display: none;
-  }
 `;
 
 export class Navbar extends Component {
@@ -78,13 +72,6 @@ export class Navbar extends Component {
     this.handleLinksClose();
   };
 
-  static getDerivedStateFromProps(props) {
-    if (props.isAuthenticated) {
-      return { loginOpen: false, registerOpen: false };
-    }
-    return {};
-  }
-
   handleLinksToggle = () => {
     this.setState((prevState) => {
       return { linksOpen: !prevState.linksOpen };
@@ -95,14 +82,15 @@ export class Navbar extends Component {
     this.setState({ linksOpen: false });
   };
 
+  static getDerivedStateFromProps(props) {
+    if (props.isAuthenticated) {
+      return { loginOpen: false, registerOpen: false };
+    }
+    return {};
+  }
   render() {
     return (
       <>
-        <MobileBackdrop
-          show={this.state.linksOpen}
-          clicked={this.handleLinksToggle}
-        ></MobileBackdrop>
-
         <LoginModal
           show={this.state.loginOpen}
           handleLoginClose={this.handleLoginClose}
@@ -113,8 +101,7 @@ export class Navbar extends Component {
           handleRegisterClose={this.handleRegisterClose}
           register={this.props.register}
         ></RegisterModal>
-
-        <StyledNavbar>
+        <Container>
           <Title>Recipe Search</Title>
           <NavLinks
             open={this.state.linksOpen}
@@ -128,7 +115,7 @@ export class Navbar extends Component {
             handleToRecipes={this.handleToRecipes}
             handleToFavorites={this.handleToFavorites}
           ></NavLinks>
-        </StyledNavbar>
+        </Container>
       </>
     );
   }

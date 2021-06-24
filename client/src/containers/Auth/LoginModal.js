@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import Modal from '../../components/UI/Modal/Modal';
+import Modal, { ModalHeader } from '../../components/UI/Modal/Modal';
 import ErrorDiv from '../../components/Error/ErrorDiv';
 
 import Button from '../../components/UI/Button/Button';
 
-import ModalHeader from '../../components/UI/Modal/ModalHeader/ModalHeader';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 import FormInputs from '../../components/Forms/FormInputs';
