@@ -22,7 +22,7 @@ const Container = styled.div`
   margin: 0.8em 0;
 `;
 
-const Header = styled.h3`
+const Header = styled.p`
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 0.3em;
@@ -32,7 +32,8 @@ const HealthType = ({ healthFields, handleCheck }) => {
   const healthElements = [];
 
   for (const health in healthFields) {
-    const id = health;
+    const id = health; // DO NOT CHANGE
+
     healthElements.push(
       <BoxGroup key={id}>
         <CheckBox

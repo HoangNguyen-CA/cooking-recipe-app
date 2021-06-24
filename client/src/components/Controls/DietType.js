@@ -32,7 +32,7 @@ const nameAtr = 'dietTypes';
 const DietType = ({ dietField, handleRadio }) => {
   const dietElements = ['balanced', 'highProtein', 'lowCarb', 'lowFat'].map(
     (diet) => {
-      const id = `dietTypes/${diet}`;
+      const id = diet; // DO NOT CHANGE
       return (
         <BoxGroup key={id}>
           <RadioBox
