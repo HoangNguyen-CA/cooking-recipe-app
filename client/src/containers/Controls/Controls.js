@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import { getRecipes as GET_RECIPES } from '../../store/slices/recipeSlice';
 import styled from 'styled-components';
 
-import Label from '../../components/Forms/Label';
-import TextInput from '../../components/Forms/TextInput';
-import NumberInput from '../../components/Forms/NumberInput';
+import FormInputs from '../../components/Forms/FormInputs';
+import { checkValidity } from '../../shared/formAuth';
 
 import Button from '../../components/UI/Button/Button';
 
@@ -19,11 +18,6 @@ const StyledControls = styled.div`
   padding: 2em;
   max-width: 600px;
   margin: 0 auto;
-`;
-
-const SearchLabel = styled(Label)`
-  font-weight: 600;
-  font-size: 1.2rem;
 `;
 
 const AdvancedButton = styled(Button)`
@@ -44,11 +38,68 @@ const ButtonContainer = styled.div`
 
 export class Controls extends Component {
   state = {
-    search: '',
-    maxIngredients: '',
-    maxCalories: '',
-    maxTime: '',
-    excludedField: '',
+    searchControls: {
+      search: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+        },
+        validation: {
+          required: true,
+        },
+        value: '',
+        msg: '',
+        valid: false,
+        touched: false,
+      },
+    },
+    advancedControls: {
+      maxIngredients: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+        },
+        value: '',
+        msg: '',
+        valid: false,
+        touched: false,
+      },
+      maxCalories: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+        },
+        value: '',
+        msg: '',
+        valid: false,
+        touched: false,
+      },
+      maxTime: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+        },
+        value: '',
+        msg: '',
+        valid: false,
+        touched: false,
+      },
+    },
+    excludedControls: {
+      excluded: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+        },
+        validation: {
+          required: true,
+        },
+        value: '',
+        msg: '',
+        valid: false,
+        touched: false,
+      },
+    },
     showAdvanced: false,
     healthFields: {
       vegan: false,
@@ -62,15 +113,89 @@ export class Controls extends Component {
     excludedItems: new Set(),
   };
 
-  handleSearchChange = (e) => this.setState({ search: e.target.value });
+  handleSearchControlsChange = (event, controlName) => {
+    const { valid, msg } = checkValidity(
+      event.target.value,
+      this.state.searchControls[controlName].validation,
+      controlName
+    );
+    const updatedControls = {
+      ...this.state.searchControls,
+      [controlName]: {
+        ...this.state.searchControls[controlName],
+        value: event.target.value,
+        msg: msg,
+        valid: valid,
+        touched: true,
+      },
+    };
 
-  handleMaxIngredientsChange = (e) =>
-    this.setState({ maxIngredients: e.target.value });
+    this.setState({ searchControls: updatedControls });
+  };
+  handleAdvancedControlsChange = (event, controlName) => {
+    const { valid, msg } = checkValidity(
+      event.target.value,
+      this.state.advancedControls[controlName].validation,
+      controlName
+    );
+    const updatedControls = {
+      ...this.state.advancedControls,
+      [controlName]: {
+        ...this.state.advancedControls[controlName],
+        value: event.target.value,
+        msg: msg,
+        valid: valid,
+        touched: true,
+      },
+    };
+    this.setState({ advancedControls: updatedControls });
+  };
 
-  handleMaxCaloriesChange = (e) =>
-    this.setState({ maxCalories: e.target.value });
+  handleExcludedControlsChange = (event, controlName) => {
+    const { valid, msg } = checkValidity(
+      event.target.value,
+      this.state.excludedControls[controlName].validation,
+      controlName
+    );
+    const updatedControls = {
+      ...this.state.excludedControls,
+      [controlName]: {
+        ...this.state.excludedControls[controlName],
+        value: event.target.value,
+        msg: msg,
+        valid: valid,
+        touched: true,
+      },
+    };
+    this.setState({ excludedControls: updatedControls });
+  };
 
-  handleMaxTimeChange = (e) => this.setState({ maxTime: e.target.value });
+  handleAddExcluded = () => {
+    if (this.state.excludedControls.excluded.value === '') return;
+    this.setState((prevState) => {
+      const prevControls = prevState.excludedControls;
+      const newSet = new Set(prevState.excludedItems);
+      newSet.add(prevControls.excluded.value.toLowerCase());
+      return {
+        excludedItems: newSet,
+        excludedControls: {
+          ...prevControls,
+          excluded: {
+            ...prevControls.excluded,
+            value: '',
+          },
+        },
+      };
+    });
+  };
+
+  handleRemoveExcluded = (item) => {
+    this.setState((prevState) => {
+      const newSet = new Set(prevState.excludedItems);
+      newSet.delete(item);
+      return { excludedItems: newSet };
+    });
+  };
 
   handleCheck = (e) => {
     let target = e.target;
@@ -86,27 +211,6 @@ export class Controls extends Component {
     this.setState({ dietField: target.id });
   };
 
-  handleAddExcluded = () => {
-    if (this.state.excludedField === '') return;
-    this.setState((prevState) => {
-      const newSet = new Set(prevState.excludedItems);
-      newSet.add(prevState.excludedField.toLowerCase());
-      return { excludedItems: newSet, excludedField: '' };
-    });
-  };
-
-  handleRemoveExcluded = (item) => {
-    this.setState((prevState) => {
-      const newSet = new Set(prevState.excludedItems);
-      newSet.delete(item);
-      return { excludedItems: newSet };
-    });
-  };
-
-  handleExcludedChange = (e) => {
-    this.setState({ excludedField: e.target.value });
-  };
-
   handleToggleAdvanced = () => {
     this.setState((prevState) => {
       return { showAdvanced: !prevState.showAdvanced };
@@ -120,10 +224,10 @@ export class Controls extends Component {
     }
     let excluded = [...this.state.excludedItems];
     this.props.getRecipes(
-      this.state.search,
-      this.state.maxIngredients,
-      this.state.maxCalories,
-      this.state.maxTime,
+      this.state.searchControls.search.value,
+      this.state.advancedControls.maxIngredients.value,
+      this.state.advancedControls.maxCalories.value,
+      this.state.advancedControls.maxTime.value,
       this.state.dietField,
       health,
       excluded
@@ -132,63 +236,41 @@ export class Controls extends Component {
   };
 
   render() {
-    let advancedSearch;
-
+    let advancedSearch = null;
     if (this.state.showAdvanced) {
       advancedSearch = (
         <>
-          <Label htmlFor='search-ingredients'>Max Ingredients:</Label>
-          <NumberInput
-            id='search-ingredients'
-            type='number'
-            value={this.state.maxIngredients}
-            onChange={this.handleMaxIngredientsChange}
-          ></NumberInput>
-
-          <Label htmlFor='search-calories'>Max Calories: </Label>
-          <NumberInput
-            id='search-calories'
-            value={this.state.maxCalories}
-            onChange={this.handleMaxCaloriesChange}
-          ></NumberInput>
-
-          <Label htmlFor='search-cook'>Max Cooking Time (Mins):</Label>
-          <NumberInput
-            id='search-cook'
-            value={this.state.maxTime}
-            onChange={this.handleMaxTimeChange}
-          ></NumberInput>
-
+          <FormInputs
+            controls={this.state.advancedControls}
+            handleInputChanged={this.handleAdvancedControlsChange}
+          ></FormInputs>
           <HealthType
             healthFields={this.state.healthFields}
             handleCheck={this.handleCheck}
           />
           <DietType
-            handleRadio={this.handleRadio}
             dietField={this.state.dietField}
+            handleRadio={this.handleRadio}
           />
+          <FormInputs
+            controls={this.state.excludedControls}
+            handleInputChanged={this.handleExcludedControlsChange}
+          ></FormInputs>
           <ExcludedIngredients
-            excludedField={this.state.excludedField}
-            handleExcludedChange={this.handleExcludedChange}
             excludedItems={this.state.excludedItems}
             handleAddExcluded={this.handleAddExcluded}
             handleRemoveExcluded={this.handleRemoveExcluded}
           ></ExcludedIngredients>
         </>
       );
-    } else {
-      advancedSearch = null;
     }
 
     return (
       <StyledControls>
-        <SearchLabel htmlFor='search-input'>Search:</SearchLabel>
-        <TextInput
-          id='search-input'
-          type='text'
-          value={this.state.search}
-          onChange={this.handleSearchChange}
-        ></TextInput>
+        <FormInputs
+          controls={this.state.searchControls}
+          handleInputChanged={this.handleSearchControlsChange}
+        ></FormInputs>
         {advancedSearch}
         <ButtonContainer>
           <AdvancedButton onClick={this.handleToggleAdvanced}>

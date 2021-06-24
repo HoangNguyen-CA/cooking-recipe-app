@@ -5,7 +5,10 @@ import FormGroup from './FormGroup';
 const Form = (props) => {
   const formElementsArray = [];
   for (let key in props.controls) {
-    formElementsArray.push({ id: key, config: props.controls[key] });
+    formElementsArray.push({
+      id: key,
+      config: props.controls[key],
+    });
   }
 
   let form = formElementsArray.map((formElement) => (

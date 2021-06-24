@@ -1,11 +1,14 @@
-export const checkValidity = (value, rules, name = '') => {
-  if (!rules) return true;
+export const checkValidity = (value, rules = null, name = '') => {
   let isValid = true;
   let msg = null;
 
-  const finish = () => {
+  function finish() {
     return { valid: isValid, msg };
-  };
+  }
+
+  if (rules == null) {
+    return finish();
+  }
 
   if (rules.required) {
     if (value.trim() === '') {
@@ -14,6 +17,7 @@ export const checkValidity = (value, rules, name = '') => {
       finish();
     }
   }
+
   if (rules.minLength) {
     if (value.length < rules.minLength) {
       msg = `${name} is too short, minimum ${rules.minLength} characters required`;

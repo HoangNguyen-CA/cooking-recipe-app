@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import TextInput from '../../Forms/TextInput';
 import Label from '../../Forms/Label';
 import Button from '../../UI/Button/Button';
 
@@ -26,12 +25,6 @@ const ExcludeIngredients = (props) => {
   const excludedArr = [...props.excludedItems];
   return (
     <>
-      <Label fontSize='1.1rem'>Exclude Ingredient:</Label>
-      <TextInput
-        id='exclude'
-        value={props.excludedField}
-        onChange={props.handleExcludedChange}
-      ></TextInput>
       <ExcludeButton onClick={props.handleAddExcluded}>Exclude</ExcludeButton>
 
       <Label fontSize='1.1rem'>Ingredients Excluded:</Label>

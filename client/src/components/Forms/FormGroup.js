@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import TextInput from './TextInput';
 import Label from './Label';
+import TextInput from './TextInput';
+
+import { v4 as uuidv4 } from 'uuid';
+
+const Group = styled.div`
+  margin-top: 0.5em;
+  font-size: 1rem;
+`;
 
 const ValidatedInput = styled(TextInput)`
   ${(props) =>
@@ -18,16 +25,14 @@ const ValidatedInput = styled(TextInput)`
   }
 `;
 
-const Group = styled.div``;
-
 const Message = styled.small`
   display: block;
-  padding-left: 1em;
+
   color: ${(props) => props.theme.colors.danger};
-  font-size: 0.8rem;
+  font-size: 0.8em;
   text-transform: capitalize;
   ${(props) => {
-    if (!props.valid && props.touched && props.msg !== '') {
+    if (!props.valid && props.touched) {
       return 'opacity: 1;';
     } else {
       return 'opacity: 0;';
@@ -35,45 +40,53 @@ const Message = styled.small`
   }}
 `;
 
-const NoMarginLabel = styled(Label)`
-  margin-top: 0;
-`;
-
-const Input = (props) => {
+const FormGroup = ({
+  elementType,
+  elementConfig,
+  valid,
+  touched,
+  value,
+  changed,
+  label,
+  msg,
+}) => {
   let inputElement = null;
+  const [uuid] = useState(uuidv4());
 
-  switch (props.elementType) {
+  switch (elementType) {
     case 'input':
       inputElement = (
         <ValidatedInput
-          {...props.elementConfig}
-          valid={props.valid}
-          touched={props.touched}
-          value={props.value}
-          onChange={props.changed}
+          {...elementConfig}
+          id={uuid}
+          valid={valid}
+          touched={touched}
+          value={value}
+          onChange={changed}
         ></ValidatedInput>
       );
       break;
     default:
       inputElement = (
         <ValidatedInput
-          {...props.elementConfig}
-          valid={props.valid}
-          touched={props.touched}
-          value={props.value}
-          onChange={props.changed}
+          {...elementConfig}
+          id={uuid}
+          valid={valid}
+          touched={touched}
+          value={value}
+          onChange={changed}
         ></ValidatedInput>
       );
   }
   return (
     <Group>
-      <NoMarginLabel>{props.label}</NoMarginLabel>
+      <Label htmlFor={uuid}>{label}:</Label>
       {inputElement}
-      <Message valid={props.valid} touched={props.touched} msg={props.msg}>
-        {props.msg || '_'}
+      <Message valid={valid} touched={touched}>
+        {msg || ''}
       </Message>
     </Group>
   );
 };
 
-export default Input;
+export default FormGroup;
