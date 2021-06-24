@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import Label from '../Forms/Label';
 import RadioBox from '../Forms/RadioBox';
 
-import { kebabize } from '../../shared/util';
-
 import PropTypes from 'prop-types';
 
 const SideLabel = styled(Label)`
@@ -29,23 +27,21 @@ const Header = styled.h3`
 
 const nameAtr = 'dietTypes';
 
-const DietType = ({ dietField, handleRadio }) => {
-  const dietElements = ['balanced', 'highProtein', 'lowCarb', 'lowFat'].map(
-    (diet) => {
-      const id = diet; // DO NOT CHANGE
-      return (
-        <BoxGroup key={id}>
-          <RadioBox
-            name={nameAtr}
-            id={id}
-            onChange={handleRadio}
-            checked={dietField === id}
-          ></RadioBox>
-          <SideLabel htmlFor={id}>{kebabize(diet)}</SideLabel>
-        </BoxGroup>
-      );
-    }
-  );
+const DietType = ({ dietField, dietOptions, handleRadio }) => {
+  const dietElements = dietOptions.map((diet) => {
+    const id = diet; // DO NOT CHANGE
+    return (
+      <BoxGroup key={id}>
+        <RadioBox
+          name={nameAtr}
+          id={id}
+          onChange={handleRadio}
+          checked={dietField === id}
+        ></RadioBox>
+        <SideLabel htmlFor={id}>{diet}</SideLabel>
+      </BoxGroup>
+    );
+  });
   return (
     <Container>
       <Header>Diet Type: </Header>
@@ -57,6 +53,7 @@ const DietType = ({ dietField, handleRadio }) => {
 DietType.propTypes = {
   dietField: PropTypes.string.isRequired,
   handleRadio: PropTypes.func.isRequired,
+  dietOptions: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default DietType;

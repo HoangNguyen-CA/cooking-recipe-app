@@ -4,8 +4,6 @@ import Label from '../Forms/Label';
 
 import styled from 'styled-components';
 
-import { kebabize } from '../../shared/util';
-
 import PropTypes from 'prop-types';
 
 const BoxGroup = styled.div`
@@ -41,7 +39,7 @@ const HealthType = ({ healthFields, handleCheck }) => {
           checked={healthFields[health]}
           onChange={handleCheck}
         ></CheckBox>
-        <SideLabel htmlFor={id}>{kebabize(health)}</SideLabel>
+        <SideLabel htmlFor={id}>{health}</SideLabel>
       </BoxGroup>
     );
   }

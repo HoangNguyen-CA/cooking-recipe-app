@@ -105,12 +105,13 @@ export class Controls extends Component {
     healthFields: {
       vegan: false,
       vegetarian: false,
-      sugarConscious: false,
-      peanutFree: false,
-      treeNutFree: false,
-      alcoholFree: false,
+      'sugar-conscious': false,
+      'peanut-free': false,
+      'tree-nut-free': false,
+      'alcohol-free': false,
     },
     dietField: '',
+    dietOptions: ['balanced', 'high-protein', 'low-carb', 'low-fat'],
     excludedItems: new Set(),
   };
 
@@ -222,6 +223,7 @@ export class Controls extends Component {
             handleCheck={this.handleCheck}
           />
           <DietType
+            dietOptions={this.state.dietOptions}
             dietField={this.state.dietField}
             handleRadio={this.handleRadio}
           />
