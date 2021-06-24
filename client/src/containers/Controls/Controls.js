@@ -11,7 +11,7 @@ import Button from '../../components/UI/Button/Button';
 
 import HealthType from '../../components/Controls/HealthType';
 import DietType from '../../components/Controls/DietType';
-import ExcludedIngredients from '../../components/Controls/ExcludedIngredients/ExcludedIngredients';
+import ExcludedIngredients from '../../components/Controls/ExcludedIngredients';
 
 import { withRouter } from 'react-router-dom';
 
@@ -225,12 +225,11 @@ export class Controls extends Component {
             dietField={this.state.dietField}
             handleRadio={this.handleRadio}
           />
-          <FormInputs
-            controls={this.state.excludedControls}
-            handleInputChanged={this.handleExcludedControlsChange}
-          ></FormInputs>
+
           <ExcludedIngredients
-            excludedItems={this.state.excludedItems}
+            controls={this.state.excludedControls}
+            handleControlsChange={this.handleExcludedControlsChange}
+            excludedItems={[...this.state.excludedItems]}
             handleAddExcluded={this.handleAddExcluded}
             handleRemoveExcluded={this.handleRemoveExcluded}
           ></ExcludedIngredients>
