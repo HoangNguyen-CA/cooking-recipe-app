@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import Label from '../Forms/Label';
 import RadioBox from '../Forms/RadioBox';
 
+import { kebabize } from '../../shared/util';
+
+import PropTypes from 'prop-types';
+
 const SideLabel = styled(Label)`
   margin: 0 0 0 0.3em;
 `;
@@ -23,50 +27,36 @@ const Header = styled.h3`
   margin-bottom: 0.3em;
 `;
 
-const nameAtr = 'hello';
+const nameAtr = 'dietTypes';
 
-const HealthType = (props) => {
+const DietType = ({ dietField, handleRadio }) => {
+  const dietElements = ['balanced', 'highProtein', 'lowCarb', 'lowFat'].map(
+    (diet) => {
+      const id = `dietTypes/${diet}`;
+      return (
+        <BoxGroup key={id}>
+          <RadioBox
+            name={nameAtr}
+            id={id}
+            onChange={handleRadio}
+            checked={dietField === id}
+          ></RadioBox>
+          <SideLabel htmlFor={id}>{kebabize(diet)}</SideLabel>
+        </BoxGroup>
+      );
+    }
+  );
   return (
     <Container>
       <Header>Diet Type: </Header>
-      <BoxGroup>
-        <RadioBox
-          name={nameAtr}
-          id='balanced'
-          onChange={props.handleRadio}
-          checked={props.dietField === 'balanced'}
-        ></RadioBox>
-        <SideLabel htmlFor='balanced'>Balanced</SideLabel>
-      </BoxGroup>
-      <BoxGroup>
-        <RadioBox
-          name={nameAtr}
-          id='highProtein'
-          onChange={props.handleRadio}
-          checked={props.dietField === 'highProtein'}
-        ></RadioBox>
-        <SideLabel htmlFor='highProtein'>High-Protein</SideLabel>
-      </BoxGroup>
-      <BoxGroup>
-        <RadioBox
-          name={nameAtr}
-          id='lowCarb'
-          onChange={props.handleRadio}
-          checked={props.dietField === 'lowCarb'}
-        ></RadioBox>
-        <SideLabel htmlFor='lowCarb'>Low-Carb</SideLabel>
-      </BoxGroup>
-      <BoxGroup>
-        <RadioBox
-          name={nameAtr}
-          id='lowFat'
-          onChange={props.handleRadio}
-          checked={props.dietField === 'lowFat'}
-        ></RadioBox>
-        <SideLabel htmlFor='lowtFat'>Low-Fat</SideLabel>
-      </BoxGroup>
+      {dietElements}
     </Container>
   );
 };
 
-export default HealthType;
+DietType.propTypes = {
+  dietField: PropTypes.string.isRequired,
+  handleRadio: PropTypes.func.isRequired,
+};
+
+export default DietType;

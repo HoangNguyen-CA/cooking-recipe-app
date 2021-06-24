@@ -4,6 +4,10 @@ import Label from '../Forms/Label';
 
 import styled from 'styled-components';
 
+import { kebabize } from '../../shared/util';
+
+import PropTypes from 'prop-types';
+
 const BoxGroup = styled.div`
   display: inline-block;
   margin-right: 1em;
@@ -24,11 +28,40 @@ const Header = styled.h3`
   margin-bottom: 0.3em;
 `;
 
-const DietType = (props) => {
+const HealthType = ({ healthFields, handleCheck }) => {
+  const healthElements = [];
+
+  for (const health in healthFields) {
+    const id = health;
+    healthElements.push(
+      <BoxGroup key={id}>
+        <CheckBox
+          id={id}
+          checked={healthFields[health]}
+          onChange={handleCheck}
+        ></CheckBox>
+        <SideLabel htmlFor={id}>{kebabize(health)}</SideLabel>
+      </BoxGroup>
+    );
+  }
   return (
     <Container>
       <Header>Health Type:</Header>
-      <BoxGroup>
+      {healthElements}
+    </Container>
+  );
+};
+
+HealthType.propTypes = {
+  healthFields: PropTypes.objectOf(PropTypes.bool).isRequired,
+  handleCheck: PropTypes.func.isRequired,
+};
+
+export default HealthType;
+
+/*
+
+ <BoxGroup>
         <CheckBox
           id='vegan'
           checked={props.healthFields.vegan}
@@ -78,8 +111,4 @@ const DietType = (props) => {
         ></CheckBox>
         <SideLabel htmlFor='alcoholFree'>Alcohol-Free</SideLabel>
       </BoxGroup>
-    </Container>
-  );
-};
-
-export default DietType;
+      */
