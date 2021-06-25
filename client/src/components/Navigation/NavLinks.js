@@ -1,25 +1,20 @@
 import React from 'react';
-import styled from 'styled-components';
-import Backdrop from '../UI/Backdrop/Backdrop';
+import styled, { css } from 'styled-components';
+
+import { useLocation } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
-
-const MobileBackdrop = styled(Backdrop)`
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    display: none;
-  }
-`;
 
 const Burger = styled.div`
   cursor: pointer;
   display: block;
 
   & div {
-    height: 3px;
+    height: 2px;
     width: 25px;
-    margin: 4px;
+    margin: 6px 0;
     border-radius: 100px;
-    background-color: black;
+    background-color: ${({ theme }) => theme.colors.light};
   }
 
   @media ${({ theme }) => theme.breakpoints.tablet} {
@@ -28,95 +23,77 @@ const Burger = styled.div`
 `;
 
 const Container = styled.div`
+  position: fixed;
   display: flex;
+
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
 
-  position: fixed;
-  top: 0;
+  top: ${({ theme }) => theme.navbarHeight};
   right: 0;
+  height: calc(100vh - ${({ theme }) => theme.navbarHeight});
+  width: 100%;
 
-  min-height: auto;
-  height: 100vh;
-  z-index: 500;
-
-  background-color: ${(props) => props.theme.colors.light};
+  background-color: ${(props) => props.theme.colors.darkLight};
 
   overflow: auto;
-
-  font-size: 1.2rem;
-  width: 12em;
-  max-width: 50vw;
   transform: ${(props) => (props.open ? 'translateX(0%)' : 'translateX(100%)')};
-
   transition: 0.2s transform ease-out;
-
   @media ${({ theme }) => theme.breakpoints.tablet} {
     position: static;
     flex-direction: row;
-    font-size: 1rem;
-    z-index: 0;
-
-    height: auto;
-    max-height: none;
-    max-width: none;
-
+    height: 100%;
+    align-items: center;
     width: auto;
-
     background-color: transparent;
     transform: translateX(0%);
     transition: none;
   }
 `;
 
-const NavLink = styled.a`
-  cursor: pointer;
-  padding: 1em 0;
-  text-align: center;
+const hoveredLink = css`
+  color: ${({ theme }) => theme.colors.light};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.light};
+`;
+const activeLink = css`
+  color: ${({ theme }) => theme.colors.light};
+  background-color: ${(props) => props.theme.colors.dark};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
+`;
 
-  color: ${(props) => props.theme.colors.dark};
-  font-weight: 600;
+const NavLink = styled.a`
+  font-size: 1rem;
+  font-weight: 400;
+
+  cursor: pointer;
+  padding: 1.5em 1em;
+
+  color: ${({ theme }) => theme.colors.lightDark};
 
   &:hover {
-    background-color: ${(props) => props.theme.colors.darkerLight};
+    ${hoveredLink}
   }
 
+  &:active {
+    ${activeLink}
+  }
+
+  ${(props) => (props.active ? activeLink : '')}
+
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    margin: 0 0.7em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 1.5em;
+    position: relative;
+    height: 100%;
 
     width: auto;
-    font-weight: 500;
-
-    &:hover {
-      background-color: transparent;
-      text-decoration: underline;
-    }
   }
-`;
-
-const NavLabel = styled.p`
-  display: block;
-  padding: 1em 0;
-  text-align: center;
-  color: ${(props) => props.theme.colors.dark};
-
-  text-transform: uppercase;
-
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    margin: 0 0.7em;
-    padding: 0;
-  }
-`;
-
-const Emphasis = styled.span`
-  color: ${(props) => props.theme.colors.primary};
-  font-weight: 600;
 `;
 
 const NavLinks = ({
   isAuthenticated,
-  user,
   handleToSearch,
   handleToFavorites,
   handleToRecipes,
@@ -126,17 +103,26 @@ const NavLinks = ({
   open,
   toggleOpen,
 }) => {
+  let location = useLocation();
+
+  const searchActive = location.pathname === '/';
+  const recipesActive = location.pathname === '/recipes';
+  const favoritesActive = location.pathname === '/favorites';
+
   let navLinks;
   if (isAuthenticated) {
     navLinks = (
       <>
         <Container open={open}>
-          <NavLabel>
-            Logged in as <Emphasis>{user ? user.name : null}</Emphasis>{' '}
-          </NavLabel>
-          <NavLink onClick={handleToSearch}>Search</NavLink>
-          <NavLink onClick={handleToRecipes}>Recipes</NavLink>
-          <NavLink onClick={handleToFavorites}>Favorites</NavLink>
+          <NavLink onClick={handleToSearch} active={searchActive}>
+            Search
+          </NavLink>
+          <NavLink onClick={handleToRecipes} active={recipesActive}>
+            Recipes
+          </NavLink>
+          <NavLink onClick={handleToFavorites} active={favoritesActive}>
+            Favorites
+          </NavLink>
           <NavLink onClick={logout}>Logout</NavLink>
         </Container>
       </>
@@ -145,8 +131,12 @@ const NavLinks = ({
     navLinks = (
       <>
         <Container open={open}>
-          <NavLink onClick={handleToSearch}>Search</NavLink>
-          <NavLink onClick={handleToRecipes}>Recipes</NavLink>
+          <NavLink onClick={handleToSearch} active={searchActive}>
+            Search
+          </NavLink>
+          <NavLink onClick={handleToRecipes} active={recipesActive}>
+            Recipes
+          </NavLink>
 
           <NavLink onClick={handleLoginOpen}>Login</NavLink>
           <NavLink onClick={handleRegisterOpen}>Register</NavLink>
@@ -156,7 +146,6 @@ const NavLinks = ({
   }
   return (
     <>
-      <MobileBackdrop show={open} clicked={toggleOpen}></MobileBackdrop>
       {navLinks}
       <Burger onClick={toggleOpen}>
         <div></div>
@@ -169,7 +158,6 @@ const NavLinks = ({
 
 NavLinks.propTypes = {
   isAuthenticated: PropTypes.bool,
-  user: PropTypes.object,
   handleToSearch: PropTypes.func.isRequired,
   handleToFavorites: PropTypes.func.isRequired,
   handleToRecipes: PropTypes.func.isRequired,

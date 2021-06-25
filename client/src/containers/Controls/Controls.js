@@ -31,6 +31,10 @@ const ButtonContainer = styled.div`
   margin-top: 1.3em;
 `;
 
+const maxIngredients = 'max number of ingredients';
+const maxCalories = 'max calories';
+const maxTime = 'max time to cook';
+
 export class Controls extends Component {
   state = {
     searchControls: {
@@ -49,7 +53,7 @@ export class Controls extends Component {
       },
     },
     advancedControls: {
-      maxIngredients: {
+      [maxIngredients]: {
         elementType: 'input',
         elementConfig: {
           type: 'number',
@@ -59,7 +63,7 @@ export class Controls extends Component {
         valid: false,
         touched: false,
       },
-      maxCalories: {
+      [maxCalories]: {
         elementType: 'input',
         elementConfig: {
           type: 'number',
@@ -69,7 +73,7 @@ export class Controls extends Component {
         valid: false,
         touched: false,
       },
-      maxTime: {
+      [maxTime]: {
         elementType: 'input',
         elementConfig: {
           type: 'number',
@@ -81,7 +85,7 @@ export class Controls extends Component {
       },
     },
     excludedControls: {
-      excluded: {
+      'excluded ingredients': {
         elementType: 'input',
         elementConfig: {
           type: 'text',
@@ -190,15 +194,17 @@ export class Controls extends Component {
       if (this.state.healthFields[field] === true) health.push(field);
     }
     let excluded = [...this.state.excludedItems];
+
     this.props.getRecipes(
       this.state.searchControls.search.value,
-      this.state.advancedControls.maxIngredients.value,
-      this.state.advancedControls.maxCalories.value,
-      this.state.advancedControls.maxTime.value,
+      this.state.advancedControls[maxIngredients].value,
+      this.state.advancedControls[maxCalories].value,
+      this.state.advancedControls[maxTime].value,
       this.state.dietField,
       health,
       excluded
     );
+
     this.props.history.push('/recipes');
   };
 

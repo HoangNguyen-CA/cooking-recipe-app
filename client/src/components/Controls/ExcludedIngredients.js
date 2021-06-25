@@ -10,7 +10,6 @@ import FormInputs from '../Forms/FormInputs';
 const ExcludeButton = styled(Button)`
   background-color: ${(props) => props.theme.colors.danger};
   color: white;
-  margin-top: 0.5em;
   margin-bottom: 0.5em;
   display: block;
 `;
@@ -18,15 +17,14 @@ const ExcludeButton = styled(Button)`
 const ExcludedItem = styled(Button)`
   background-color: ${(props) => props.theme.colors.danger};
   color: white;
-  margin: 0.5em;
+  margin: 0.3em;
 `;
 
 const ItemsContainer = styled.div`
-  border-radius: 5px;
+  border-radius: ${({ theme }) => theme.radius.medium};
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
   height: auto;
   background-color: ${(props) => props.theme.colors.light};
-  min-height: 3.2em;
 `;
 
 const ExcludeIngredients = ({
@@ -47,7 +45,7 @@ const ExcludeIngredients = ({
         controls={controls}
         handleInputChanged={handleControlsChange}
       ></FormInputs>
-      <ExcludeButton onClick={handleAddExcluded}>Exclude</ExcludeButton>
+      <ExcludeButton onClick={handleAddExcluded}>Add to excluded</ExcludeButton>
       <Label>Ingredients Excluded:</Label>
       <ItemsContainer>{excludedElements}</ItemsContainer>
     </>

@@ -7,8 +7,8 @@ import TextInput from './TextInput';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 
-const Group = styled.div`
-  margin-top: 0.5em;
+const Container = styled.div`
+  margin-top: 0;
   font-size: 1rem;
 `;
 
@@ -80,13 +80,14 @@ const FormGroup = ({
       );
   }
   return (
-    <Group>
+    <Container>
       <Label htmlFor={uuid}>{label}:</Label>
+
       {inputElement}
       <Message valid={valid} touched={touched}>
         {msg || '_'}
       </Message>
-    </Group>
+    </Container>
   );
 };
 

@@ -1,15 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+
     * {
-     margin: 0;
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
     }
 
     html {
-     font-size: 80%;
-     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+     font-size: 90%;
+     font-family: "Roboto", 'Times New Roman', Times, serif;
     }
 
     @media ${({ theme }) => theme.breakpoints.tablet}{

@@ -15,7 +15,7 @@ const StyledModal = styled.div`
 
   z-index: 1000;
 
-  border-radius: 5px;
+  border-radius: ${({ theme }) => theme.radius.medium};
   padding: 1.5em;
 
   overflow: auto;

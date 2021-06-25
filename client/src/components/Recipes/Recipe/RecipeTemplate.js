@@ -10,7 +10,7 @@ const Display = styled.div`
   width: 100%;
   margin: 2em 0;
   background-color: ${(props) => props.theme.colors.light};
-  border-radius: 5px;
+  border-radius: ${({ theme }) => theme.radius.medium};
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
   padding: 1.5em;
 `;
@@ -31,7 +31,7 @@ const Url = styled.a.attrs(() => ({ target: '_blank' }))`
 
 const ImageContainer = styled.div`
   border: 2px solid rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
+  border-radius: ${({ theme }) => theme.radius.medium};
   overflow: hidden;
   margin: 1em 0;
 `;

@@ -17,18 +17,24 @@ import {
 } from '../../store/slices/authSlice.js';
 
 const Container = styled.div`
+  position: sticky;
+  top: 0;
+  left: 0;
+  padding: 0 1em;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5em 0.7em;
-  background-color: ${(props) => props.theme.colors.light};
+  height: ${({ theme }) => theme.navbarHeight};
+  background: ${({ theme }) => theme.colors.darkLight};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+  }
 `;
 
 const Title = styled.h1`
-  font-size: 1.6rem;
-  display: block;
-  color: ${(props) => props.theme.colors.primary};
+  font-size: 1.3rem;
   font-weight: 500;
+  display: block;
+  color: ${(props) => props.theme.colors.light};
 `;
 
 export class Navbar extends Component {
@@ -102,7 +108,7 @@ export class Navbar extends Component {
           register={this.props.register}
         ></RegisterModal>
         <Container>
-          <Title>Recipe Search</Title>
+          <Title>RecipeSearch</Title>
           <NavLinks
             open={this.state.linksOpen}
             toggleOpen={this.handleLinksToggle}

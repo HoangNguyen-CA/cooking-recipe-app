@@ -1,29 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
-import Label from '../Forms/Label';
 import RadioBox from '../Forms/RadioBox';
+import { BoxGroup, SideLabel, Header, Container } from './SharedStyles';
 
 import PropTypes from 'prop-types';
-
-const SideLabel = styled(Label)`
-  margin: 0 0 0 0.3em;
-`;
-
-const Container = styled.div`
-  margin-top: 0.8em;
-`;
-
-const BoxGroup = styled.div`
-  display: inline-block;
-  margin-right: 1em;
-  margin-bottom: 0.3em;
-`;
-
-const Header = styled.h3`
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.3em;
-`;
 
 const nameAtr = 'dietTypes';
 

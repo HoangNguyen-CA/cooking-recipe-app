@@ -4,8 +4,8 @@ const Button = styled.button`
   text-align: center;
   cursor: pointer;
   padding: 0.5em 0.5em;
-  border-radius: 4px;
-  font-size: 1.1rem;
+  border-radius: ${({ theme }) => theme.radius.medium};
+  font-size: 1rem;
   border: none;
   outline: none;
   text-transform: uppercase;

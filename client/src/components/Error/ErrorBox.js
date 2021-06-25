@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const Container = styled.div`
   background-color: ${(props) => props.theme.colors.danger};
   color: white;
-  border-radius: 3px;
+  border-radius: ${({ theme }) => theme.radius.medium};
   padding: 0.5em 0.1em;
   text-align: center;
   font-size: 1rem;

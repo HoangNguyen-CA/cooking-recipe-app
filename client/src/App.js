@@ -25,7 +25,7 @@ export class App extends Component {
         <GlobalStyle></GlobalStyle>
         <Switch>
           <Route exact path='/'>
-            <Layout>
+            <Layout maxWidth='600px'>
               <Controls></Controls>
             </Layout>
           </Route>

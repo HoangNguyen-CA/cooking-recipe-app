@@ -3,24 +3,35 @@ import Navbar from '../../containers/Navbar/Navbar';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
-const OutterContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  background-color: ${({ theme }) => theme.colors.dark};
-`;
-
 const centerChildren = css`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
+const OutterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.dark};
+`;
+
+const FakedFullContainer = styled(OutterContainer)`
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: -100;
+`;
+
 const InnerContainer = styled.div`
   width: 80%;
-  max-width: 800px;
+  max-width: ${(props) => props.maxWidth || '800px'};
   margin: 4em 0;
+  border-radius: ${({ theme }) => theme.radius.medium};
+
   background-color: ${({ theme }) => theme.colors.light};
 `;
 
@@ -29,12 +40,13 @@ const PaddingContainer = styled.div`
   ${(props) => (props.center ? centerChildren : '')}
 `;
 
-const Layout = ({ center, children }) => {
+const Layout = ({ center, children, maxWidth }) => {
   return (
     <>
+      <FakedFullContainer></FakedFullContainer>
       <Navbar></Navbar>
       <OutterContainer>
-        <InnerContainer>
+        <InnerContainer maxWidth={maxWidth}>
           <PaddingContainer center={center}>{children}</PaddingContainer>
         </InnerContainer>
       </OutterContainer>
