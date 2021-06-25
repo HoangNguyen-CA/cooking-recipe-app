@@ -2,6 +2,8 @@ import React from 'react';
 import Backdrop from '../Backdrop/Backdrop';
 import styled from 'styled-components';
 
+import PropTypes from 'prop-types';
+
 const StyledModal = styled.div`
   background-color: ${({ theme }) => theme.colors.light};
   box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.4);
@@ -20,15 +22,21 @@ const StyledModal = styled.div`
   max-height: 90%;
 `;
 
-const Modal = (props) => {
+const Modal = ({ show, clickedBackdrop, children, className }) => {
   return (
     <>
-      <Backdrop show={props.show} clicked={props.clickedBackdrop}></Backdrop>
-      {props.show ? (
-        <StyledModal className={props.className}>{props.children}</StyledModal>
+      <Backdrop show={show} clicked={clickedBackdrop}></Backdrop>
+      {show ? (
+        <StyledModal className={className}>{children}</StyledModal>
       ) : null}
     </>
   );
+};
+
+Modal.propTypes = {
+  show: PropTypes.bool,
+  clickedBackdrop: PropTypes.func,
+  children: PropTypes.node,
 };
 
 export const ModalHeader = styled.h2`

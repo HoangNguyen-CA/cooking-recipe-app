@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import RecipeModal from './RecipeModal/RecipeModal';
 import Button from '../../UI/Button/Button';
 import LabelSection from './LabelSection/LabelSection';
+import PropTypes from 'prop-types';
 
 const Display = styled.div`
   flex-grow: 1;
@@ -54,7 +55,7 @@ const LabelsContainer = styled.div`
   margin-top: 0.5em;
 `;
 
-const Recipe = ({
+const RecipeTemplate = ({
   label,
   image,
   source,
@@ -71,7 +72,6 @@ const Recipe = ({
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleModalOpen = () => {
-    console.log(modalOpen);
     setModalOpen(true);
   };
 
@@ -115,4 +115,19 @@ const Recipe = ({
   );
 };
 
-export default Recipe;
+RecipeTemplate.propTypes = {
+  label: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  source: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  dietLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  healthLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  cautions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+  calories: PropTypes.number.isRequired,
+  totalTime: PropTypes.number.isRequired,
+  nutrients: PropTypes.arrayOf(PropTypes.object).isRequired,
+  children: PropTypes.node,
+};
+
+export default RecipeTemplate;

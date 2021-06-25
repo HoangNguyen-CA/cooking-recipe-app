@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import Modal, { ModalHeader } from '../../components/UI/Modal/Modal';
-import ErrorDiv from '../../components/Error/ErrorDiv';
+import ErrorBox from '../../components/Error/ErrorBox';
 
 import Button from '../../components/UI/Button/Button';
 
@@ -86,7 +86,7 @@ function LoginModal(props) {
   let content = (
     <>
       <ModalHeader>Login</ModalHeader>
-      <ErrorDiv error={props.error}></ErrorDiv>
+      <ErrorBox error={props.error}></ErrorBox>
       <form onSubmit={handleSubmit}>
         <FormInputs
           controls={controls}

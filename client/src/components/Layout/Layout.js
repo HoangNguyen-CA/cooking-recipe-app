@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../../containers/Navbar/Navbar';
 import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 
 const OutterContainer = styled.div`
   display: flex;
@@ -28,15 +29,13 @@ const PaddingContainer = styled.div`
   ${(props) => (props.center ? centerChildren : '')}
 `;
 
-const Layout = (props) => {
+const Layout = ({ center, children }) => {
   return (
     <>
       <Navbar></Navbar>
       <OutterContainer>
         <InnerContainer>
-          <PaddingContainer center={props.center}>
-            {props.children}
-          </PaddingContainer>
+          <PaddingContainer center={center}>{children}</PaddingContainer>
         </InnerContainer>
       </OutterContainer>
     </>
@@ -54,5 +53,9 @@ export const EmptyMessage = styled.p`
   color: ${(props) => props.theme.colors.danger};
   text-transform: uppercase;
 `;
+
+Layout.propTypes = {
+  center: PropTypes.bool,
+};
 
 export default Layout;

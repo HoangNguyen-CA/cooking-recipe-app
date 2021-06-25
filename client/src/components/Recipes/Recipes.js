@@ -16,19 +16,21 @@ const AddFavButton = styled(Button)`
 
 const Recipes = ({ loading, recipes, isAuthenticated, addFavorite }) => {
   const handleAddFavorites = (el) => {
-    let FAV = {};
-    FAV.label = el.recipe.label;
-    FAV.image = el.recipe.image;
-    FAV.source = el.recipe.source;
-    FAV.url = el.recipe.url;
-    FAV.dietLabels = el.recipe.dietLabels;
-    FAV.healthLabels = el.recipe.healthLabels;
-    FAV.cautions = el.recipe.cautions;
-    FAV.ingredients = el.recipe.ingredientLines;
-    FAV.calories = el.recipe.calories;
-    FAV.totalTime = el.recipe.totalTime;
-    FAV.nutrients = el.recipe.digest;
-    addFavorite(FAV);
+    const recipe = el.recipe;
+    let newFavorite = {
+      label: recipe.label,
+      image: recipe.image,
+      source: recipe.source,
+      url: recipe.url,
+      dietLabels: recipe.dietLabels,
+      healthLabels: recipe.healthLabels,
+      cautions: recipe.cautions,
+      ingredients: recipe.ingredientLines,
+      calories: recipe.calories,
+      totalTime: recipe.totalTime,
+      nutrients: recipe.digest,
+    };
+    addFavorite(newFavorite);
   };
   return (
     <>

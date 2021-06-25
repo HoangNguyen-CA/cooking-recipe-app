@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import PropTypes from 'prop-types';
+
 const StyledBackdrop = styled.div`
   width: 100%;
   height: 100%;
@@ -17,6 +19,11 @@ const Backdrop = ({ clicked, show, className }) => {
   ) : (
     ''
   );
+};
+
+Backdrop.propTypes = {
+  clicked: PropTypes.func,
+  show: PropTypes.bool,
 };
 
 export default Backdrop;

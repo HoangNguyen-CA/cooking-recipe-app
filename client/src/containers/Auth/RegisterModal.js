@@ -6,7 +6,7 @@ import Modal, { ModalHeader } from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
-import ErrorDiv from '../../components/Error/ErrorDiv';
+import ErrorBox from '../../components/Error/ErrorBox';
 
 import FormInputs from '../../components/Forms/FormInputs';
 
@@ -103,7 +103,7 @@ function RegisterModal(props) {
   let content = (
     <>
       <ModalHeader>Register</ModalHeader>
-      <ErrorDiv error={props.error}></ErrorDiv>
+      <ErrorBox error={props.error}></ErrorBox>
       <form onSubmit={handleSubmit}>
         <FormInputs
           controls={controls}

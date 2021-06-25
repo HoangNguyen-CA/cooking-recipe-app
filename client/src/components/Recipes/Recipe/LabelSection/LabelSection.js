@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import PropTypes from 'prop-types';
+
 const LabelContainer = styled.div`
   margin: 0.3em 0;
 `;
@@ -18,15 +20,15 @@ const LabelItem = styled.p`
   border: 2px solid ${(props) => props.theme.colors.dark};
 `;
 
-const LabelSection = (props) => {
+const LabelSection = ({ labels, header }) => {
   let Element;
 
-  if (props.labels.length > 0) {
+  if (labels.length > 0) {
     Element = (
       <>
-        <LabelHeader>{props.header}</LabelHeader>
+        <LabelHeader>{header}</LabelHeader>
         <LabelContainer>
-          {props.labels.map((el, index) => (
+          {labels.map((el, index) => (
             <LabelItem key={index}>{el}</LabelItem>
           ))}
         </LabelContainer>
@@ -38,4 +40,8 @@ const LabelSection = (props) => {
   return <>{Element}</>;
 };
 
+LabelSection.propTypes = {
+  labels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  header: PropTypes.string.isRequired,
+};
 export default LabelSection;

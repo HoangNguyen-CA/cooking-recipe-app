@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from '../../../UI/Modal/Modal';
 import styled from 'styled-components';
 import { ModalHeader } from '../../../UI/Modal/Modal';
+import PropTypes from 'prop-types';
 
 const StyledModal = styled(Modal)`
   max-width: 600px;
@@ -24,19 +25,19 @@ const ListElement = styled.li`
   margin-left: 1em;
 `;
 
-const RecipeModal = (props) => {
+const RecipeModal = ({ open, label, ingredients, nutrients, handleClose }) => {
   return (
-    <StyledModal show={props.open} clickedBackdrop={props.handleClose}>
-      <ModalHeader>{props.label}</ModalHeader>
+    <StyledModal show={open} clickedBackdrop={handleClose}>
+      <ModalHeader>{label}</ModalHeader>
       <List>
         <ListHeader>Ingredients:</ListHeader>
-        {props.ingredients.map((el, index) => (
+        {ingredients.map((el, index) => (
           <ListElement key={index}>{el}</ListElement>
         ))}
       </List>
       <List>
         <ListHeader>Nutrients:</ListHeader>
-        {props.nutrients.map((el, index) => (
+        {nutrients.map((el, index) => (
           <ListElement key={index}>
             {el.label}: {el.total.toFixed(2)} {el.unit} ({Math.round(el.daily)}%
             daily)
@@ -45,6 +46,14 @@ const RecipeModal = (props) => {
       </List>
     </StyledModal>
   );
+};
+
+RecipeModal.propTypes = {
+  open: PropTypes.bool,
+  label: PropTypes.string.isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+  nutrients: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleClose: PropTypes.func.isRequired,
 };
 
 export default RecipeModal;

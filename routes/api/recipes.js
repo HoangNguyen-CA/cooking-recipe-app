@@ -57,7 +57,6 @@ router.get(
     } catch (e) {
       // log error
       console.dir(e);
-      console.log(params);
       throw e;
     }
   })

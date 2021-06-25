@@ -100,4 +100,5 @@ FormGroup.propTypes = {
   label: PropTypes.string.isRequired,
   msg: PropTypes.string,
 };
+
 export default FormGroup;
