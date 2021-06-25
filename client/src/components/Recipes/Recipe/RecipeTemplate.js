@@ -50,7 +50,7 @@ const StyledButton = styled(Button)`
   margin-top: 1em;
 `;
 
-const LabelsWrapper = styled.div`
+const LabelsContainer = styled.div`
   margin-top: 0.5em;
 `;
 
@@ -88,7 +88,7 @@ const Recipe = ({
         ingredients={ingredients}
         nutrients={nutrients}
       ></RecipeModal>
-      <Header> {label}</Header>
+      <Header> {label} </Header>
       <Source>
         Source: <Url href={url}>{source}</Url>
       </Source>
@@ -98,14 +98,14 @@ const Recipe = ({
       <Info>Calories: {calories}</Info>
       <Info>Time to make: {totalTime} minutes</Info>
 
-      <LabelsWrapper>
+      <LabelsContainer>
         <LabelSection header='Diet Types:' labels={dietLabels}></LabelSection>
         <LabelSection
           header='Health Types:'
           labels={healthLabels}
         ></LabelSection>
         <LabelSection header='Cautions:' labels={cautions}></LabelSection>
-      </LabelsWrapper>
+      </LabelsContainer>
 
       <StyledButton onClick={handleModalOpen}>
         Ingredients & Nutrients

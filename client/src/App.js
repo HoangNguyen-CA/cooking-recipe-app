@@ -7,6 +7,7 @@ import RecipesDisplay from './containers/RecipesDisplay/RecipesDisplay';
 import FavoritesDisplay from './containers/FavoritesDisplay/FavoritesDisplay';
 
 import Layout from './components/Layout/Layout';
+import ErrorDisplay from './containers/ErrorDisplay/ErrorDisplay';
 
 import { loadUser } from './store/slices/authSlice';
 
@@ -20,6 +21,7 @@ export class App extends Component {
   render() {
     return (
       <>
+        <ErrorDisplay></ErrorDisplay>
         <GlobalStyle></GlobalStyle>
         <Switch>
           <Route exact path='/'>

@@ -84,7 +84,7 @@ const FormGroup = ({
       <Label htmlFor={uuid}>{label}:</Label>
       {inputElement}
       <Message valid={valid} touched={touched}>
-        {msg || ''}
+        {msg || '_'}
       </Message>
     </Group>
   );

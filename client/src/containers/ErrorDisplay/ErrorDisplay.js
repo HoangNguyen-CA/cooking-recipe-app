@@ -12,7 +12,8 @@ const ErrorModal = styled(Modal)`
 `;
 
 const ErrorText = styled.p`
-  font-size: 1.1rem;
+  text-align: center;
+  font-size: 1rem;
   font-weight: 600;
   text-transform: uppercase;
 `;
@@ -21,6 +22,7 @@ export class ErrorDisplay extends Component {
   handleModalClose = () => {
     this.props.hideError();
   };
+
   render() {
     return (
       <>

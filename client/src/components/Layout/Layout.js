@@ -46,7 +46,6 @@ const Layout = (props) => {
 export const Header = styled.h2`
   font-size: 3rem;
   font-weight: 600;
-  margin-top: 1em;
   margin-bottom: 0.3em;
 `;
 

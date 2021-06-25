@@ -13,6 +13,7 @@ const errorSlice = createSlice({
       state.error = action.payload;
       state.show = true;
     },
+
     hideError(state) {
       state.error = '';
       state.show = false;
