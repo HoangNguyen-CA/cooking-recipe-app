@@ -1,19 +1,14 @@
 import React from 'react';
 import Navbar from '../../containers/Navbar/Navbar';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-const centerChildren = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 
 const OutterContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.dark};
+  padding: 4em 0;
 `;
 
 const FakedFullContainer = styled(OutterContainer)`
@@ -26,30 +21,12 @@ const FakedFullContainer = styled(OutterContainer)`
   z-index: -100;
 `;
 
-const InnerContainer = styled.div`
-  width: 80%;
-  max-width: ${(props) => props.maxWidth || '800px'};
-  margin: 4em 0;
-  border-radius: ${({ theme }) => theme.radius.medium};
-
-  background-color: ${({ theme }) => theme.colors.light};
-`;
-
-const PaddingContainer = styled.div`
-  padding: 2em 10%;
-  ${(props) => (props.center ? centerChildren : '')}
-`;
-
 const Layout = ({ center, children, maxWidth }) => {
   return (
     <>
       <FakedFullContainer></FakedFullContainer>
       <Navbar></Navbar>
-      <OutterContainer>
-        <InnerContainer maxWidth={maxWidth}>
-          <PaddingContainer center={center}>{children}</PaddingContainer>
-        </InnerContainer>
-      </OutterContainer>
+      <OutterContainer>{children}</OutterContainer>
     </>
   );
 };

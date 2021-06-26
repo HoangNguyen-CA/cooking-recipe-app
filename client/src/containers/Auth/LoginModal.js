@@ -19,9 +19,7 @@ const StyledModal = styled(Modal)`
 
 const SubmitButton = styled(Button)`
   width: 100%;
-  background-color: ${(props) => props.theme.colors.primary};
-  color: ${(props) => props.theme.colors.light};
-  margin-top: 2em;
+  margin-top: 1em;
 `;
 
 function LoginModal(props) {
@@ -92,7 +90,9 @@ function LoginModal(props) {
           controls={controls}
           handleInputChanged={handleInputChanged}
         ></FormInputs>
-        <SubmitButton type='submit'>Submit</SubmitButton>
+        <SubmitButton primary type='submit'>
+          Submit
+        </SubmitButton>
       </form>
     </>
   );

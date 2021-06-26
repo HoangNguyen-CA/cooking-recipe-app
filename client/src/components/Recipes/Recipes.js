@@ -10,8 +10,6 @@ import PropTypes from 'prop-types';
 const AddFavButton = styled(Button)`
   display: block;
   margin-top: 1em;
-  background-color: ${(props) => props.theme.colors.primary};
-  color: white;
 `;
 
 const Recipes = ({ loading, recipes, isAuthenticated, addFavorite }) => {
@@ -52,7 +50,7 @@ const Recipes = ({ loading, recipes, isAuthenticated, addFavorite }) => {
             nutrients={el.recipe.digest}
           >
             {isAuthenticated ? (
-              <AddFavButton onClick={() => handleAddFavorites(el)}>
+              <AddFavButton primary onClick={() => handleAddFavorites(el)}>
                 Add To Favorites
               </AddFavButton>
             ) : null}

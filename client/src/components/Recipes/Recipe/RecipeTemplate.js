@@ -46,8 +46,6 @@ const Info = styled.p`
 `;
 
 const StyledButton = styled(Button)`
-  background-color: ${(props) => props.theme.colors.primary};
-  color: white;
   margin-top: 1em;
 `;
 
@@ -107,7 +105,7 @@ const RecipeTemplate = ({
         <LabelSection header='Cautions:' labels={cautions}></LabelSection>
       </LabelsContainer>
 
-      <StyledButton onClick={handleModalOpen}>
+      <StyledButton primary onClick={handleModalOpen}>
         Ingredients & Nutrients
       </StyledButton>
       {children}

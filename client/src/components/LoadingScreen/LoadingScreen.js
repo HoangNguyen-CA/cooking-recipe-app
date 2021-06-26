@@ -9,10 +9,10 @@ const TransparentModal = styled(Modal)`
   box-shadow: none;
 `;
 
-const LoadingScreen = ({ show }) => {
+const LoadingScreen = ({ show, clicked }) => {
   return (
     <>
-      <TransparentModal show={show}>
+      <TransparentModal show={show} clickedBackdrop={clicked}>
         <Spinner></Spinner>
       </TransparentModal>
     </>
@@ -21,5 +21,6 @@ const LoadingScreen = ({ show }) => {
 
 LoadingScreen.propTypes = {
   show: PropTypes.bool,
+  clicked: PropTypes.func,
 };
 export default LoadingScreen;

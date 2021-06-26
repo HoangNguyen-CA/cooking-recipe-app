@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getRecipes as GET_RECIPES } from '../../store/slices/recipeSlice';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import FormInputs, {
   handleControlChange,
@@ -15,25 +15,48 @@ import ExcludedIngredients from '../../components/Controls/ExcludedIngredients';
 
 import { withRouter } from 'react-router-dom';
 
+const showAdvanced = css`
+  max-height: 700px;
+`;
+
+const MainContainer = styled.div`
+  width: 80%;
+  max-width: 600px;
+  border-radius: ${({ theme }) => theme.radius.medium};
+  background-color: ${({ theme }) => theme.colors.light};
+`;
+
+const PaddingContainer = styled.div`
+  padding: 2em 10%;
+`;
+
+const AdvancedSearchContainer = styled.div`
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.5s ease-out;
+  ${(props) => (props.show ? showAdvanced : '')}
+`;
+
 const AdvancedButton = styled(Button)`
   display: block;
 `;
 
 const SearchButton = styled(Button)`
   display: block;
-  background-color: ${(props) => props.theme.colors.primary};
-  color: #fff;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 1.3em;
+  margin-top: 1em;
 `;
 
 const maxIngredients = 'max number of ingredients';
 const maxCalories = 'max calories';
 const maxTime = 'max time to cook';
+const excludedProp = 'excluded ingredient';
 
 export class Controls extends Component {
   state = {
@@ -85,7 +108,7 @@ export class Controls extends Component {
       },
     },
     excludedControls: {
-      'excluded ingredients': {
+      [excludedProp]: {
         elementType: 'input',
         elementConfig: {
           type: 'text',
@@ -100,6 +123,7 @@ export class Controls extends Component {
       },
     },
     showAdvanced: false,
+    showExcluded: false,
     healthFields: {
       vegan: false,
       vegetarian: false,
@@ -142,17 +166,17 @@ export class Controls extends Component {
   };
 
   handleAddExcluded = () => {
-    if (this.state.excludedControls.excluded.value === '') return;
+    if (this.state.excludedControls[excludedProp].value === '') return;
     this.setState((prevState) => {
       const prevControls = prevState.excludedControls;
       const newSet = new Set(prevState.excludedItems);
-      newSet.add(prevControls.excluded.value.toLowerCase());
+      newSet.add(prevControls[excludedProp].value.toLowerCase());
       return {
         excludedItems: newSet,
         excludedControls: {
           ...prevControls,
-          excluded: {
-            ...prevControls.excluded,
+          [excludedProp]: {
+            ...prevControls[excludedProp],
             value: '',
           },
         },
@@ -188,6 +212,12 @@ export class Controls extends Component {
     });
   };
 
+  handleToggleExcluded = () => {
+    this.setState((prevState) => {
+      return { showExcluded: !prevState.showExcluded };
+    });
+  };
+
   handleSubmit = () => {
     const health = [];
     for (let field in this.state.healthFields) {
@@ -209,50 +239,57 @@ export class Controls extends Component {
   };
 
   render() {
-    let advancedSearch = null;
-    if (this.state.showAdvanced) {
-      advancedSearch = (
-        <>
-          <FormInputs
-            controls={this.state.advancedControls}
-            handleInputChanged={this.handleAdvancedControlsChange}
-          ></FormInputs>
+    const advancedSearch = (
+      <AdvancedSearchContainer show={this.state.showAdvanced}>
+        <FormInputs
+          controls={this.state.advancedControls}
+          handleInputChanged={this.handleAdvancedControlsChange}
+        ></FormInputs>
 
-          <HealthType
-            healthFields={this.state.healthFields}
-            handleCheck={this.handleCheck}
-          />
-          <DietType
-            dietOptions={this.state.dietOptions}
-            dietField={this.state.dietField}
-            handleRadio={this.handleRadio}
-          />
+        <HealthType
+          healthFields={this.state.healthFields}
+          handleCheck={this.handleCheck}
+        />
+        <DietType
+          dietOptions={this.state.dietOptions}
+          dietField={this.state.dietField}
+          handleRadio={this.handleRadio}
+        />
 
-          <ExcludedIngredients
-            controls={this.state.excludedControls}
-            handleControlsChange={this.handleExcludedControlsChange}
-            excludedItems={[...this.state.excludedItems]}
-            handleAddExcluded={this.handleAddExcluded}
-            handleRemoveExcluded={this.handleRemoveExcluded}
-          ></ExcludedIngredients>
-        </>
-      );
-    }
+        <Button onClick={this.handleToggleExcluded} danger>
+          Exclude Ingredients
+        </Button>
+        <ExcludedIngredients
+          show={this.state.showExcluded}
+          toggleShow={this.handleToggleExcluded}
+          controls={this.state.excludedControls}
+          handleControlsChange={this.handleExcludedControlsChange}
+          excludedItems={[...this.state.excludedItems]}
+          handleAddExcluded={this.handleAddExcluded}
+          handleRemoveExcluded={this.handleRemoveExcluded}
+        ></ExcludedIngredients>
+      </AdvancedSearchContainer>
+    );
 
     return (
-      <>
-        <FormInputs
-          controls={this.state.searchControls}
-          handleInputChanged={this.handleSearchControlsChange}
-        ></FormInputs>
-        {advancedSearch}
-        <ButtonContainer>
-          <AdvancedButton onClick={this.handleToggleAdvanced}>
-            Advanced Search
-          </AdvancedButton>
-          <SearchButton onClick={this.handleSubmit}>Search</SearchButton>
-        </ButtonContainer>
-      </>
+      <MainContainer>
+        <PaddingContainer>
+          <FormInputs
+            controls={this.state.searchControls}
+            handleInputChanged={this.handleSearchControlsChange}
+          ></FormInputs>
+          {advancedSearch}
+
+          <ButtonContainer>
+            <AdvancedButton dark onClick={this.handleToggleAdvanced}>
+              Advanced Search
+            </AdvancedButton>
+            <SearchButton primary onClick={this.handleSubmit}>
+              Search
+            </SearchButton>
+          </ButtonContainer>
+        </PaddingContainer>
+      </MainContainer>
     );
   }
 }

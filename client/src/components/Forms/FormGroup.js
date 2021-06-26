@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 const Container = styled.div`
   margin-top: 0;
   font-size: 1rem;
+  width: 100%;
 `;
 
 const ValidatedInput = styled(TextInput)`

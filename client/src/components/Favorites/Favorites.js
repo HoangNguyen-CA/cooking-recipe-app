@@ -10,8 +10,6 @@ import PropTypes from 'prop-types';
 
 const RemoveButton = styled(Button)`
   display: block;
-  background-color: ${(props) => props.theme.colors.danger};
-  color: white;
   margin-top: 1em;
 `;
 const Favorites = ({ loading, deleteFavorite, favorites }) => {
@@ -37,6 +35,7 @@ const Favorites = ({ loading, deleteFavorite, favorites }) => {
           nutrients={el.nutrients}
         >
           <RemoveButton
+            danger
             onClick={() => {
               handleDeleteFavorite(el);
             }}
