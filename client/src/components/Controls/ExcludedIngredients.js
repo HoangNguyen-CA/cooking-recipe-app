@@ -9,13 +9,13 @@ import PropTypes from 'prop-types';
 import FormInputs from '../Forms/FormInputs';
 
 const ExcludeButton = styled(Button)`
-  margin-bottom: 0.5em;
+  margin: 0.5em 0;
   display: block;
   width: 100%;
 `;
 
 const ExcludedItem = styled(Button)`
-  margin: 0.5em 0;
+  margin-top: 0.5em;
   text-overflow: ellipsis;
   overflow: hidden;
 `;
@@ -27,7 +27,7 @@ const ItemsContainer = styled.div`
 `;
 
 const MainContainer = styled.div`
-  width: 320px;
+  width: 250px;
   max-width: 90vw;
 `;
 

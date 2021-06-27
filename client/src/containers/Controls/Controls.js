@@ -26,7 +26,7 @@ const MainContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.light};
 `;
 
-const PaddingContainer = styled.div`
+const FormContainer = styled.form`
   padding: 2em 10%;
 `;
 
@@ -218,7 +218,10 @@ export class Controls extends Component {
     });
   };
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.showExcluded === true) return; // Don't submit form when excluded modal is open.
+
     const health = [];
     for (let field in this.state.healthFields) {
       if (this.state.healthFields[field] === true) health.push(field);
@@ -273,22 +276,23 @@ export class Controls extends Component {
 
     return (
       <MainContainer>
-        <PaddingContainer>
+        <FormContainer onSubmit={this.handleSubmit}>
           <FormInputs
             controls={this.state.searchControls}
             handleInputChanged={this.handleSearchControlsChange}
           ></FormInputs>
+
           {advancedSearch}
 
           <ButtonContainer>
             <AdvancedButton dark onClick={this.handleToggleAdvanced}>
               Advanced Search
             </AdvancedButton>
-            <SearchButton primary onClick={this.handleSubmit}>
+            <SearchButton submit primary>
               Search
             </SearchButton>
           </ButtonContainer>
-        </PaddingContainer>
+        </FormContainer>
       </MainContainer>
     );
   }

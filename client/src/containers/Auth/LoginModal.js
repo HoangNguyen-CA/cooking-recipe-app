@@ -1,28 +1,14 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
-
-import Modal, { ModalHeader } from '../../components/UI/Modal/Modal';
-import ErrorBox from '../../components/Error/ErrorBox';
-
-import Button from '../../components/UI/Button/Button';
-
-import Spinner from '../../components/UI/Spinner/Spinner';
 
 import FormInputs from '../../components/Forms/FormInputs';
 
+import PropTypes from 'prop-types';
+
 import { checkValidity, checkSubmitValidity } from '../../shared/formAuth';
+import AuthTemplate from './AuthTemplate';
 
-const StyledModal = styled(Modal)`
-  max-width: 400px;
-`;
-
-const SubmitButton = styled(Button)`
-  width: 100%;
-  margin-top: 1em;
-`;
-
-function LoginModal(props) {
+function LoginModal({ show, handleLoginClose, login, error, loading }) {
   const [controls, setControls] = useState({
     email: {
       elementType: 'input',
@@ -77,34 +63,23 @@ function LoginModal(props) {
     e.preventDefault();
 
     if (checkSubmitValidity(controls)) {
-      props.login(controls.email.value, controls.password.value);
+      login(controls.email.value, controls.password.value);
     }
   };
 
-  let content = (
-    <>
-      <ModalHeader>Login</ModalHeader>
-      <ErrorBox error={props.error}></ErrorBox>
-      <form onSubmit={handleSubmit}>
-        <FormInputs
-          controls={controls}
-          handleInputChanged={handleInputChanged}
-        ></FormInputs>
-        <SubmitButton primary type='submit'>
-          Submit
-        </SubmitButton>
-      </form>
-    </>
-  );
-
-  if (props.loading) {
-    content = <Spinner />;
-  }
-
   return (
-    <StyledModal show={props.show} clickedBackdrop={props.handleLoginClose}>
-      {content}
-    </StyledModal>
+    <AuthTemplate
+      header='Sign In'
+      handleSubmit={handleSubmit}
+      error={error}
+      show={show}
+      handleClose={handleLoginClose}
+    >
+      <FormInputs
+        controls={controls}
+        handleInputChanged={handleInputChanged}
+      ></FormInputs>
+    </AuthTemplate>
   );
 }
 
@@ -112,5 +87,13 @@ const mapStateToProps = (state) => ({
   error: state.auth.loginError,
   loading: state.auth.loading,
 });
+
+LoginModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  handleLoginClose: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+  error: PropTypes.string,
+  loading: PropTypes.bool,
+};
 
 export default connect(mapStateToProps)(LoginModal);

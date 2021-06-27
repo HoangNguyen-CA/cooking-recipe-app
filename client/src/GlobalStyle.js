@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
     html {
      font-size: 90%;
      font-family: "Roboto", 'Times New Roman', Times, serif;
+     color: ${({ theme }) => theme.colors.dark}
     }
 
     @media ${({ theme }) => theme.breakpoints.tablet}{

@@ -1,27 +1,20 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
-import Modal, { ModalHeader } from '../../components/UI/Modal/Modal';
-
-import Button from '../../components/UI/Button/Button';
-import Spinner from '../../components/UI/Spinner/Spinner';
-
-import ErrorBox from '../../components/Error/ErrorBox';
 
 import FormInputs from '../../components/Forms/FormInputs';
+import AuthTemplate from './AuthTemplate';
+
+import PropTypes from 'prop-types';
 
 import { checkSubmitValidity, checkValidity } from '../../shared/formAuth';
 
-const StyledModal = styled(Modal)`
-  max-width: 400px;
-`;
-
-const SubmitButton = styled(Button)`
-  width: 100%;
-  margin-top: 1em;
-`;
-
-function RegisterModal(props) {
+function RegisterModal({
+  show,
+  handleRegisterClose,
+  register,
+  error,
+  loading,
+}) {
   const [controls, setControls] = useState({
     username: {
       elementType: 'input',
@@ -90,7 +83,7 @@ function RegisterModal(props) {
     e.preventDefault();
 
     if (checkSubmitValidity(controls)) {
-      props.register(
+      register(
         controls.username.value,
         controls.email.value,
         controls.password.value
@@ -98,30 +91,19 @@ function RegisterModal(props) {
     }
   };
 
-  let content = (
-    <>
-      <ModalHeader>Register</ModalHeader>
-      <ErrorBox error={props.error}></ErrorBox>
-      <form onSubmit={handleSubmit}>
-        <FormInputs
-          controls={controls}
-          handleInputChanged={handleInputChanged}
-        ></FormInputs>
-        <SubmitButton primary type='submit'>
-          Submit
-        </SubmitButton>
-      </form>
-    </>
-  );
-
-  if (props.loading) {
-    content = <Spinner />;
-  }
-
   return (
-    <StyledModal show={props.show} clickedBackdrop={props.handleRegisterClose}>
-      {content}
-    </StyledModal>
+    <AuthTemplate
+      handleSubmit={handleSubmit}
+      error={error}
+      header='Register'
+      show={show}
+      handleClose={handleRegisterClose}
+    >
+      <FormInputs
+        controls={controls}
+        handleInputChanged={handleInputChanged}
+      ></FormInputs>
+    </AuthTemplate>
   );
 }
 
@@ -129,5 +111,13 @@ const mapStateToProps = (state) => ({
   error: state.auth.registerError,
   loading: state.auth.loading,
 });
+
+RegisterModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  handleRegisterClose: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  error: PropTypes.string,
+  loading: PropTypes.bool,
+};
 
 export default connect(mapStateToProps)(RegisterModal);

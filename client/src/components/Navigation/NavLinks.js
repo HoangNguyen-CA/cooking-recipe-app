@@ -138,7 +138,7 @@ const NavLinks = ({
             Recipes
           </NavLink>
 
-          <NavLink onClick={handleLoginOpen}>Login</NavLink>
+          <NavLink onClick={handleLoginOpen}>Sign In</NavLink>
           <NavLink onClick={handleRegisterOpen}>Register</NavLink>
         </Container>
       </>

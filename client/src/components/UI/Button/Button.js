@@ -16,10 +16,12 @@ const darkStyles = css`
   color: ${({ theme }) => theme.colors.light};
 `;
 
-const Button = styled.button`
+const Button = styled.button.attrs((props) => ({
+  type: props.submit ? 'submit' : 'button',
+}))`
   text-align: center;
   cursor: pointer;
-  padding: 0.7em 1.5em;
+  padding: 0.9em 1.5em;
   border-radius: ${({ theme }) => theme.radius.medium};
   font-size: 1rem;
   border: none;
