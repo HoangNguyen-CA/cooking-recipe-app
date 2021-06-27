@@ -4,6 +4,8 @@ import Modal, { ModalHeader } from '../../components/UI/Modal/Modal';
 import ErrorBox from '../../components/Error/ErrorBox';
 import Button from '../../components/UI/Button/Button';
 
+import LoadingScreen from '../../components/LoadingScreen/LoadingScreen';
+
 import PropTypes from 'prop-types';
 
 const StyledModal = styled(Modal)`
@@ -23,9 +25,11 @@ const AuthTemplate = ({
   handleSubmit,
   show,
   handleClose,
+  loading,
 }) => {
   return (
     <StyledModal show={show} clickedBackdrop={handleClose}>
+      <LoadingScreen show={loading}></LoadingScreen>
       <ModalHeader>{header}</ModalHeader>
       <ErrorBox error={error}></ErrorBox>
       <form onSubmit={handleSubmit}>
@@ -42,6 +46,7 @@ AuthTemplate.propTypes = {
   header: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 
+  loading: PropTypes.bool.isRequired,
   error: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,

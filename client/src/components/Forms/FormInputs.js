@@ -54,7 +54,7 @@ Form.propTypes = {
   controls: PropTypes.objectOf(
     PropTypes.shape({
       elementType: PropTypes.string,
-      elementConfig: PropTypes.objectOf(PropTypes.string),
+      elementConfig: PropTypes.object,
       validation: PropTypes.object,
       value: PropTypes.string.isRequired,
       msg: PropTypes.string,

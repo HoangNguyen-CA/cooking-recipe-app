@@ -74,6 +74,7 @@ function LoginModal({ show, handleLoginClose, login, error, loading }) {
       error={error}
       show={show}
       handleClose={handleLoginClose}
+      loading={loading}
     >
       <FormInputs
         controls={controls}

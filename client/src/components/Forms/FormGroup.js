@@ -94,7 +94,7 @@ const FormGroup = ({
 
 FormGroup.propTypes = {
   elementType: PropTypes.string,
-  elementConfig: PropTypes.objectOf(PropTypes.string),
+  elementConfig: PropTypes.object,
   valid: PropTypes.bool,
   touched: PropTypes.bool,
   value: PropTypes.string.isRequired,

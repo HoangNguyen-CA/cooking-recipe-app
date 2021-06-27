@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Label from '../Forms/Label';
 import Button from '../UI/Button/Button';
 import Modal from '../UI/Modal/Modal';
 
@@ -26,7 +25,7 @@ const ItemsContainer = styled.div`
   width: 100%;
 `;
 
-const MainContainer = styled.div`
+const MainContainer = styled.form`
   width: 250px;
   max-width: 90vw;
 `;
@@ -51,15 +50,14 @@ const ExcludeIngredients = ({
   ));
   return (
     <Modal show={show} clickedBackdrop={toggleShow}>
-      <MainContainer>
+      <MainContainer onSubmit={handleAddExcluded}>
         <FormInputs
           controls={controls}
           handleInputChanged={handleControlsChange}
         ></FormInputs>
-        <ExcludeButton danger onClick={handleAddExcluded}>
+        <ExcludeButton danger submit>
           Add to excluded
         </ExcludeButton>
-        <Label>Ingredients Excluded:</Label>
         <ItemsContainer>{excludedElements}</ItemsContainer>
       </MainContainer>
     </Modal>
@@ -74,7 +72,7 @@ ExcludeIngredients.propTypes = {
   controls: PropTypes.objectOf(
     PropTypes.shape({
       elementType: PropTypes.string,
-      elementConfig: PropTypes.objectOf(PropTypes.string),
+      elementConfig: PropTypes.object,
       validation: PropTypes.object,
       value: PropTypes.string.isRequired,
       msg: PropTypes.string,

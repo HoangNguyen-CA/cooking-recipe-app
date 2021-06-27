@@ -97,6 +97,7 @@ function RegisterModal({
       error={error}
       header='Register'
       show={show}
+      loading={loading}
       handleClose={handleRegisterClose}
     >
       <FormInputs

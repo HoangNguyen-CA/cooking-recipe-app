@@ -65,6 +65,7 @@ export class Controls extends Component {
         elementType: 'input',
         elementConfig: {
           type: 'text',
+          autoFocus: true,
         },
         validation: {
           required: true,
@@ -112,6 +113,7 @@ export class Controls extends Component {
         elementType: 'input',
         elementConfig: {
           type: 'text',
+          autoFocus: true,
         },
         validation: {
           required: true,
@@ -165,7 +167,9 @@ export class Controls extends Component {
     this.setState({ excludedControls: updatedControls });
   };
 
-  handleAddExcluded = () => {
+  handleAddExcluded = (e) => {
+    e.preventDefault();
+
     if (this.state.excludedControls[excludedProp].value === '') return;
     this.setState((prevState) => {
       const prevControls = prevState.excludedControls;
@@ -262,15 +266,6 @@ export class Controls extends Component {
         <Button onClick={this.handleToggleExcluded} danger>
           Exclude Ingredients
         </Button>
-        <ExcludedIngredients
-          show={this.state.showExcluded}
-          toggleShow={this.handleToggleExcluded}
-          controls={this.state.excludedControls}
-          handleControlsChange={this.handleExcludedControlsChange}
-          excludedItems={[...this.state.excludedItems]}
-          handleAddExcluded={this.handleAddExcluded}
-          handleRemoveExcluded={this.handleRemoveExcluded}
-        ></ExcludedIngredients>
       </AdvancedSearchContainer>
     );
 
@@ -293,6 +288,15 @@ export class Controls extends Component {
             </SearchButton>
           </ButtonContainer>
         </FormContainer>
+        <ExcludedIngredients
+          show={this.state.showExcluded}
+          toggleShow={this.handleToggleExcluded}
+          controls={this.state.excludedControls}
+          handleControlsChange={this.handleExcludedControlsChange}
+          excludedItems={[...this.state.excludedItems]}
+          handleAddExcluded={this.handleAddExcluded}
+          handleRemoveExcluded={this.handleRemoveExcluded}
+        ></ExcludedIngredients>
       </MainContainer>
     );
   }

@@ -8,7 +8,7 @@ export const Header = styled.p`
 `;
 
 export const Container = styled.div`
-  margin-bottom: 0.5em;
+  margin-bottom: 0.8em;
 `;
 
 export const SideLabel = styled(Label)`
