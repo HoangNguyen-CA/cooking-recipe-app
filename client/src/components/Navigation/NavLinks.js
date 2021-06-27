@@ -5,6 +5,8 @@ import { useLocation } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 
+import { FaRegUserCircle } from 'react-icons/fa';
+
 const Burger = styled.div`
   cursor: pointer;
   display: block;
@@ -22,7 +24,13 @@ const Burger = styled.div`
   }
 `;
 
-const Container = styled.div`
+const MainContainer = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+`;
+
+const ResponsiveContainer = styled.div`
   position: fixed;
   display: flex;
 
@@ -51,47 +59,106 @@ const Container = styled.div`
   }
 `;
 
-const hoveredLink = css`
+const lightColor = css`
   color: ${({ theme }) => theme.colors.light};
-  border-bottom: 2px solid ${({ theme }) => theme.colors.light};
-`;
-const activeLink = css`
-  color: ${({ theme }) => theme.colors.light};
-  background-color: ${(props) => props.theme.colors.dark};
-  border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
 `;
 
-const NavLink = styled.a`
+const activeNavLink = css`
+  background-color: ${(props) => props.theme.colors.dark};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.primary} !important;
+  ${lightColor}
+`;
+
+const navLinkStyles = css`
   font-size: 1rem;
   font-weight: 400;
 
   cursor: pointer;
-  padding: 1.5em 1em;
 
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  width: auto;
   color: ${({ theme }) => theme.colors.lightDark};
+`;
+
+const ResponsiveNavLink = styled.a`
+  ${navLinkStyles};
+  padding: 1.5em 1em;
+  height: auto;
 
   &:hover {
-    ${hoveredLink}
+    background-color: ${(props) => props.theme.colors.dark};
+    ${lightColor}
   }
-
-  &:active {
-    ${activeLink}
-  }
-
-  ${(props) => (props.active ? activeLink : '')}
 
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 1.5em;
-    position: relative;
+    padding: 0 1em;
     height: 100%;
-
-    width: auto;
+    &:hover {
+      border-bottom: 2px solid ${({ theme }) => theme.colors.light};
+    }
+    &:active {
+      ${activeNavLink}
+    }
+    ${(props) => (props.active ? activeNavLink : '')}
   }
 `;
 
+const UserLink = styled.div`
+  ${navLinkStyles}
+  height: 100%;
+
+  padding: 0 1.4em;
+  &:hover,
+  &:active {
+    ${lightColor}
+  }
+
+  ${(props) => (props.active ? lightColor : '')}
+`;
+
+const UserIcon = styled(FaRegUserCircle)`
+  height: 25px;
+  width: auto;
+`;
+
+const UserContent = styled.div`
+  position: absolute;
+  padding: 1em;
+  overflow: hidden;
+  border-radius: ${({ theme }) => theme.radius.medium};
+
+  display: ${(props) => (props.show ? 'block' : 'none')};
+  background-color: ${({ theme }) => theme.colors.darkLight};
+  top: calc(100% + 10px);
+  right: 10px;
+  width: auto;
+`;
+
+const UserContentLabel = styled.p`
+  ${navLinkStyles}
+  ${lightColor}
+  justify-content: center;
+  cursor: auto;
+  text-align: center;
+  width: 100%;
+`;
+
+const UserContentLink = styled.a`
+  ${navLinkStyles}
+  justify-content: center;
+
+  margin-top: 1em;
+
+  position: static;
+
+  &:hover,
+  &:active {
+    ${lightColor}
+  }
+`;
 const NavLinks = ({
   isAuthenticated,
   handleToSearch,
@@ -102,6 +169,9 @@ const NavLinks = ({
   logout,
   open,
   toggleOpen,
+  userOpen,
+  setUserOpen,
+  user,
 }) => {
   let location = useLocation();
 
@@ -109,49 +179,73 @@ const NavLinks = ({
   const recipesActive = location.pathname === '/recipes';
   const favoritesActive = location.pathname === '/favorites';
 
+  const stopPropagation = (e) => {
+    e.stopPropagation();
+  };
+  const handleUserLinkClicked = (e) => {
+    stopPropagation(e);
+    setUserOpen(!userOpen);
+  };
+
   let navLinks;
   if (isAuthenticated) {
     navLinks = (
       <>
-        <Container open={open}>
-          <NavLink onClick={handleToSearch} active={searchActive}>
+        <ResponsiveContainer open={open}>
+          <ResponsiveNavLink onClick={handleToSearch} active={searchActive}>
             Search
-          </NavLink>
-          <NavLink onClick={handleToRecipes} active={recipesActive}>
+          </ResponsiveNavLink>
+          <ResponsiveNavLink onClick={handleToRecipes} active={recipesActive}>
             Recipes
-          </NavLink>
-          <NavLink onClick={handleToFavorites} active={favoritesActive}>
+          </ResponsiveNavLink>
+          <ResponsiveNavLink
+            onClick={handleToFavorites}
+            active={favoritesActive}
+          >
             Favorites
-          </NavLink>
-          <NavLink onClick={logout}>Logout</NavLink>
-        </Container>
+          </ResponsiveNavLink>
+        </ResponsiveContainer>
+
+        <UserLink onClick={handleUserLinkClicked} active={userOpen}>
+          <UserIcon />
+        </UserLink>
+        <UserContent show={userOpen} onClick={stopPropagation}>
+          <UserContentLabel>{user.name}</UserContentLabel>
+          <UserContentLabel>{user.email}</UserContentLabel>
+          <UserContentLink onClick={logout}>Logout</UserContentLink>
+        </UserContent>
       </>
     );
   } else {
     navLinks = (
       <>
-        <Container open={open}>
-          <NavLink onClick={handleToSearch} active={searchActive}>
+        <ResponsiveContainer open={open}>
+          <ResponsiveNavLink onClick={handleToSearch} active={searchActive}>
             Search
-          </NavLink>
-          <NavLink onClick={handleToRecipes} active={recipesActive}>
+          </ResponsiveNavLink>
+          <ResponsiveNavLink onClick={handleToRecipes} active={recipesActive}>
             Recipes
-          </NavLink>
-
-          <NavLink onClick={handleLoginOpen}>Sign In</NavLink>
-          <NavLink onClick={handleRegisterOpen}>Register</NavLink>
-        </Container>
+          </ResponsiveNavLink>
+          <ResponsiveNavLink onClick={handleLoginOpen}>
+            Sign In
+          </ResponsiveNavLink>
+          <ResponsiveNavLink onClick={handleRegisterOpen}>
+            Register
+          </ResponsiveNavLink>
+        </ResponsiveContainer>
       </>
     );
   }
   return (
     <>
-      {navLinks}
-      <Burger onClick={toggleOpen}>
-        <div></div>
-        <div></div>
-        <div></div>
-      </Burger>
+      <MainContainer>
+        {navLinks}
+        <Burger onClick={toggleOpen}>
+          <div></div>
+          <div></div>
+          <div></div>
+        </Burger>
+      </MainContainer>
     </>
   );
 };
@@ -166,6 +260,11 @@ NavLinks.propTypes = {
   logout: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   toggleOpen: PropTypes.func.isRequired,
+  userOpen: PropTypes.bool.isRequired,
+  setUserOpen: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string,
+  }),
 };
 
 export default NavLinks;

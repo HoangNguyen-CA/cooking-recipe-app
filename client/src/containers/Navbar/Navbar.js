@@ -9,6 +9,8 @@ import styled from 'styled-components';
 
 import NavLinks from '../../components/Navigation/NavLinks';
 
+import { setUserOpen } from '../../store/slices/userSlice';
+
 import {
   login,
   logout,
@@ -120,6 +122,8 @@ export class Navbar extends Component {
             handleToSearch={this.handleToSearch}
             handleToRecipes={this.handleToRecipes}
             handleToFavorites={this.handleToFavorites}
+            userOpen={this.props.userOpen}
+            setUserOpen={this.props.setUserOpen}
           ></NavLinks>
         </Container>
       </>
@@ -129,6 +133,7 @@ export class Navbar extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    userOpen: state.user.open,
     user: state.auth.user,
     isAuthenticated: state.auth.isAuthenticated,
   };
@@ -136,6 +141,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    setUserOpen: (open) => dispatch(setUserOpen(open)),
+
     login: (email, password) => dispatch(login({ email, password })),
     logout: () => dispatch(logout()),
     register: (username, email, password) =>

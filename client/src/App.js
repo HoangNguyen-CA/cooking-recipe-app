@@ -10,6 +10,7 @@ import Layout from './components/Layout/Layout';
 import ErrorDisplay from './containers/ErrorDisplay/ErrorDisplay';
 
 import { loadUser } from './store/slices/authSlice';
+import { setUserOpen } from './store/slices/userSlice';
 
 import GlobalStyle from './GlobalStyle';
 
@@ -20,7 +21,7 @@ export class App extends Component {
 
   render() {
     return (
-      <>
+      <div onClick={this.props.closeUser}>
         <ErrorDisplay></ErrorDisplay>
         <GlobalStyle></GlobalStyle>
         <Switch>
@@ -40,7 +41,7 @@ export class App extends Component {
             </Layout>
           </Route>
         </Switch>
-      </>
+      </div>
     );
   }
 }
@@ -50,6 +51,7 @@ const mapStateToProps = (state) => ({});
 const mapDispatchToProps = (dispatch) => {
   return {
     loadUser: () => dispatch(loadUser()),
+    closeUser: () => dispatch(setUserOpen(false)),
   };
 };
 

@@ -8,6 +8,7 @@ import { setError } from './errorSlice';
 const initialState = {
   favorites: [],
   loading: false,
+  open: false,
 };
 
 const userSlice = createSlice({
@@ -34,11 +35,16 @@ const userSlice = createSlice({
       );
       state.favorites = newFavorities;
     },
+    setUserOpen(state, action) {
+      state.open = action.payload || false;
+    },
   },
 });
 
 const { getFavStart, getFavSuccess, getFavFail, addFav, deleteFav } =
   userSlice.actions;
+
+export const { setUserOpen } = userSlice.actions;
 
 //async actions
 

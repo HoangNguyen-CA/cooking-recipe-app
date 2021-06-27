@@ -91,7 +91,7 @@ const {
   userLoadingFail,
 } = authSlice.actions;
 
-export const { logout, clearAuthErrors } = authSlice.actions;
+export const { logout, clearAuthErrors, setOpen } = authSlice.actions;
 
 export const login =
   ({ email, password }) =>
