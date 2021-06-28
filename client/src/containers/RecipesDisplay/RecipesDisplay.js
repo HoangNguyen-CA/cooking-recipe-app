@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Recipes from '../../components/Recipes/Recipes';
 
 import { addFavorite } from '../../store/slices/userSlice';
+
 import { Header, EmptyMessage } from '../../components/Layout/Layout';
 
 export class RecipesDisplay extends Component {

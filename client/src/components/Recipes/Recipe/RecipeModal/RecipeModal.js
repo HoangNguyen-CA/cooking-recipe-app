@@ -2,11 +2,13 @@ import React from 'react';
 import Modal from '../../../UI/Modal/Modal';
 import styled from 'styled-components';
 import { ModalHeader } from '../../../UI/Modal/Modal';
+import LabelSection from '../LabelSection/LabelSection';
 import PropTypes from 'prop-types';
 
 const StyledModal = styled(Modal)`
-  max-width: 600px;
+  max-width: 550px;
   padding: 1em 3em;
+  width: 90%;
 `;
 
 const List = styled.ul`
@@ -25,10 +27,22 @@ const ListElement = styled.li`
   margin-left: 1em;
 `;
 
-const RecipeModal = ({ open, label, ingredients, nutrients, handleClose }) => {
+const RecipeModal = ({
+  open,
+  label,
+  ingredients,
+  nutrients,
+  handleClose,
+  dietLabels,
+  healthLabels,
+  cautions,
+}) => {
   return (
     <StyledModal show={open} clickedBackdrop={handleClose}>
       <ModalHeader>{label}</ModalHeader>
+      <LabelSection header='Diet:' labels={dietLabels}></LabelSection>
+      <LabelSection header='Health:' labels={healthLabels}></LabelSection>
+      <LabelSection header='Cautions:' labels={cautions}></LabelSection>
       <List>
         <ListHeader>Ingredients:</ListHeader>
         {ingredients.map((el, index) => (
@@ -54,6 +68,9 @@ RecipeModal.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
   nutrients: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleClose: PropTypes.func.isRequired,
+  dietLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  healthLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  cautions: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default RecipeModal;

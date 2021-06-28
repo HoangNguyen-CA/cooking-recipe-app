@@ -7,7 +7,6 @@ const dangerStyles = css`
 
 const primaryStyles = css`
   background-color: ${({ theme }) => theme.colors.primary};
-  background-color: green;
   color: ${({ theme }) => theme.colors.light};
 `;
 

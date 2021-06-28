@@ -2,55 +2,70 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import RecipeModal from './RecipeModal/RecipeModal';
 import Button from '../../UI/Button/Button';
-import LabelSection from './LabelSection/LabelSection';
 import PropTypes from 'prop-types';
 
-const Display = styled.div`
-  flex-grow: 1;
-  width: 100%;
-  margin: 2em 0;
+import placeholder from './placeholder.png';
+
+const Container = styled.div`
+  max-width: 300px;
   background-color: ${(props) => props.theme.colors.light};
+  margin: 10px;
   border-radius: ${({ theme }) => theme.radius.medium};
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
-  padding: 1.5em;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+`;
+
+const InnerContainer = styled.div`
+  flex-grow: 1;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Header = styled.h3`
-  font-size: 2rem;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
   font-weight: 600;
+  line-height: 99%;
 `;
 
 const Source = styled.p`
-  font-size: 1.3rem;
+  font-size: 1rem;
 `;
 
 const Url = styled.a.attrs(() => ({ target: '_blank' }))`
   text-decoration: none;
   color: ${(props) => props.theme.colors.blue};
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const ImageContainer = styled.div`
-  border: 2px solid rgba(0, 0, 0, 0.5);
-  border-radius: ${({ theme }) => theme.radius.medium};
   overflow: hidden;
-  margin: 1em 0;
+  width: 100%;
+  display: flex;
 `;
+
 const Image = styled.img`
   display: block;
   width: 100%;
 `;
 
 const Info = styled.p`
-  font-size: 1.2rem;
-  margin-top: 0.2em;
+  font-size: 1rem;
+  margin-bottom: 0.2em;
 `;
 
-const StyledButton = styled(Button)`
-  margin-top: 1em;
-`;
+const ButtonContainer = styled.div`
+  display: flex;
 
-const LabelsContainer = styled.div`
-  margin-top: 0.5em;
+  margin-top: auto;
+
+  & *::first-child {
+    margin-right: 10px;
+  }
 `;
 
 const RecipeTemplate = ({
@@ -65,7 +80,7 @@ const RecipeTemplate = ({
   calories,
   totalTime,
   nutrients,
-  children,
+  button,
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -78,38 +93,36 @@ const RecipeTemplate = ({
   };
 
   return (
-    <Display>
+    <Container>
       <RecipeModal
         open={modalOpen}
         handleClose={handleModalClose}
         label={label}
         ingredients={ingredients}
         nutrients={nutrients}
+        dietLabels={dietLabels}
+        healthLabels={healthLabels}
+        cautions={cautions}
       ></RecipeModal>
-      <Header> {label} </Header>
-      <Source>
-        Source: <Url href={url}>{source}</Url>
-      </Source>
       <ImageContainer>
         <Image src={image}></Image>
       </ImageContainer>
-      <Info>Calories: {calories}</Info>
-      <Info>Time to make: {totalTime} minutes</Info>
+      <InnerContainer>
+        <Header> {label} </Header>
+        <Source>
+          Source: <Url href={url}>{source}</Url>
+        </Source>
 
-      <LabelsContainer>
-        <LabelSection header='Diet Types:' labels={dietLabels}></LabelSection>
-        <LabelSection
-          header='Health Types:'
-          labels={healthLabels}
-        ></LabelSection>
-        <LabelSection header='Cautions:' labels={cautions}></LabelSection>
-      </LabelsContainer>
-
-      <StyledButton primary onClick={handleModalOpen}>
-        Ingredients & Nutrients
-      </StyledButton>
-      {children}
-    </Display>
+        <Info>Calories: {Math.round(calories)}</Info>
+        <Info>Time to make: {totalTime} minutes</Info>
+      </InnerContainer>
+      <ButtonContainer>
+        <StyledButton primary onClick={handleModalOpen}>
+          More Information
+        </StyledButton>
+        {button}
+      </ButtonContainer>
+    </Container>
   );
 };
 
@@ -125,7 +138,22 @@ RecipeTemplate.propTypes = {
   calories: PropTypes.number.isRequired,
   totalTime: PropTypes.number.isRequired,
   nutrients: PropTypes.arrayOf(PropTypes.object).isRequired,
-  children: PropTypes.node,
+  button: PropTypes.node,
 };
+
+export const WrapperContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1000px;
+`;
+
+export const StyledButton = styled(Button)`
+  width: 100%;
+  border-radius: 0;
+  &:hover {
+    transform: translateY(0);
+  }
+`;
 
 export default RecipeTemplate;
