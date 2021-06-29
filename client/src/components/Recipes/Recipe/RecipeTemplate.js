@@ -9,7 +9,7 @@ import placeholder from './placeholder.png';
 const Container = styled.div`
   max-width: 300px;
   background-color: ${(props) => props.theme.colors.light};
-  margin: 10px;
+  margin: 15px;
   border-radius: ${({ theme }) => theme.radius.medium};
   display: flex;
   flex-direction: column;
@@ -18,16 +18,18 @@ const Container = styled.div`
 
 const InnerContainer = styled.div`
   flex-grow: 1;
-  padding: 1em;
+  padding: 0.5em;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
 `;
 
 const Header = styled.h3`
   font-size: 1.2rem;
   letter-spacing: 1px;
   font-weight: 600;
-  line-height: 99%;
+  line-height: 120%;
   margin-bottom: 0.1em;
 `;
 
@@ -62,12 +64,7 @@ const Info = styled.p`
 
 const ButtonContainer = styled.div`
   display: flex;
-
   margin-top: auto;
-
-  & *::first-child {
-    margin-right: 10px;
-  }
 `;
 
 const RecipeTemplate = ({
@@ -107,7 +104,13 @@ const RecipeTemplate = ({
         cautions={cautions}
       ></RecipeModal>
       <ImageContainer>
-        <Image src={image}></Image>
+        <Image
+          src={image}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = placeholder;
+          }}
+        ></Image>
       </ImageContainer>
       <InnerContainer>
         <Header> {label} </Header>

@@ -42,7 +42,6 @@ const Recipes = ({
           const isFavorite = favorites.find(
             (item) => item.label === recipe.label
           );
-          console.log(isFavorite);
 
           return (
             <RecipeTemplate
