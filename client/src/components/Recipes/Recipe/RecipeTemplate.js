@@ -150,7 +150,7 @@ export const WrapperContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 1000px;
+  max-width: 1100px;
 `;
 
 export const StyledButton = styled(Button)`

@@ -9,6 +9,7 @@ import Modal from '../../components/UI/Modal/Modal';
 const ErrorModal = styled(Modal)`
   background-color: ${(props) => props.theme.colors.danger};
   color: white;
+  padding: 1.1em 1.5em;
 `;
 
 const ErrorText = styled.p`

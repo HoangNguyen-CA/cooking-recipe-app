@@ -26,20 +26,16 @@ const Button = styled.button.attrs((props) => ({
   cursor: pointer;
   padding: 0.9em 1.5em;
   border-radius: ${({ theme }) => theme.radius.medium};
-  font-size: 1rem;
+  font-size: 1.05rem;
   border: none;
   outline: none;
   background-color: white;
+  background-image: linear-gradient(rgba(0, 0, 0, 0) 0 0);
+
   text-transform: capitalize;
 
   &:hover {
-    transform: translateY(-1px);
-    filter: brightness(1.05);
-    box-shadow: 1px 1px, 5px rgba(0, 0, 0, 0.5);
-  }
-
-  &:active {
-    transform: translateY(2px);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
   }
 
   ${(props) => (props.danger ? dangerStyles : '')}
