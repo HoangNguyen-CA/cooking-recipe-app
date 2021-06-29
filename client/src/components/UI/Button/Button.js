@@ -15,6 +15,10 @@ const darkStyles = css`
   color: ${({ theme }) => theme.colors.light};
 `;
 
+const disabledStyles = css`
+  background-color: ${({ theme }) => theme.colors.lightDark};
+`;
+
 const Button = styled.button.attrs((props) => ({
   type: props.submit ? 'submit' : 'button',
 }))`
@@ -41,6 +45,7 @@ const Button = styled.button.attrs((props) => ({
   ${(props) => (props.danger ? dangerStyles : '')}
   ${(props) => (props.primary ? primaryStyles : '')}
   ${(props) => (props.dark ? darkStyles : '')}
+  ${(props) => (props.disabled ? disabledStyles : '')}
 `;
 
 export default Button;

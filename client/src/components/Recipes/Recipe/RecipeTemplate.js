@@ -28,10 +28,12 @@ const Header = styled.h3`
   letter-spacing: 1px;
   font-weight: 600;
   line-height: 99%;
+  margin-bottom: 0.1em;
 `;
 
 const Source = styled.p`
   font-size: 1rem;
+  margin-bottom: 0.5em;
 `;
 
 const Url = styled.a.attrs(() => ({ target: '_blank' }))`

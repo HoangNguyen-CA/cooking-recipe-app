@@ -15,6 +15,7 @@ export class RecipesDisplay extends Component {
         {this.props.recipes.length > 0 || this.props.loading ? (
           <Recipes
             recipes={this.props.recipes}
+            favorites={this.props.favorites}
             loading={this.props.loading}
             addFavorite={this.props.addFavorite}
             isAuthenticated={this.props.isAuthenticated}
@@ -29,6 +30,7 @@ export class RecipesDisplay extends Component {
 
 const mapStateToProps = (state) => ({
   recipes: state.recipe.recipes,
+  favorites: state.user.favorites,
   loading: state.recipe.loading,
   isAuthenticated: state.auth.isAuthenticated,
 });

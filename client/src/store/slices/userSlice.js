@@ -54,6 +54,7 @@ export const getFavorites = () => async (dispatch, getState) => {
     const res = await axios.get('/api/recipes/', tokenConfig(getState));
     dispatch(getFavSuccess(res.data));
   } catch (e) {
+    console.log(e);
     dispatch(getFavFail());
     dispatch(setError(e.response.data.msg));
   }

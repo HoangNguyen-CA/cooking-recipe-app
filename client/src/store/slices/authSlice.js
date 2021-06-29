@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { createSlice } from '@reduxjs/toolkit';
 import { tokenConfig } from '../util';
+import { getFavorites } from './userSlice';
 
 const removeToken = (state) => {
   localStorage.removeItem('token');
@@ -101,6 +102,7 @@ export const login =
       const body = JSON.stringify({ email, password });
       const res = await axios.post('/api/auth', body);
       dispatch(loginSuccess(res.data));
+      dispatch(getFavorites());
     } catch (e) {
       dispatch(loginFail({ error: e.response.data.msg }));
     }
@@ -114,6 +116,7 @@ export const register =
       const body = JSON.stringify({ name, email, password });
       const res = await axios.post('/api/users', body);
       dispatch(registerSuccess(res.data));
+      dispatch(getFavorites());
     } catch (e) {
       dispatch(registerFail({ error: e.response.data.msg }));
     }
@@ -123,6 +126,7 @@ export const loadUser = () => async (dispatch, getState) => {
     dispatch(userLoadingStart());
     const res = await axios.get('/api/auth/user', tokenConfig(getState));
     dispatch(userLoadingSuccess(res.data));
+    dispatch(getFavorites());
   } catch (e) {
     dispatch(userLoadingFail());
   }

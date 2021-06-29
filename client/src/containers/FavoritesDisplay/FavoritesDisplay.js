@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getFavorites, deleteFavorite } from '../../store/slices/userSlice';
+import { deleteFavorite } from '../../store/slices/userSlice';
 
 import Favorites from '../../components/Favorites/Favorites';
 
@@ -8,13 +8,10 @@ import { Redirect } from 'react-router-dom';
 import { Header, EmptyMessage } from '../../components/Layout/Layout';
 
 export class FavoritesDisplay extends Component {
-  componentDidMount() {
-    this.props.getFavorites();
-  }
   render() {
     return (
       <>
-        <Header>Your Favorites</Header>
+        <Header>Favorites</Header>
         {this.props.isAuthenticated ? null : <Redirect to='/'></Redirect>}
 
         {this.props.favorites.length > 0 || this.props.loading ? (
@@ -39,7 +36,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getFavorites: () => dispatch(getFavorites()),
     deleteFavorite: (id) => dispatch(deleteFavorite(id)),
   };
 };

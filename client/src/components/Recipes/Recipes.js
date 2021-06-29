@@ -7,7 +7,13 @@ import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
 import PropTypes from 'prop-types';
 
-const Recipes = ({ loading, recipes, isAuthenticated, addFavorite }) => {
+const Recipes = ({
+  loading,
+  recipes,
+  isAuthenticated,
+  addFavorite,
+  favorites,
+}) => {
   const handleAddFavorites = (el) => {
     const recipe = el.recipe;
     let newFavorite = {
@@ -33,9 +39,14 @@ const Recipes = ({ loading, recipes, isAuthenticated, addFavorite }) => {
         {recipes.map((el) => {
           const recipe = el.recipe;
 
+          const isFavorite = favorites.find(
+            (item) => item.label === recipe.label
+          );
+          console.log(isFavorite);
+
           return (
             <RecipeTemplate
-              key={recipe}
+              key={recipe.label}
               label={recipe.label}
               image={recipe.image}
               source={recipe.source}
@@ -49,8 +60,12 @@ const Recipes = ({ loading, recipes, isAuthenticated, addFavorite }) => {
               nutrients={recipe.digest}
               button={
                 isAuthenticated ? (
-                  <StyledButton primary onClick={() => handleAddFavorites(el)}>
-                    Add To Favorites
+                  <StyledButton
+                    primary
+                    disabled={isFavorite}
+                    onClick={() => handleAddFavorites(el)}
+                  >
+                    {isFavorite ? 'Favored' : 'Add To Favorites'}
                   </StyledButton>
                 ) : null
               }
@@ -67,6 +82,7 @@ Recipes.propTypes = {
   isAuthenticated: PropTypes.bool,
   recipes: PropTypes.array.isRequired,
   addFavorite: PropTypes.func.isRequired,
+  favorites: PropTypes.array.isRequired,
 };
 
 export default Recipes;

@@ -72,6 +72,13 @@ router.post(
     const id = req.user.id;
     const recipe = req.body;
     const foundUser = await User.findById(id);
+    const foundRecipe = foundUser.recipes.filter(
+      (item) => item.label === recipe.label
+    );
+    console.log(foundRecipe);
+    if (foundRecipe.length !== 0) {
+      throw new AppError(404, 'Recipe already exists in favorites.');
+    }
     foundUser.recipes.push(recipe);
     const savedUser = await foundUser.save();
     if (savedUser == null) throw new AppError(404, 'Failed to save user data.');
