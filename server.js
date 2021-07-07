@@ -1,9 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+require('dotenv').config();
 
 const db = process.env.MONGODB_URI || 'mongodb://localhost:27017/recipe-app';
 const port = process.env.PORT || 5000;

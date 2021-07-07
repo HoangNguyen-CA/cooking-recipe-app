@@ -13,7 +13,7 @@ const Container = styled.div`
   margin-bottom: 0.3em;
 `;
 
-const ErrorDiv = ({ error }) => {
+const ErrorBox = ({ error }) => {
   let element = null;
   if (error) {
     element = <Container>{error}</Container>;
@@ -21,8 +21,8 @@ const ErrorDiv = ({ error }) => {
   return <>{element}</>;
 };
 
-ErrorDiv.propTypes = {
+ErrorBox.propTypes = {
   error: PropTypes.string,
 };
 
-export default ErrorDiv;
+export default ErrorBox;
