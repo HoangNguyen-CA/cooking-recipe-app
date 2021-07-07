@@ -22,6 +22,6 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
-  "author": "",
+  "author": "hoang nguyen",
   "license": "ISC"
 }
