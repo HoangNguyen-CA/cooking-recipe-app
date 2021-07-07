@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import Label from './Label';
 import TextInput from './TextInput';
 
-import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 
 const Container = styled.div`
@@ -53,14 +52,12 @@ const FormGroup = ({
   msg,
 }) => {
   let inputElement = null;
-  const [uuid] = useState(uuidv4());
 
   switch (elementType) {
     case 'input':
       inputElement = (
         <ValidatedInput
           {...elementConfig}
-          id={uuid}
           valid={valid}
           touched={touched}
           value={value}
@@ -72,7 +69,6 @@ const FormGroup = ({
       inputElement = (
         <ValidatedInput
           {...elementConfig}
-          id={uuid}
           valid={valid}
           touched={touched}
           value={value}
@@ -82,9 +78,10 @@ const FormGroup = ({
   }
   return (
     <Container>
-      <Label htmlFor={uuid}>{label}:</Label>
+      <Label>
+        {label}:{inputElement}
+      </Label>
 
-      {inputElement}
       <Message valid={valid} touched={touched}>
         {msg || '_'}
       </Message>

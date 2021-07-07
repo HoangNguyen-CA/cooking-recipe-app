@@ -6,6 +6,7 @@ const StyledLabel = styled.label`
   margin-top: 0.4em;
   font-size: ${(props) => props.fontSize};
   text-transform: capitalize;
+  width: 100%;
 `;
 
 export default StyledLabel;
