@@ -32,17 +32,20 @@ const Layout = ({ center, children, maxWidth }) => {
 };
 
 export const Header = styled.h2`
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 3rem;
+  font-weight: 300;
   margin-bottom: 0.8em;
   letter-spacing: 2px;
   color: ${({ theme }) => theme.colors.light};
+
+  text-align: center;
 `;
 
 export const EmptyMessage = styled.p`
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: ${(props) => props.theme.colors.danger};
   text-transform: uppercase;
+  text-align: center;
 `;
 
 Layout.propTypes = {

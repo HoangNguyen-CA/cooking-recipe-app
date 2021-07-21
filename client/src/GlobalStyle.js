@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
 
     html {
      font-size: 90%;
-     font-family: "Roboto", 'Times New Roman', Times, serif;
+     font-family: "Roboto", 'Times New Roman', serif;
      color: ${({ theme }) => theme.colors.dark}
     }
 

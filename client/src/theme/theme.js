@@ -11,7 +11,7 @@ const theme = {
   },
 
   radius: {
-    medium: '5px',
+    medium: '3px',
   },
   navbarHeight: '60px',
   breakpoints: {

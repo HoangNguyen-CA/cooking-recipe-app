@@ -36,6 +36,7 @@ const Title = styled.h1`
   font-size: 1.3rem;
   font-weight: 500;
   display: block;
+  letter-spacing: 0.1em;
   color: ${(props) => props.theme.colors.light};
 `;
 
@@ -110,7 +111,7 @@ export class Navbar extends Component {
           register={this.props.register}
         ></RegisterModal>
         <Container>
-          <Title>RecipeSearch</Title>
+          <Title>R.S</Title>
           <NavLinks
             open={this.state.linksOpen}
             toggleOpen={this.handleLinksToggle}

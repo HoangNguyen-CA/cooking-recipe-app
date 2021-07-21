@@ -3,12 +3,15 @@ import Label from '../Forms/Label';
 
 export const Header = styled.p`
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 0.3em;
+  width: 100%;
 `;
 
 export const Container = styled.div`
   margin-bottom: 0.8em;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 export const SideLabel = styled(Label)`
@@ -16,7 +19,8 @@ export const SideLabel = styled(Label)`
 `;
 
 export const BoxGroup = styled.div`
-  display: inline-block;
+  display: flex;
   margin-right: 1em;
   margin-bottom: 0.3em;
+  align-items: center;
 `;
