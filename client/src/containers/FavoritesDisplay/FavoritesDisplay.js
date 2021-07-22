@@ -5,13 +5,12 @@ import { deleteFavorite } from '../../store/slices/userSlice';
 import Favorites from '../../components/Favorites/Favorites';
 
 import { Redirect } from 'react-router-dom';
-import { Header, EmptyMessage } from '../../components/Layout/Layout';
+import { EmptyMessage } from '../../components/Layout/Layout';
 
 export class FavoritesDisplay extends Component {
   render() {
     return (
       <>
-        <Header>Favorites</Header>
         {this.props.isAuthenticated ? null : <Redirect to='/'></Redirect>}
 
         {this.props.favorites.length > 0 || this.props.loading ? (

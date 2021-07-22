@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 const StyledModal = styled.div`
   background-color: ${({ theme }) => theme.colors.light};
-  box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 7px 7px ${({ theme }) => theme.colors.darkLight};
 
   position: fixed;
   left: 50%;

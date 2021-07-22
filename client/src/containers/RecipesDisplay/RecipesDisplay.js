@@ -5,13 +5,12 @@ import Recipes from '../../components/Recipes/Recipes';
 
 import { addFavorite } from '../../store/slices/userSlice';
 
-import { Header, EmptyMessage } from '../../components/Layout/Layout';
+import { EmptyMessage } from '../../components/Layout/Layout';
 
 export class RecipesDisplay extends Component {
   render() {
     return (
       <>
-        <Header>Recipes</Header>
         {this.props.recipes.length > 0 || this.props.loading ? (
           <Recipes
             recipes={this.props.recipes}

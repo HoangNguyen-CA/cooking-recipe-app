@@ -21,17 +21,7 @@ const FakedFullContainer = styled(OuterContainer)`
   z-index: -100;
 `;
 
-const Layout = ({ center, children, maxWidth }) => {
-  return (
-    <>
-      <FakedFullContainer></FakedFullContainer>
-      <Navbar></Navbar>
-      <OuterContainer>{children}</OuterContainer>
-    </>
-  );
-};
-
-export const Header = styled.h2`
+const Header = styled.h2`
   font-size: 3rem;
   font-weight: 300;
   margin-bottom: 0.8em;
@@ -40,6 +30,19 @@ export const Header = styled.h2`
 
   text-align: center;
 `;
+
+const Layout = ({ children, header }) => {
+  return (
+    <>
+      <FakedFullContainer></FakedFullContainer>
+      <Navbar></Navbar>
+      <OuterContainer>
+        <Header>{header}</Header>
+        {children}
+      </OuterContainer>
+    </>
+  );
+};
 
 export const EmptyMessage = styled.p`
   font-size: 2rem;

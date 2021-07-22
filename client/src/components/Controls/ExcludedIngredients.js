@@ -8,26 +8,29 @@ import PropTypes from 'prop-types';
 import FormInputs from '../Forms/FormInputs';
 
 const ExcludeButton = styled(Button)`
-  margin: 0.5em 0;
   display: block;
   width: 100%;
 `;
 
 const ExcludedItem = styled(Button)`
-  margin-top: 0.5em;
   text-overflow: ellipsis;
   overflow: hidden;
-`;
-
-const ItemsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 100%;
 `;
 
 const MainContainer = styled.form`
-  width: 250px;
-  max-width: 90vw;
+  width: 100%;
+  max-width: 300px;
+
+  height: max-content;
+  & > button + button {
+    margin-top: 0.8em;
+  }
+`;
+
+const StyledModal = styled(Modal)`
+  width: 90%;
+  max-width: max-content;
 `;
 
 const ExcludeIngredients = ({
@@ -49,7 +52,7 @@ const ExcludeIngredients = ({
     </ExcludedItem>
   ));
   return (
-    <Modal show={show} clickedBackdrop={toggleShow}>
+    <StyledModal show={show} clickedBackdrop={toggleShow}>
       <MainContainer onSubmit={handleAddExcluded}>
         <FormInputs
           controls={controls}
@@ -58,9 +61,9 @@ const ExcludeIngredients = ({
         <ExcludeButton danger submit>
           Add to excluded
         </ExcludeButton>
-        <ItemsContainer>{excludedElements}</ItemsContainer>
+        {excludedElements}
       </MainContainer>
-    </Modal>
+    </StyledModal>
   );
 };
 

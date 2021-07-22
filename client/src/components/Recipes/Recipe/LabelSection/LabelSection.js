@@ -7,7 +7,7 @@ const LabelContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
 
-  margin: -5px;
+  margin: 0px -5px;
 
   & > * {
     margin: 5px;
@@ -16,7 +16,7 @@ const LabelContainer = styled.div`
 
 const LabelHeader = styled.h6`
   font-size: 1.3rem;
-  margin-bottom: 0.2em;
+  margin-bottom: 0.1em;
 `;
 
 const LabelItem = styled.p`

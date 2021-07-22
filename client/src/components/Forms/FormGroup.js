@@ -28,6 +28,7 @@ const ValidatedInput = styled(TextInput)`
 
 const Message = styled.small`
   display: block;
+  margin: 0.2em 0;
 
   color: ${(props) => props.theme.colors.danger};
   font-size: 0.8em;

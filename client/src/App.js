@@ -26,17 +26,17 @@ export class App extends Component {
         <GlobalStyle></GlobalStyle>
         <Switch>
           <Route exact path='/'>
-            <Layout maxWidth='600px'>
+            <Layout maxWidth='600px' header='Search'>
               <Controls></Controls>
             </Layout>
           </Route>
           <Route exact path='/recipes'>
-            <Layout center>
+            <Layout header='Recipes'>
               <RecipesDisplay> </RecipesDisplay>
             </Layout>
           </Route>
           <Route exact path='/favorites'>
-            <Layout center>
+            <Layout header='Favorites'>
               <FavoritesDisplay></FavoritesDisplay>
             </Layout>
           </Route>
