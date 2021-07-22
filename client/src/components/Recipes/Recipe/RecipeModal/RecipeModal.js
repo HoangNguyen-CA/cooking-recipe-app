@@ -6,20 +6,23 @@ import LabelSection from '../LabelSection/LabelSection';
 import PropTypes from 'prop-types';
 
 const StyledModal = styled(Modal)`
-  max-width: 550px;
-  padding: 1em 3em;
+  max-width: 700px;
+  padding: 3em;
   width: 90%;
+
+  & > * + * {
+    margin-top: 1em;
+  }
 `;
 
 const List = styled.ul`
   font-size: 1.1rem;
-  margin-bottom: 1em;
 `;
 
 const ListHeader = styled.h6`
   font-size: 1.3rem;
   font-weight: 600;
-  margin-bottom: 0.3em;
+  margin-bottom: 0.2em;
 `;
 
 const ListElement = styled.li`

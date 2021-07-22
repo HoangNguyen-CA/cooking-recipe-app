@@ -24,10 +24,11 @@ const MainContainer = styled.div`
   max-width: 600px;
   border-radius: ${({ theme }) => theme.radius.medium};
   background-color: ${({ theme }) => theme.colors.light};
+  box-shadow: 10px 10px ${({ theme }) => theme.colors.darkLight};
 `;
 
 const FormContainer = styled.form`
-  padding: 2em 10%;
+  padding: 2em;
 `;
 
 const AdvancedSearchContainer = styled.div`

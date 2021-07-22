@@ -41,8 +41,8 @@ Modal.propTypes = {
 
 export const ModalHeader = styled.h2`
   font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 0.5em;
+  font-weight: 500;
+  margin-bottom: 1em;
   text-align: center;
 `;
 

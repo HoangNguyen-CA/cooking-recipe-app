@@ -4,21 +4,28 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const LabelContainer = styled.div`
-  margin: 0.5em 0;
   display: flex;
   flex-wrap: wrap;
+
+  margin: -5px;
+
+  & > * {
+    margin: 5px;
+  }
 `;
 
 const LabelHeader = styled.h6`
   font-size: 1.3rem;
+  margin-bottom: 0.2em;
 `;
 
 const LabelItem = styled.p`
   display: inline-block;
   padding: 0.5em 0.8em;
-  margin: 0.3em;
   border-radius: ${({ theme }) => theme.radius.medium};
-  border: 2px solid ${(props) => props.theme.colors.lightDark};
+  background-color: ${(props) => props.theme.colors.dark};
+  color: ${(props) => props.theme.colors.light};
+  border: 2px solid ${(props) => props.theme.colors.dark};
 `;
 
 const LabelSection = ({ labels, header }) => {

@@ -7,35 +7,44 @@ import PropTypes from 'prop-types';
 import placeholder from './placeholder.png';
 
 const Container = styled.div`
-  max-width: 300px;
+  max-width: 330px;
+
   background-color: ${(props) => props.theme.colors.light};
-  margin: 15px;
   border-radius: ${({ theme }) => theme.radius.medium};
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
+  box-shadow: 7px 7px ${({ theme }) => theme.colors.darkLight};
 `;
 
 const InnerContainer = styled.div`
   flex-grow: 1;
-  padding: 0.5em;
+  padding: 1em;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   text-align: center;
+
+  color: ${({ theme }) => theme.colors.darkLight};
+  & > * + * {
+    margin-top: 0.5em;
+  }
 `;
 
 const Header = styled.h3`
-  font-size: 1.2rem;
+  font-size: 1.7rem;
+  display: inline;
+  color: ${({ theme }) => theme.colors.dark};
+
   letter-spacing: 1px;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 120%;
-  margin-bottom: 0.1em;
 `;
 
 const Source = styled.p`
   font-size: 1rem;
-  margin-bottom: 0.5em;
 `;
 
 const Url = styled.a.attrs(() => ({ target: '_blank' }))`
@@ -59,12 +68,10 @@ const Image = styled.img`
 
 const Info = styled.p`
   font-size: 1rem;
-  margin-bottom: 0.2em;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  margin-top: auto;
 `;
 
 const RecipeTemplate = ({
@@ -150,7 +157,13 @@ export const WrapperContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 1100px;
+  width: 100%;
+  max-width: 1980px;
+
+  margin: -2em;
+  & > * {
+    margin: 2em;
+  }
 `;
 
 export const StyledButton = styled(Button)`

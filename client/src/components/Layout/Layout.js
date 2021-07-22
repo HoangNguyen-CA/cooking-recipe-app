@@ -3,7 +3,7 @@ import Navbar from '../../containers/Navbar/Navbar';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const OutterContainer = styled.div`
+const OuterContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,7 +11,7 @@ const OutterContainer = styled.div`
   padding: 4em 0;
 `;
 
-const FakedFullContainer = styled(OutterContainer)`
+const FakedFullContainer = styled(OuterContainer)`
   display: block;
   position: absolute;
   top: 0;
@@ -26,7 +26,7 @@ const Layout = ({ center, children, maxWidth }) => {
     <>
       <FakedFullContainer></FakedFullContainer>
       <Navbar></Navbar>
-      <OutterContainer>{children}</OutterContainer>
+      <OuterContainer>{children}</OuterContainer>
     </>
   );
 };

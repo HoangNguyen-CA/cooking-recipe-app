@@ -33,10 +33,10 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 1.3rem;
-  font-weight: 500;
+  font-size: 1.5rem;
+  font-weight: 400;
   display: block;
-  letter-spacing: 0.1em;
+  letter-spacing: 2px;
   color: ${(props) => props.theme.colors.light};
 `;
 
@@ -111,7 +111,7 @@ export class Navbar extends Component {
           register={this.props.register}
         ></RegisterModal>
         <Container>
-          <Title>R.S</Title>
+          <Title>Recipe Search</Title>
           <NavLinks
             open={this.state.linksOpen}
             toggleOpen={this.handleLinksToggle}
